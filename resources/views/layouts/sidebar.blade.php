@@ -21,7 +21,7 @@
         </h5>
         <ul class="nav flex-column mb-auto">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2" href="#">
+            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('acserver.index') }}">
               <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
               AC Server
             </a>

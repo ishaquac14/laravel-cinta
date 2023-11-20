@@ -6,6 +6,7 @@ use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SanswitchController;
+use App\Http\Controllers\AcserverController;
 /*  
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +32,8 @@ Route::get('/sanswitch/search', 'SanswitchController@index');
 Route::resource('/database', DatabaseController::class);
 Route::get('/database/search', 'DatabaseController@index');
 
-// Route::get('/dashboard', function(){
-//     return view('dashboard.index');
-// });
+Route::resource('/acserver', AcserverController::class);
+Route::get('/acserver/search', 'AcserverController@index');
 
 Route::get('/login', [LoginController::class, 'index']);
 Route::get('/register', [RegisterController::class, 'index']);
