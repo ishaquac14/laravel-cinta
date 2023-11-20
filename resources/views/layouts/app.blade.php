@@ -131,11 +131,23 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <div class="navbar-nav">
-    <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">Logout</a>
-    </div>
-  </div>
+ 
+  @auth
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle px-4 col-md-3 col-lg-2 me-0 text-center" style="color: white; text-decoration-color: ghostwhite" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Welcome Back, {{ auth()->user()->name }}
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <form action="/logout" method="post">
+          @csrf
+          <button type="submit" class="dropdown-item"><i class="bibi-box-arrow-right"></i>Logout</button>
+        </form>
+    </ul>
+</li>
+  @endauth
+
 </header>
 
 

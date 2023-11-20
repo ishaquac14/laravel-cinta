@@ -4,29 +4,49 @@
 <div class="row justify-content-center mt-5">
     <div class="col-lg-4">
         <main class="form-registration w-100 m-auto">
-            <form>
+            <form action="/register" method="post">
                 @csrf
                 <div class="mt-5 mb-0 text-center">
                     <img src="/images/aisin.png" height="50px" style="margin-bottom: 40px;">
                 </div>
             
                 <div class="form-floating mt-0">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+                  <input type="text" name="name" id="name" placeholder="Name" class="form-control @error('name')is-invalid @enderror" value="{{ old('name') }}" required>
                   <label for="name">Name</label>
+                  @error('name')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                  @enderror
                 </div>
                 <div class="form-floating mt-0">
-                  <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+                  <input type="text" name="username" class="form-control @error('username')is-invalid @enderror" id="username" placeholder="Username" value="{{ old('username') }}" required>
                   <label for="username">Username</label>
+                  @error('username')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                  @enderror
                 </div>
                 <div class="form-floating mt-0">
-                    <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
+                    <input type="email" name="email" class="form-control @error('email')is-invalid @enderror"  id="email" placeholder="name@example.com" value="{{ old('email') }}" required>
                     <label for="email">Email address</label>
+                    @error('email')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
                   </div>
                 <div class="form-floating">
-                  <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                  <input type="password" name="password" class="form-control @error('password')is-invalid @enderror" id="password" placeholder="Password" required>
                   <label for="password">Password</label>
+                  @error('password')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
                 </div>
-            
+
                 <div class="form-check text-start my-3">
                   <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
                   <label class="form-check-label" for="flexCheckDefault">
