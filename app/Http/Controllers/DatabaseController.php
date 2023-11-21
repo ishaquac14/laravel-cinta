@@ -23,7 +23,7 @@ class DatabaseController extends Controller
         }
     
         // Menggunakan paginate(10) untuk mendapatkan data paginasi
-        $databases = $query->paginate(2);
+        $databases = $query->paginate(5);
     
         // Mengirimkan data ke tampilan
         return view('pages.database.index', compact('databases'));

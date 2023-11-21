@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('acservers', function (Blueprint $table) {
             $table->id();
-            $table->string('ac-01'); 
-            $table->string('ac-02'); 
-            $table->string('ac-03'); 
-            $table->string('ac-04');  
+            $table->string('kondisi');
+            $table->string('ac-01_suhu')->nullable(); 
+            $table->string('ac-02_suhu')->nullable(); 
+            $table->string('ac-03_suhu')->nullable(); 
+            $table->string('ac-04_suhu')->nullable();  
             $table->string('note')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

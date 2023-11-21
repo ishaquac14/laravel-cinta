@@ -33,8 +33,9 @@
                 <tr>
                     <th width="4%">No</th>
                     <th width="20%">Tanggal</th>
-                    <th>Author</th>
                     <th>Note</th>
+                    <th width="25%">Author</th>
+                    <th>Status</th>
                     <th width="20%">Action</th>
                 </tr>
             </thead>
@@ -48,8 +49,19 @@
                     <tr class="table-light"> 
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y') }}</td>
-                        <td class="align-middle">{{ $acserver->author }}</td>
-                        <td class="align-middle">{{ $acserver->note }}</td>
+                        <td class="align-middle">{{ empty($acserver->note) ? 'Tidak ada' : $acserver->note }}</td>
+                        <td class="align-middle text-center">{{ auth()->user()->name }}</td>
+                        <td class="text-center">
+                            @if ($acserver->status === 'ok')
+                                <span class="badge bg-success">Ok</span>
+                            @elseif ($acserver->status === 'warning')
+                                <span class="badge bg-warning">Warning</span>
+                            @elseif ($acserver->status === 'not good')
+                                <span class="badge bg-danger">Not Good</span>
+                            @else
+                                {{ $acserver["{$item}"] }}
+                            @endif
+                        </td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('acserver.show', $acserver->id) }}" class="btn btn-primary">Detail</a>

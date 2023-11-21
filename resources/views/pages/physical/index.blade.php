@@ -33,8 +33,8 @@
                 <tr>
                     <th width="4%">No</th>
                     <th width="20%">Tanggal</th>
-                    <th>Author</th>
                     <th>Note</th>
+                    <th>Author</th>
                     <th width="20%">Action</th>
                 </tr>
             </thead>
@@ -47,8 +47,8 @@
                     <tr class="table-light"> 
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($physical->created_at)->format('d-m-Y') }}</td>
-                        <td class="align-middle">{{ $physical->author }}</td>
-                        <td class="align-middle">{{ $physical->note }}</td>
+                        <td class="align-middle">{{ empty($physical->note) ? 'Tidak ada' : $physical->note }}</td>
+                        <td class="align-middle text-center">{{ auth()->user()->name }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('physical.show', $physical->id) }}" class="btn btn-primary">Detail</a>

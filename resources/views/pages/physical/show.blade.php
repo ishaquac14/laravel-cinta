@@ -17,16 +17,15 @@
         <table class="table table-bordered table-striped">
             <thead class="table-primary text-center">
                 <tr>
-                    <th width="4%">No</th>
-                    <th>Author</th>
-                    <th>Task List</th>
+                    <th width="5%">No</th>
+                    <th width="40%">Task List</th>
                     <th width="15%">Judgment</th>
+                    <th width="40%">Author</th>
                 </tr>
             </thead>            
             <tbody>
                 <tr>
                     <td class="text-center">1</td>
-                    <td>Processed</td>
                     <td>Host 3</td>
                     <td  class="text-center">
                         @if ($physical->host3 == 'OK')
@@ -37,11 +36,12 @@
                             {{ $physical->host3 }}
                         @endif
                     </td>
+                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>  
                 </tr>
                 <tr>
                     <td class="text-center">2</td>
-                    <td>Processed</td>
                     <td>Storage 3</td>
+                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
                     <td class="text-center">
                         @if ($physical->storage3 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -55,8 +55,8 @@
                 @for ($i = 1; $i <= 19; $i++)
                     <tr>
                         <td class="text-center">{{ $i + 2 }}</td>
-                        <td>Processed</td>
                         <td>HDD{{ $i }}-Str3</td>
+                        <td class="align-middle text-center">{{ auth()->user()->name }}</td>
                         <td class="text-center">
                             @if ($physical["hdd{$i}"] == 'OK')
                                 <span class="badge bg-success text-white">OK</span>
@@ -70,8 +70,8 @@
                 @endfor
                 <tr>
                     <td class="text-center">{{ $i + 2 }}</td>
-                    <td>Processed</td>
                     <td>Host 4</td>
+                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
                     <td class="text-center">
                         @if ($physical->host4 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -84,8 +84,8 @@
                 </tr>
                 <tr>
                     <td class="text-center">{{ $i + 3 }}</td>
-                    <td>Processed</td>
                     <td>Storage 4</td>
+                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
                     <td class="text-center">
                         @if ($physical->storage4 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -99,8 +99,8 @@
                 @for ($i = 1; $i <= 10; $i++)
                 <tr>
                     <td class="text-center">{{ $i + 23 }}</td>
-                    <td>Processed</td>
                     <td>HDD{{ $i }}-Str4</td>
+                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
                     <td class="text-center">
                         @if ($physical["hdd_" . $i] == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -116,7 +116,8 @@
         </table>
         <div class="row mt-4">
             <div class="col-md-12 mb-5">
-                <textarea class="form-control" name="note" rows="{{ substr_count($physical->note, "\n") + 5 }}" readonly>{{ $physical->note }}</textarea>
+                <p>Note :</p>
+                <textarea class="form-control" name="note" rows="{{ substr_count($physical->note, "\n") + 5 }}" readonly>{{ $physical->note ?? 'Tidak ada' }}</textarea>
             </div>
         </div>
     </div>

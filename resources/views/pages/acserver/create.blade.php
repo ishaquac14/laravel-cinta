@@ -19,12 +19,12 @@
             <thead class="table-primary text-center">
               <tr>
                 <th width="4%" scope="col">No</th>
-                <th scope="col">Server Name</th>
+                <th scope="col">AC Name</th>
+                <th scope="col">Kondisi</th>
+                <th scope="col">Jadwal Mati/Hidup</th>
                 <th scope="col">Suhu</th>
-                <th width="25%" scope="col">OK (Green)</th>
-                <th width="25%" scope="col">Not Good (Orange)</th>
               </tr>
-            </thead>
+            </thead>    
             <tbody>
             @php
                 $data = [
@@ -41,21 +41,19 @@
                     <td>{{ $item['display'] }}</td>
                     <td class="text-center">
                         <div class="text-center">
+                            <select name="kondisi" class="form-select" id="KondisiSelect" contenteditable="true" required>
+                                <option value="" disabled selected>--Kondisi--</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Rusak">Rusak</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>jadwal</td>
+                    <td class="text-center">
+                        <div class="text-center">
                             <input type="text" class="form-control" name="{{ $item['name'] }}_suhu" placeholder="INPUT SUHU (°C)" pattern="\d+(\.\d{1,2})?" title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma" required>
                         </div>
                     </td>                    
-                    <td class="text-center">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="{{ $item['name'] }}" id="{{ $item['name'] }}_success" value="success" required>
-                            <label class="form-check-label" for="{{ $item['name'] }}">SUCCESS</label>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="{{ $item['name'] }}" id="{{ $item['name'] }}_error" value="error" required>
-                            <label class="form-check-label" for="{{ $item['name'] }}">ERROR</label>
-                        </div>
-                    </td>
                 </tr>
             @endforeach
             
@@ -65,7 +63,15 @@
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
         </div>
-        <div class="mt-4"><p><b>IMPORTANT:</b> If any orange, please email to: callcenter.fid@fujitsu.com</p></div>
+        <div class="mt-3">
+            <select name="status" class="form-select" id="StatusSelect" contenteditable="true" required>
+                <option value="" disabled selected>--Status--</option>
+                <option value="ok">Ok</option>
+                <option value="warning">Warning</option>
+                <option value="not good">Not good</option>
+            </select>
+        </div>
+        <div class="mt-4"><p><b>Standard:</b> Standar menyala AC dalam satu hari adalah sebanyak dua.</p></div>
         <div class="mt-3 mb-5">
             <button class="btn btn-primary">SUBMIT</button>
         </div>

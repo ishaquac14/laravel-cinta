@@ -33,8 +33,8 @@
                 <tr>
                     <th width="4%">No</th>
                     <th width="20%">Tanggal</th>
-                    <th>Author</th>
                     <th>Note</th>
+                    <th>Author</th>
                     <th width="20%">Action</th>
                 </tr>
             </thead>
@@ -48,8 +48,8 @@
                     <tr class="table-light"> 
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($database->created_at)->format('d-m-Y') }}</td>
-                        <td class="align-middle">{{ $database->author }}</td>
-                        <td class="align-middle">{{ $database->note }}</td>
+                        <td class="align-middle">{{ empty($database->note) ? 'Tidak ada' : $database->note }}</td>
+                        <td class="align-middle text-center">{{ auth()->user()->name }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('database.show', $database->id) }}" class="btn btn-primary">Detail</a>

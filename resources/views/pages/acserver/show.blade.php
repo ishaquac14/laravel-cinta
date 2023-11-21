@@ -18,7 +18,8 @@
             <thead class="table-primary text-center">
                 <tr>
                     <th width="4%">No</th>
-                    <th>Server Name</th>
+                    <th>AC Name</th>
+                    <th>Suhu</th>
                     <th width="15%">Judgment</th>
                     <th>Author</th>
                 </tr>
@@ -28,26 +29,30 @@
                     'ac-01', 'ac-02', 'ac-03', 'ac-04'] as $index => $item)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
-                        <td>{{ $item }}</td>
-                        <td class="text-center">
-                            @if ($acserver["{$item}"] === 'OK')
-                                <span class="badge bg-success">Success</span>
-                            @elseif ($acserver["{$item}"] === 'NG')
-                                <span class="badge bg-danger">Error</span>
+                        <td>{{ strtoupper($item) }}</td>
+                        <td>{{ isset($selectedStatus) ? $selectedStatus : '' }}</td>
+                        <td class="text-center" width="35%">
+                            @if ($acserver->status === 'ok')
+                                <span class="badge bg-success">Ok</span>
+                            @elseif ($acserver->status === 'warning')
+                                <span class="badge bg-warning">Warning</span>
+                            @elseif ($acserver->status === 'not good')
+                                <span class="badge bg-danger">Not Good</span>
                             @else
                                 {{ $acserver["{$item}"] }}
                             @endif
                         </td>
-                        <td>Processed</td>
+                        <td class="text-center" width="35%">{{ auth()->user()->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="row mt-4">
             <div class="col-md-12 mb-5">
-                <textarea class="form-control" name="note" rows="{{ substr_count($acserver->note, "\n") + 5 }}" readonly>{{ $acserver->note }}</textarea>
+                <p>Note :</p>
+                <textarea class="form-control" name="note" rows="{{ substr_count($acserver->note, "\n") + 5 }}" readonly>{{ $acserver->note ?? 'Tidak ada' }}</textarea>
             </div>
-        </div>
+        </div>        
     </div>
 </div>
 

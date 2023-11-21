@@ -40,14 +40,15 @@
                                 {{ $database["{$item}"] }}
                             @endif
                         </td>
-                        <td>Processed</td>
+                        <td class="text-center" width="35%">{{ auth()->user()->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="row mt-4">
             <div class="col-md-12 mb-5">
-                <textarea class="form-control" name="note" rows="{{ substr_count($database->note, "\n") + 5 }}" readonly>{{ $database->note }}</textarea>
+                <p>Note :</p>
+                <textarea class="form-control" name="note" rows="{{ substr_count($database->note, "\n") + 5 }}" readonly>{{ $database->note ?? 'Tidak ada' }}</textarea>
             </div>
         </div>
     </div>

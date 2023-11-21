@@ -23,7 +23,7 @@ class AcserverController extends Controller
         }
     
         // Menggunakan paginate(10) untuk mendapatkan data paginasi
-        $acservers = $query->paginate(2);
+        $acservers = $query->paginate(5);
     
         // Mengirimkan data ke tampilan
         return view('pages.acserver.index', compact('acservers'));
@@ -42,17 +42,20 @@ class AcserverController extends Controller
     {
         // Validasi form input
         $request->validate([
-            'ac-01' => 'required|in:success,error',
-            'ac-02' => 'required|in:success,error',
-            'ac-03' => 'required|in:success,error',
-            'ac-04' => 'required|in:success,error',
-            'note' => 'string|nullable'
+            'kondisi' => 'required',
+            'ac-01_suhu' => 'required', 
+            'ac-02_suhu' => 'required', 
+            'ac-03_suhu' => 'required', 
+            'ac-04_suhu' => 'required', 
+            'note' => 'string|nullable',
+            'status' => 'required'
         ]);
         
 
         // Mendapatkan data dari permintaan
-        $data = $request->only(['ac-01', 'ac-02', 'ac-03', 'ac-04', 'note']);
+        $data = $request->only(['kondisi', 'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'note', 'status']);
         // Menyimpan data ke dalam acserver
+        
         Acserver::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan
