@@ -18,7 +18,7 @@ class AcserverController extends Controller
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('author', 'LIKE', '%' . $searchTerm . '%');
+                    ->orWhere('note', 'LIKE', '%' . $searchTerm . '%');
             });
         }
     
@@ -42,20 +42,25 @@ class AcserverController extends Controller
     {
         // Validasi form input
         $request->validate([
-            'kondisi' => 'required',
-            'ac-01_suhu' => 'required', 
-            'ac-02_suhu' => 'required', 
-            'ac-03_suhu' => 'required', 
-            'ac-04_suhu' => 'required', 
+            'kondisi_ac-01' => 'string|required',
+            'kondisi_ac-02' => 'string|required',
+            'kondisi_ac-03' => 'string|required',
+            'kondisi_ac-04' => 'string|required',
+            'ac-01_suhu' => 'string|nullable',
+            'ac-02_suhu' => 'string|nullable',
+            'ac-03_suhu' => 'string|nullable',
+            'ac-04_suhu' => 'string|nullable',
             'note' => 'string|nullable',
             'status' => 'required'
         ]);
         
 
         // Mendapatkan data dari permintaan
-        $data = $request->only(['kondisi', 'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'note', 'status']);
+        $data = $request->only(['kondisi_ac-01', 'kondisi_ac-02', 'kondisi_ac-03', 'kondisi_ac-04', 
+                                'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'note', 'status'
+                                ]);
         // Menyimpan data ke dalam acserver
-        
+        // dd($data);
         Acserver::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan

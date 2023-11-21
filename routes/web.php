@@ -20,7 +20,7 @@ use App\Http\Controllers\SanswitchController;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('dashboard.index');
 });
 
 Route::resource('/physical', PhysicalController::class)->middleware('auth');
@@ -45,4 +45,5 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::resource('/dashboard', DashboardController::class);
 

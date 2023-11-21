@@ -36,26 +36,40 @@
             @endphp
             
             @foreach ($data as $index => $item)
-                <tr>
-                    <th scope="row" class="text-center">{{ $index + 1 }}</th>
-                    <td>{{ $item['display'] }}</td>
-                    <td class="text-center">
-                        <div class="text-center">
-                            <select name="kondisi" class="form-select" id="KondisiSelect" contenteditable="true" required>
-                                <option value="" disabled selected>--Kondisi--</option>
-                                <option value="Normal">Normal</option>
-                                <option value="Rusak">Rusak</option>
-                            </select>
-                        </div>
-                    </td>
-                    <td>jadwal</td>
-                    <td class="text-center">
-                        <div class="text-center">
-                            <input type="text" class="form-control" name="{{ $item['name'] }}_suhu" placeholder="INPUT SUHU (°C)" pattern="\d+(\.\d{1,2})?" title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma" required>
-                        </div>
-                    </td>                    
-                </tr>
-            @endforeach
+    <tr>
+        <th scope="row" class="text-center">{{ $index + 1 }}</th>
+        <td>{{ $item['display'] }}</td>
+        <td class="text-center">
+            <div class="text-center">
+                <select name="kondisi_{{ $item['name'] }}" class="form-select" id="KondisiSelect" contenteditable="true" required>
+                    <option value="" disabled selected>--Kondisi--</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Rusak">Rusak</option>
+                </select>
+            </div>
+        </td>
+        <td class="text-center">
+            @php
+                // Mendapatkan tanggal sekarang
+                $currentDate = now();
+
+                // Menentukan jadwal berdasarkan ac
+                if ($item['name'] == 'ac-01' || $item['name'] == 'ac-02') {
+                    $jadwal = ($currentDate->day <= 15) ? 'Hidup' : 'Mati';
+                } else {
+                    $jadwal = ($currentDate->day > 15) ? 'Hidup' : 'Mati';
+                }
+            @endphp
+            {{ $jadwal }}
+        </td>
+        <td class="text-center">
+            <div class="text-center">
+                <input type="text" class="form-control" name="{{ $item['name'] }}_suhu" placeholder="INPUT SUHU (°C)" pattern="\d+(\.\d{1,2})?" title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma">
+            </div>
+        </td>                    
+    </tr>
+@endforeach
+
             
             </tbody>
           </table>
