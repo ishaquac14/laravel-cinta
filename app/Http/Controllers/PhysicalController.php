@@ -84,6 +84,11 @@ class PhysicalController extends Controller
             $data["hdd_" . ($i)] = $request->input("hdd_" . ($i + 19));
         }
         // dd($data);
+
+        $data['author'] = auth()->user()->name;
+
+        $data['user_id'] = auth()->user()->id;
+
         Physical::create($data);
         
 

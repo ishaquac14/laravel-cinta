@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('physicals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('host3');
             $table->string('storage3');
             

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Database extends Model
+class Gacsirt extends Model
 {
 
     protected $guarded = [];
@@ -36,10 +36,5 @@ class Database extends Model
             // Tampilkan pesan kesalahan jika diperlukan
             dd($th->getMessage());
         }
-    }
-
-    public function users()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

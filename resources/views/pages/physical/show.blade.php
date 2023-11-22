@@ -85,7 +85,7 @@
                 <tr>
                     <td class="text-center">{{ $i + 3 }}</td>
                     <td>Storage 4</td>
-                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
+                    <td class="align-middle text-center">{{ $physical->author }}</td>
                     <td class="text-center">
                         @if ($physical->storage4 == 'OK')
                             <span class="badge bg-success text-white">OK</span>

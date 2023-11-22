@@ -21,7 +21,6 @@
                     <th width="15%">AC Name</th>
                     <th width="15%">Suhu</th>
                     <th width="15%">Kondisi</th>
-                    <th width="15%">Judgment</th>
                     <th>Author</th>
                 </tr>
             </thead>            
@@ -31,19 +30,16 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ strtoupper($item) }}</td>
                         <td class="text-center">{{ $acserver->{$item . '_suhu'} ? $acserver->{$item . '_suhu'} . '°C' : '-' }}</td>
-                        <td>{{ $acserver->{'kondisi_' . $item} }}</td>
-                        <td class="text-center" width="35%">
-                            @if ($acserver->status === 'ok')
-                                <span class="badge bg-success">Ok</span>
-                            @elseif ($acserver->status === 'warning')
-                                <span class="badge bg-warning">Warning</span>
-                            @elseif ($acserver->status === 'not good')
-                                <span class="badge bg-danger">Not Good</span>
+                        <td class="text-center">
+                            @if ($acserver->{'kondisi_' . $item} == 'Normal')
+                            <span class="badge bg-success">Normal</span>
+                            @elseif ($acserver->{'kondisi_' . $item} == 'Rusak')
+                            <span class="badge bg-danger">Rusak</span>
                             @else
-                                {{ $acserver->{$item . '_suhu'} }}
+                            {{ $acserver->{'kondisi_' . $item} }}
                             @endif
                         </td>
-                        <td class="text-center" width="35%">{{ auth()->user()->name }}</td>
+                        <td class="align-middle text-center">{{ $acserver->author }}</td>
                     </tr>
                 @endforeach
             </tbody>

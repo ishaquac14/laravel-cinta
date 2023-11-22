@@ -13,6 +13,7 @@ class CreateDatabasesTable extends Migration
     {
         Schema::create('databases', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('asiic'); 
             $table->string('avicenna'); 
             $table->string('broadcast'); 

@@ -60,7 +60,11 @@ class AcserverController extends Controller
                                 'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'note', 'status'
                                 ]);
         // Menyimpan data ke dalam acserver
-        // dd($data);
+        // dd($data);auth()->user()->name
+        $data['author'] = auth()->user()->name;
+
+        $data['user_id'] = auth()->user()->id;
+
         Acserver::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan

@@ -25,6 +25,7 @@ class DatabaseController extends Controller
         // Menggunakan paginate(10) untuk mendapatkan data paginasi
         $databases = $query->paginate(5);
     
+        // dd($databases);
         // Mengirimkan data ke tampilan
         return view('pages.database.index', compact('databases'));
     }    
@@ -66,6 +67,11 @@ class DatabaseController extends Controller
                                 'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy'
                                 , 'note']);
         // Menyimpan data ke dalam database
+
+        $data['author'] = auth()->user()->name;
+
+        $data['user_id'] = auth()->user()->id;
+
         Database::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan

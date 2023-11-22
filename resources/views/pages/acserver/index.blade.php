@@ -50,7 +50,7 @@
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y') }}</td>
                         <td class="align-middle">{{ empty($acserver->note) ? 'Tidak ada' : $acserver->note }}</td>
-                        <td class="align-middle text-center">{{ auth()->user()->name }}</td>
+                        <td class="align-middle text-center">{{ $acserver->user_id }}</td>
                         <td class="text-center">
                             @if ($acserver->status === 'ok')
                                 <span class="badge bg-success">Ok</span>

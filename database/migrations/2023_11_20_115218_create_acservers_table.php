@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('acservers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('kondisi_ac-01');
             $table->string('kondisi_ac-02');
             $table->string('kondisi_ac-03');

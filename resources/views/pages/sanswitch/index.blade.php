@@ -47,7 +47,7 @@
                     <tr class="table-light"> 
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($sanswitch->created_at)->format('d-m-Y') }}</td>
-                        <td class="align-middle">{{ $sanswitch->author }}</td>
+                        <td class="align-middle text-center">{{ $sanswitch->author }}</td>
                         <td class="align-middle">{{ $sanswitch->note }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">

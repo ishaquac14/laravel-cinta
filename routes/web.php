@@ -7,7 +7,8 @@ use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SanswitchController;
+use App\Http\Controllers\SanswitchController;   
+use App\Http\Controllers\GacsirtController;
 /*  
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,4 +47,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 Route::resource('/dashboard', DashboardController::class);
+
+Route::resource('/gacsirt', GacsirtController::class)->middleware('auth');
+Route::get('/gacsirt/search', 'GacsirtController@index');
 

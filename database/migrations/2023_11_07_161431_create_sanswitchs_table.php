@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sanswitchs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('powerstatus');
             $table->string('notif');
             

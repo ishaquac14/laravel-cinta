@@ -82,6 +82,10 @@ class SanswitchController extends Controller
         for ($i = 0; $i <= 4; $i++) {
             $data["port_{$i}"] = $request->input("port_{$i}");
         }
+
+        $data['author'] = auth()->user()->name;
+
+        $data['user_id'] = auth()->user()->id;
         
         Sanswitch::create($data);
 
