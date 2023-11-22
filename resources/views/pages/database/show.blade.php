@@ -40,7 +40,7 @@
                                 {{ $database["{$item}"] }}
                             @endif
                         </td>
-                        <td class="align-middle text-center">{{ $database->author }}</td>
+                        <td class="align-middle text-center">{{ $database->users->name }}</td>
                     </tr>
                 @endforeach
             </tbody>

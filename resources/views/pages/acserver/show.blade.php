@@ -39,7 +39,7 @@
                             {{ $acserver->{'kondisi_' . $item} }}
                             @endif
                         </td>
-                        <td class="align-middle text-center">{{ $acserver->author }}</td>
+                        <td class="align-middle text-center">{{ $acserver->users->name }}</td>
                     </tr>
                 @endforeach
             </tbody>

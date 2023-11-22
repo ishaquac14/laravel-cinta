@@ -48,7 +48,7 @@
                     <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                     <td class="align-middle text-center">{{ $gacsirt->date }}</td>
                     <td class="align-middle text-center">{{ $gacsirt->status }}</td>
-                    <td class="align-middle text-center">{{ $gacsirt->author }}</td>
+                    <td class="align-middle text-center">{{ $gacsirt->users->name }}</td>
                     <td class="align-middle text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="{{ route('gacsirt.show', $gacsirt->id) }}" class="btn btn-primary">Detail</a>

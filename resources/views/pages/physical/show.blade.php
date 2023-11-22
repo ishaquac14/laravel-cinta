@@ -27,6 +27,7 @@
                 <tr>
                     <td class="text-center">1</td>
                     <td>Host 3</td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td  class="text-center">
                         @if ($physical->host3 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -36,12 +37,11 @@
                             {{ $physical->host3 }}
                         @endif
                     </td>
-                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>  
                 </tr>
                 <tr>
                     <td class="text-center">2</td>
                     <td>Storage 3</td>
-                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical->storage3 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -56,7 +56,7 @@
                     <tr>
                         <td class="text-center">{{ $i + 2 }}</td>
                         <td>HDD{{ $i }}-Str3</td>
-                        <td class="align-middle text-center">{{ auth()->user()->name }}</td>
+                        <td class="align-middle text-center">{{ $physical->users->name }}</td>
                         <td class="text-center">
                             @if ($physical["hdd{$i}"] == 'OK')
                                 <span class="badge bg-success text-white">OK</span>
@@ -71,7 +71,7 @@
                 <tr>
                     <td class="text-center">{{ $i + 2 }}</td>
                     <td>Host 4</td>
-                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical->host4 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -85,7 +85,7 @@
                 <tr>
                     <td class="text-center">{{ $i + 3 }}</td>
                     <td>Storage 4</td>
-                    <td class="align-middle text-center">{{ $physical->author }}</td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical->storage4 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
@@ -100,7 +100,7 @@
                 <tr>
                     <td class="text-center">{{ $i + 23 }}</td>
                     <td>HDD{{ $i }}-Str4</td>
-                    <td class="align-middle text-center">{{ auth()->user()->name }}</td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical["hdd_" . $i] == 'OK')
                             <span class="badge bg-success text-white">OK</span>
