@@ -3,21 +3,21 @@
 @section('body')
 <div class="container">
     <div class="d-flex align-items-center justify-content-between mt-5">
-        <a href="{{ route('gacsirt.index') }}">
+        <a href="{{ route('fujixerox.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
         </a>
         
     <div class="text-center">
-        <h4>CHECKSHEET GACSIRT</h4>
+        <h4>CHECKSHEET PRINTER FUJIXEROX</h4>
     </div>
 
         <div class="d-flex align-items-center">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
-            <a href="{{ route('gacsirt.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create Checksheet</a>
+            <a href="{{ route('fujixerox.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create Checksheet</a>
         </div>
     </div>
     <div class="col-md-3 offset-md-9 mb-3">
-        <form action="/gacsirt" class="d-flex ml-auto mt-2" method="GET">
+        <form action="/fujixerox" class="d-flex ml-auto mt-2" method="GET">
             <input class="form-control me-2" type="search" name="search" placeholder="Search">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
@@ -39,19 +39,19 @@
                 </tr>
             </thead>
             <tbody>
-                @if($gacsirts->count() > 0)
+                @if($fujixeroxs->count() > 0)
                 @php
-                $baseNumber = ($gacsirts->currentPage() - 1) * $gacsirts->perPage() + 1;
+                $baseNumber = ($fujixeroxs->currentPage() - 1) * $fujixeroxs->perPage() + 1;
                 @endphp
-                @foreach ($gacsirts as $gacsirt)
+                @foreach ($fujixeroxs as $fujixerox)
                 <tr class="table-light"> 
                     <td class="align-middle text-center">{{ $baseNumber++ }}</td>
-                    <td class="align-middle text-center">{{ $gacsirt->date }}</td>
-                    <td class="align-middle text-center">{{ $gacsirt->status }}</td>
-                    <td class="align-middle text-center">{{ $gacsirt->users->name }}</td>
+                    <td class="align-middle text-center">{{ $fujixerox->date }}</td>
+                    <td class="align-middle text-center">{{ $fujixerox->status }}</td>
+                    <td class="align-middle text-center">{{ $fujixerox->users->name }}</td>
                     <td class="align-middle text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{{ route('gacsirt.show', $gacsirt->id) }}" class="btn btn-primary">Detail</a>
+                            <a href="{{ route('fujixerox.show', $fujixerox->id) }}" class="btn btn-primary">Detail</a>
                         </div>
                     </td>
                 </tr>
@@ -63,7 +63,7 @@
                 @endif
             </tbody>
         </table>
-        @include('layouts.pagination-gacsirt', ['gacsirts' => $gacsirts])
+        @include('layouts.pagination-fujixerox', ['fujixeroxs' => $fujixeroxs])
     </div>
 </div>
 @endsection

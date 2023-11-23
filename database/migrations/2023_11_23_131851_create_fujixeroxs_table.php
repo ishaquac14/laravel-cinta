@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fujixeroxes', function (Blueprint $table) {
+        Schema::create('fujixeroxs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('date'); 
+            $table->string('timedown'); 
+            $table->string('timeon');
+            $table->string('note')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fujixeroxes');
+        Schema::dropIfExists('fujixeroxs');
     }
 };

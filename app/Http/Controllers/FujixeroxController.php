@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fujixerox;
-use App\Http\Requests\StoreFujixeroxRequest;
-use App\Http\Requests\UpdateFujixeroxRequest;
+use Illuminate\Http\Request;
 
 class FujixeroxController extends Controller
 {
@@ -36,46 +35,64 @@ class FujixeroxController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.fujixerox.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFujixeroxRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'date' => 'required',
+            'timedown' => 'required',
+            'timeon' => 'required',
+            'note' => 'nullable',
+            'status' => 'required',
+        ]);
+
+        $data = $request->only(['date', 'timedown', 'timeon', 'note', 'status'
+                                ]);
+
+        $data['author'] = auth()->user()->name;
+
+        $data['user_id'] = auth()->user()->id;
+                        
+        Fujixerox::create($data);
+
+        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil disimpan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Fujixerox $fujixerox)
+    public function show($id)
     {
-        //
+        $fujixerox = Fujixerox::findOrFail($id);
+        return view('pages.fujixerox.show', compact('fujixerox'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Fujixerox $fujixerox)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  */
+    // public function edit(Fujixerox $fujixerox)
+    // {
+    //     //
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFujixeroxRequest $request, Fujixerox $fujixerox)
-    {
-        //
-    }
+    // /**
+    //  * Update the specified resource in storage.
+    //  */
+    // public function update(UpdateFujixeroxRequest $request, Fujixerox $fujixerox)
+    // {
+    //     //
+    // }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Fujixerox $fujixerox)
-    {
-        //
-    }
+    // /**
+    //  * Remove the specified resource from storage.
+    //  */
+    // public function destroy(Fujixerox $fujixerox)
+    // {
+    //     //
+    // }
 }

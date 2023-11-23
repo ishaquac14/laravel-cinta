@@ -63,7 +63,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2" href="#">
+            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('fujixerox.index') }}">
               <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
               Printer Fujixerox
             </a>
@@ -74,31 +74,7 @@
               Sanswitch
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2" href="#">
-              <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
-              Safe Stock Device
-            </a>
-          </li>
-          </ul>
-
-        <br>
-        <hr class="my-3">
-
-        <ul class="nav flex-column mb-auto">
-          <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2" href="#">
-              <svg class="bi"><use xlink:href="#gear-wide-connected"/></svg>
-              Settings
-            </a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link d-flex align-items-center gap-2" href="#">
-              <svg class="bi"><use xlink:href="#door-closed"/></svg>
-              Logout
-            </a>
-          </li><br><br><br>
-        </ul>
+          </ul><br><br><br><br><br><br><br><br><br><br>
       </div>
     </div>
   </div>

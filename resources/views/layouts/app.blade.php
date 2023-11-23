@@ -134,11 +134,13 @@
  
   @auth
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle px-4 col-md-3 col-lg-2 me-0 text-center" style="color: white; text-decoration-color: ghostwhite" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Welcome Back, {{ auth()->user()->name }}
-    </a>
+    <div class="mt-0 mb-2">
+      <a class="nav-link dropdown-toggle px-4 col-md-3 col-lg-2 me-0 text-center" style="color: white; text-decoration-color: ghostwhite" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Welcome Back, {{ auth()->user()->name }}
+      </a>
+    <div>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+        {{-- <li><a class="dropdown-item" href="#">My Dashboard</a></li> --}}
         <li><hr class="dropdown-divider"></li>
         <form action="/logout" method="post">
           @csrf

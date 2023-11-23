@@ -3,7 +3,7 @@
 @section('body')
 <div class="container">
     <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
-        <a href="{{ route('gacsirt.index') }}">
+        <a href="{{ route('fujixerox.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
@@ -14,17 +14,15 @@
     </div>
     <hr>
     
-    <form action="{{ route('gacsirt.store') }}" method="POST">
+    <form action="{{ route('fujixerox.store') }}" method="POST">
         @csrf
         <table class="table table-striped table-bordered">
             <thead class="table-primary text-center">
               <tr>
                 <th width="4%" scope="col">Date</th>
-                <th scope="col">Total Incoming CSIRT</th>
-                <th scope="col">Incoming CSIRT Number</th>
-                <th scope="col">Total Completed CSIRT</th>
-                <th scope="col">Completed CSIRT Number</th>
-                <th scope="col">Status</th>
+                <th scope="col">Waktu Shutdown</th>
+                <th scope="col">Waktu Turn On</th>
+                <th scope="col">Status Printer</th>
               </tr>
             </thead>
             <tbody>
@@ -36,31 +34,20 @@
                 </td>
                 <td>
                     <div>
-                        <input type="number" class="form-control" name="tincoming" placeholder="TOTAL INCOMING">
-                    </div>  
-                </td>
-                <td>
-                    <div>
-                        <input type="text" class="form-control" name="incoming" placeholder="INCOMING NUMBER">
+                        <input type="text" class="form-control text-center" name="timedown" placeholder="HH : MM" pattern="(?:[01]\d|2[0123]):[0-5]\d" title="Masukkan format waktu yang benar (00:00 - 23:59)" required>
                     </div>
                 </td>
                 <td>
                     <div>
-                        <input type="number" class="form-control" name="tcompleted" placeholder="TOTAL COMPLETED">
-                    </div>
+                        <input type="text" class="form-control text-center" name="timeon" placeholder="HH : MM" pattern="(?:[01]\d|2[0123]):[0-5]\d" title="Masukkan format waktu yang benar (00:00 - 23:59)" required>
+                    </div>                                        
                 </td>
                 <td>
                     <div>
-                        <input type="text" class="form-control" name="completed" placeholder="COMPLETED NUMBER">
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <select name="status" class="form-select" id="StatusSelect" contenteditable="true" required>
-                            <option value="" disabled selected>--Status--</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Progress">Progress</option>
-                            <option value="Tidak Ada">Tidak Ada</option>
+                        <select name="status" class="form-select text-center" id="StatusSelect" contenteditable="true" required>
+                            <option value="" disabled selected>--- Status Printer ---</option>
+                            <option value="Ok">Ok</option>
+                            <option value="Not Good">Not Good</option>
                         </select>
                     </div>
                 </td>
