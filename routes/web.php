@@ -9,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SanswitchController;   
 use App\Http\Controllers\GacsirtController;
+use App\Http\Controllers\FujixeroxController;
 /*  
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,4 +51,7 @@ Route::resource('/dashboard', DashboardController::class);
 
 Route::resource('/gacsirt', GacsirtController::class)->middleware('auth');
 Route::get('/gacsirt/search', 'GacsirtController@index');
+
+Route::resource('/fujixerox', FujixeroxController::class)->middleware('auth');
+Route::get('/fujixerox/search', 'FujixeroxController@index');
 

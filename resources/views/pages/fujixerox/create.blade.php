@@ -10,7 +10,7 @@
     </div>
     <div class="mb-3">
 
-        <h4>C/S MONITORING GA-CSIRT</h4>
+        <h4>C/S PRINTER FUJIXEROX</h4>
     </div>
     <hr>
     
