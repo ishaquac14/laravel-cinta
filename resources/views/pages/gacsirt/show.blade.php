@@ -38,7 +38,7 @@
                                 {{ $gacsirt->status ?? '-' }}
                             @endif
                         </td>
-                        <td class="align-middle text-center">{{ $gacsirt->author }}</td>
+                        <td class="align-middle text-center">{{ $gacsirt->users->name }}</td>
                     </tr>
             </tbody>
         </table>

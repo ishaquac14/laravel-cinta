@@ -27,89 +27,89 @@
                 <tr>
                     <td class="text-center">1</td>
                     <td>Host 3</td>
-                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td  class="text-center">
                         @if ($physical->host3 == 'OK')
                             <span class="badge bg-success text-white">OK</span>
                         @elseif ($physical->host3 == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $physical->host3 }}
                         @endif
                     </td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                 </tr>
                 <tr>
                     <td class="text-center">2</td>
                     <td>Storage 3</td>
-                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical->storage3 == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($physical->storage3 == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $physical->storage3 }}
                         @endif
                     </td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                 </tr>
                 @for ($i = 1; $i <= 19; $i++)
                     <tr>
                         <td class="text-center">{{ $i + 2 }}</td>
                         <td>HDD{{ $i }}-Str3</td>
-                        <td class="align-middle text-center">{{ $physical->users->name }}</td>
                         <td class="text-center">
                             @if ($physical["hdd{$i}"] == 'OK')
-                                <span class="badge bg-success text-white">OK</span>
+                                <span class="badge bg-success text-white">Ok</span>
                             @elseif ($physical["hdd{$i}"] == 'NG')
-                                <span class="badge bg-danger text-white">NG</span>
+                                <span class="badge bg-danger text-white">Not Good</span>
                             @else
                                 {{ $physical["hdd{$i}"] }}
                             @endif
                         </td>
+                        <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     </tr>
                 @endfor
                 <tr>
                     <td class="text-center">{{ $i + 2 }}</td>
                     <td>Host 4</td>
-                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical->host4 == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($physical->host4 == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $physical->host4 }}
                         @endif
                     </td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                 </tr>
                 <tr>
                     <td class="text-center">{{ $i + 3 }}</td>
                     <td>Storage 4</td>
-                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical->storage4 == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($physical->storage4 == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $physical->storage4 }}
                         @endif
                     </td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                 </tr>
                 @for ($i = 1; $i <= 10; $i++)
                 <tr>
                     <td class="text-center">{{ $i + 23 }}</td>
                     <td>HDD{{ $i }}-Str4</td>
-                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                     <td class="text-center">
                         @if ($physical["hdd_" . $i] == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($physical["hdd_" . $i] == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $physical["hdd_" . $i] }}
                         @endif
                     </td>
+                    <td class="align-middle text-center">{{ $physical->users->name }}</td>
                 </tr>
                 @endfor
             </tbody>

@@ -32,29 +32,28 @@
                     <td>Power Status</td>
                     <td class="text-center">
                         @if ($sanswitch->powerstatus == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($sanswitch->powerstatus == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $sanswitch->powerstatus }}
                         @endif
                     </td>
-                    <td>Processed</td>
+                    <td class="text-center">{{ $sanswitch->users->name }}</td>
                 </tr>
                 <tr>
                     <td class="text-center">2</td>
-                    
                     <td>Notification Status</td>
                     <td class="text-center">
                         @if ($sanswitch->notif == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($sanswitch->notif == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $sanswitch->notif }}
                         @endif
                     </td>
-                    <td>Processed</td>
+                    <td class="text-center">{{ $sanswitch->users->name }}</td>
                 </tr>
                 @for ($i = 0; $i <= 3; $i++)
                     <tr>
@@ -63,46 +62,44 @@
                         <td>Port-{{ $i }}</td>
                         <td class="text-center">
                             @if ($sanswitch["port{$i}"] == 'OK')
-                                <span class="badge bg-success text-white">OK</span>
+                                <span class="badge bg-success text-white">Ok</span>
                             @elseif ($sanswitch["port{$i}"] == 'NG')
-                                <span class="badge bg-danger text-white">NG</span>
+                                <span class="badge bg-danger text-white">Not Good</span>
                             @else
                                 {{ $sanswitch["port{$i}"] }}
                             @endif
                         </td>
-                        <td>Processed</td>
+                        <td class="text-center">{{ $sanswitch->users->name }}</td>
                     </tr>
                 @endfor
                 <tr>
                     <td class="text-center">7</td>
-                    
                     <td rowspan="7" style="vertical-align: middle; text-align: center;">DELL SAN-SW-02</td>
                     <td>Power Status</td>
                     <td class="text-center">
                         @if ($sanswitch->powerstatus_ == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($sanswitch->powerstatus_ == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $sanswitch->powerstatus_ }}
                         @endif
                     </td>
-                    <td>Processed</td>
+                    <td class="text-center">{{ $sanswitch->users->name }}</td>
                 </tr>
                 <tr>
                     <td class="text-center">8</td>
-                    
                     <td>Notification Status</td>
                     <td class="text-center">
                         @if ($sanswitch->notif_ == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($sanswitch->notif_ == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $sanswitch->notif_ }}
                         @endif
                     </td>
-                    <td>Processed</td>
+                    <td class="text-center">{{ $sanswitch->users->name }}</td>
                 </tr>
                 @for ($i = 0; $i <= 4; $i++)
                 <tr>
@@ -110,22 +107,21 @@
                     <td>Port-{{ $i }}</td>
                     <td class="text-center">
                         @if ($sanswitch["port_{$i}"] == 'OK')
-                            <span class="badge bg-success text-white">OK</span>
+                            <span class="badge bg-success text-white">Ok</span>
                         @elseif ($sanswitch["port_{$i}"] == 'NG')
-                            <span class="badge bg-danger text-white">NG</span>
+                            <span class="badge bg-danger text-white">Not Good</span>
                         @else
                             {{ $sanswitch["port_{$i}"] }}
                         @endif
                     </td>
-                    <td>Processed</td>
+                    <td class="text-center">{{ $sanswitch->users->name }}</td>
                 </tr>
                 @endfor
             </tbody>
         </table>
-        <div class="row mt-4">
-            <div class="col-md-12 mb-5">
-                <textarea class="form-control" name="note" rows="{{ substr_count($sanswitch->note, "\n") + 5 }}" readonly>{{ $sanswitch->note }}</textarea>
-            </div>
+        <div class="col-md-12 mb-5">
+            <p>Note :</p>
+            <textarea class="form-control" name="note" rows="{{ substr_count($sanswitch->note, "\n") + 5 }}" readonly>{{ $sanswitch->note ?? 'Tidak ada' }}</textarea>
         </div>
     </div>
 </div>

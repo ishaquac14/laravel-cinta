@@ -11,6 +11,8 @@ class Fujixerox extends Model
 {
     protected $guarded = [];
 
+    protected $table = 'fujixeroxs';
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

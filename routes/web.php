@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SanswitchController;   
 use App\Http\Controllers\GacsirtController;
 use App\Http\Controllers\FujixeroxController;
+use App\Http\Controllers\MointernetController;
 /*  
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,6 +52,9 @@ Route::resource('/dashboard', DashboardController::class);
 
 Route::resource('/gacsirt', GacsirtController::class)->middleware('auth');
 Route::get('/gacsirt/search', 'GacsirtController@index');
+
+Route::resource('/mointernet', MointernetController::class)->middleware('auth');
+Route::get('/mointernet/search', 'MointernetController@index');
 
 Route::resource('/fujixerox', FujixeroxController::class)->middleware('auth');
 Route::get('/fujixerox/search', 'FujixeroxController@index');

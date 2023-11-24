@@ -47,8 +47,8 @@
                     <tr class="table-light"> 
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($sanswitch->created_at)->format('d-m-Y') }}</td>
-                        <td class="align-middle text-center">{{ $sanswitch->author }}</td>
-                        <td class="align-middle">{{ $sanswitch->note }}</td>
+                        <td class="align-middle text-center">{{ $sanswitch->users->name }}</td>
+                        <td class="align-middle">{{ empty($sanswitch->note) ? 'Tidak ada' : $sanswitch->note }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('sanswitch.show', $sanswitch->id) }}" class="btn btn-primary">Detail</a>
