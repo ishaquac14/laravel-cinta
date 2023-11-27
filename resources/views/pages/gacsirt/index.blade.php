@@ -47,7 +47,17 @@
                 <tr class="table-light"> 
                     <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                     <td class="align-middle text-center">{{ $gacsirt->date }}</td>
-                    <td class="align-middle text-center">{{ $gacsirt->status }}</td>
+                    <td class="align-middle text-center">
+                        @if ($gacsirt->status === 'Completed')
+                                <span class="badge bg-success">Completed</span>
+                            @elseif ($gacsirt->status === 'Progress')
+                                <span class="badge bg-primary">Progress</span>
+                            @elseif ($gacsirt->status === 'not good')
+                                <span class="badge bg-secondary">Tidak ada</span>
+                            @else
+                                {{ $gacsirt["{$item}"] }}
+                        @endif
+                    </td>
                     <td class="align-middle text-center">{{ $gacsirt->users->name }}</td>
                     <td class="align-middle text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">

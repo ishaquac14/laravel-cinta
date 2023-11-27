@@ -21,8 +21,8 @@
                 <th width="4%" scope="col">No</th>
                 <th scope="col">Application Name</th>
                 <th scope="col">Server</th>
-                <th width="25%" scope="col">OK (Green)</th>
-                <th width="25%" scope="col">Not Good (Orange)</th>
+                <th width="25%" scope="col">Succes</th>
+                <th width="25%" scope="col">Error</th>
               </tr>
             </thead>
             <tbody>
