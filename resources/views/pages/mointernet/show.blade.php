@@ -10,14 +10,13 @@
         </a>
     </div>
     <div class="mb-2">
-        <h4>DETAIL C/S GA-CSIRT ({{ \Carbon\Carbon::parse($mointernet->created_at)->format('d-m-Y H:i:s') }})</h4>
+        <h4>DETAIL C/S MONITORING INTERNET ({{ \Carbon\Carbon::parse($mointernet->created_at)->format('d-m-Y H:i:s') }})</h4>
     </div>    
     <hr>
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="table-primary text-center">
                 <tr>
-                    <th>Start</th>
                     <th>Date</th>
                     <th width="15%">Start Time</th>
                     <th width="15%">End Time</th>
@@ -27,27 +26,16 @@
             <tbody>
                     <tr>
                         <td class="text-center">{{ $mointernet->date}}</td>
-                        <td class="text-center">{{ $mointernet->start_time}}</td>
-                        <td class="text-center">{{ $mointernet->end_time}}</td>
-                        <td class="text-center">
-                            @if ($mointernet->status === 'Completed')
-                                <span class="badge bg-success">Completed</span>
-                            @elseif ($mointernet->status === 'Progress')
-                                <span class="badge bg-primary">Progress</span>
-                            @elseif ($mointernet->status === 'Tidak Ada')
-                                <span>-</span>
-                            @else
-                                {{ $mointernet->status ?? '-' }}
-                            @endif
-                        </td>
+                        <td class="text-center">{{ $mointernet->start_time ?: '-' }}</td>
+                        <td class="text-center">{{ $mointernet->end_time ?: '-' }}</td>
                         <td class="align-middle text-center">{{ $mointernet->users->name }}</td>
                     </tr>
             </tbody>
         </table>
         <div class="row mt-4">
             <div class="col-md-12 mb-5">
-                <p>Note :</p>
-                <textarea class="form-control" name="note" rows="{{ substr_count($mointernet->note, "\n") + 5 }}" readonly>{{ $mointernet->note ?? 'Tidak ada' }}</textarea>
+                <p>Root Cause :</p>
+                <textarea class="form-control" name="root_cause" rows="{{ substr_count($mointernet->root_cause, "\n") + 5 }}" readonly>{{ $mointernet->root_cause ?: 'Tidak Ada' }}</textarea>
             </div>
         </div>
     </div>

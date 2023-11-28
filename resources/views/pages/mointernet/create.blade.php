@@ -3,7 +3,7 @@
 @section('body')
 <div class="container">
     <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
-        <a href="{{ route('gacsirt.index') }}">
+        <a href="{{ route('mointernet.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
@@ -14,7 +14,7 @@
     </div>
     <hr>
     
-    <form action="{{ route('gacsirt.store') }}" method="POST">
+    <form action="{{ route('mointernet.store') }}" method="POST">
         @csrf
         <table class="table table-striped table-bordered">
             <thead class="table-primary text-center">
@@ -29,22 +29,22 @@
             <tr>
                 <td>
                     <div>
-                        <input type="date" class="form-control" name="date" placeholder="INPUT TANGGAL" required>
+                        <input type="date" class="form-control text-center" name="date" placeholder="INPUT TANGGAL" required>
                     </div>
                 </td>
                 <td>
                     <div>
-                        <input type="text" class="form-control" name="start_time" placeholder="START TIME">
+                        <input type="text" class="form-control text-center" name="start_time" placeholder="HH : MM">
                     </div>  
                 </td>
                 <td>
                     <div>
-                        <input type="text" class="form-control" name="end_time" placeholder="END TIME">
+                        <input type="text" class="form-control text-center" name="end_time" placeholder="HH : MM">
                     </div>
                 </td>
                 <td>
                     <div>
-                        <input type="text" class="form-control" name="root_cause" placeholder="ROOT CAUSE">
+                        <input type="text" class="form-control text-center" name="root_cause" placeholder="ROOT CAUSE">
                     </div>
                 </td>
             </tr>

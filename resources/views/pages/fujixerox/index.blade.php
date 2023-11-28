@@ -47,7 +47,15 @@
                 <tr class="table-light"> 
                     <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                     <td class="align-middle text-center">{{ $fujixerox->date }}</td>
-                    <td class="align-middle text-center">{{ $fujixerox->status }}</td>
+                    <td class="align-middle text-center">
+                        @if ($fujixerox->status === 'Ok')
+                        <span class="badge bg-success">Ok</span>
+                        @elseif ($fujixerox->status === 'Not Good')
+                            <span class="badge bg-danger">Not Good</span>
+                        @else
+                            {{ $fujixerox->status }}
+                        @endif
+                    </td>
                     <td class="align-middle text-center">{{ $fujixerox->users->name }}</td>
                     <td class="align-middle text-center">
                         <div class="btn-group" role="group" aria-label="Basic example">

@@ -17,28 +17,26 @@
         <table class="table table-bordered table-striped">
             <thead class="table-primary text-center">
                 <tr>
-                    <th>Incoming Number</th>
-                    <th width="15%">Completed Number</th>
+                    <th>Waktu Shutdown</th>
+                    <th width="15%">Waktu Turn On</th>
                     <th>Status</th>
                     <th>Author</th>
                 </tr>
             </thead>            
             <tbody>
                     <tr>
-                        <td class="text-center">{{ $fujixerox->incoming ?? '-'}}</td>
-                        <td class="text-center">{{ $fujixerox->completed ?? '-'}}</td>
+                        <td class="text-center">{{ $fujixerox->timedown }}</td>
+                        <td class="text-center">{{ $fujixerox->timeon }}</td>
                         <td class="text-center">
-                            @if ($fujixerox->status === 'Completed')
-                                <span class="badge bg-success">Completed</span>
-                            @elseif ($fujixerox->status === 'Progress')
-                                <span class="badge bg-primary">Progress</span>
-                            @elseif ($fujixerox->status === 'Tidak Ada')
-                                <span>-</span>
+                            @if ($fujixerox->status === 'Ok')
+                                <span class="badge bg-success">Ok</span>
+                            @elseif ($fujixerox->status === 'Not Good')
+                                <span class="badge bg-danger">Not Good</span>
                             @else
-                                {{ $fujixerox->status ?? '-' }}
+                                {{ $fujixerox->status }}
                             @endif
                         </td>
-                        <td class="align-middle text-center">{{ $fujixerox->author }}</td>
+                        <td class="align-middle text-center">{{ $fujixerox->users->name }}</td>
                     </tr>
             </tbody>
         </table>

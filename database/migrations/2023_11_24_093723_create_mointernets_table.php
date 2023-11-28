@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('date'); 
             $table->string('start_time'); 
             $table->string('end_time'); 
-            $table->string('root_cause'); 
-            $table->string('note'); 
+            $table->text('root_cause'); 
             $table->timestamps();
         });
     }
