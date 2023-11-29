@@ -31,13 +31,13 @@
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="host3" id="host3ok" value="OK" required>
-                        <label class="form-check-label" for="host3ok">OK</label>
+                        <label class="form-check-label" for="host3ok">Ok</label>
                     </div>
                 </td>
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="host3" id="host3ng" value="NG" required>
-                        <label class="form-check-label" for="host3ng">NG</label>
+                        <label class="form-check-label" for="host3ng">Not Good</label>
                     </div>
                 </td>
               </tr>
@@ -47,13 +47,13 @@
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="storage3" id="storage3ok" value="OK" required>
-                        <label class="form-check-label" for="storage3ok">OK</label>
+                        <label class="form-check-label" for="storage3ok">Ok</label>
                     </div>
                 </td>
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="storage3" id="storage3ng" value="NG" required>
-                        <label class="form-check-label" for="storage3ng">NG</label>
+                        <label class="form-check-label" for="storage3ng">Not Good</label>
                     </div>
                 </td>
               </tr>
@@ -64,13 +64,13 @@
                         <td class="text-center">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hdd<?php echo $i; ?>" id="hdd<?php echo $i; ?>ok" value="OK" required>
-                                <label class="form-check-label" for="hdd<?php echo $i; ?>ok">OK</label>
+                                <label class="form-check-label" for="hdd<?php echo $i; ?>ok">Ok</label>
                             </div>
                         </td>
                         <td class="text-center">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hdd<?php echo $i; ?>" id="hdd<?php echo $i; ?>ng" value="NG" required>
-                                <label class="form-check-label" for="hdd<?php echo $i; ?>ng">NG</label>
+                                <label class="form-check-label" for="hdd<?php echo $i; ?>ng">Not Good</label>
                             </div>
                         </td>
                     </tr>
@@ -82,13 +82,13 @@
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="host4" id="host4ok" value="OK" required>
-                            <label class="form-check-label" for="host4ok">OK</label>
+                            <label class="form-check-label" for="host4ok">Ok</label>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="host4" id="host4ng" value="NG" required>
-                            <label class="form-check-label" for="host4ng">NG</label>
+                            <label class="form-check-label" for="host4ng">Not Good</label>
                         </div>
                     </td>
                 </tr>
@@ -98,13 +98,13 @@
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="storage4" id="storage4ok" value="OK" required>
-                            <label class="form-check-label" for="storage4ok">OK</label>
+                            <label class="form-check-label" for="storage4ok">Ok</label>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="storage4" id="storage4ng" value="NG" required>
-                            <label class="form-check-label" for="storage4ng">NG</label>
+                            <label class="form-check-label" for="storage4ng">Not Good</label>
                         </div>
                     </td>
                 </tr>
@@ -115,13 +115,13 @@
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="hdd_<?php echo $i + 19; ?>" id="hdd_<?php echo $i + 19; ?>ok" value="OK" required>
-                            <label class="form-check-label" for="hdd_<?php echo $i + 19; ?>ok">OK</label>
+                            <label class="form-check-label" for="hdd_<?php echo $i + 19; ?>ok">Ok</label>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="hdd_<?php echo $i + 19; ?>" id="hdd_<?php echo $i + 19; ?>ng" value="NG" required>
-                            <label class="form-check-label" for="hdd_<?php echo $i + 19; ?>ng">NG</label>
+                            <label class="form-check-label" for="hdd_<?php echo $i + 19; ?>ng">Not Good</label>
                         </div>
                     </td>
                 </tr>

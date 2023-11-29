@@ -11,6 +11,7 @@ use App\Http\Controllers\SanswitchController;
 use App\Http\Controllers\GacsirtController;
 use App\Http\Controllers\FujixeroxController;
 use App\Http\Controllers\MointernetController;
+use App\Http\Controllers\CctvController;
 /*  
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,4 +59,7 @@ Route::get('/mointernet/search', 'MointernetController@index');
 
 Route::resource('/fujixerox', FujixeroxController::class)->middleware('auth');
 Route::get('/fujixerox/search', 'FujixeroxController@index');
+
+Route::resource('/cctv', CctvController::class)->middleware('auth');
+Route::get('/cctv/search', 'CctvController@index');
 
