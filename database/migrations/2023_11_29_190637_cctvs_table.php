@@ -13,7 +13,21 @@ return new class extends Migration
     {
         Schema::create('cctvs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+
+            for ($i = 1; $i <= 3; $i++) {
+                $columnName = "cam{$i}";
+                $table->string($columnName);
+            }
+            
+            for ($i = 1; $i <= 3; $i++) {
+                $columnName = "kondisi_cam{$i}";
+                $table->string($columnName)->nullable();
+            }
+
+            $table->string('note')->nullable();
             $table->timestamps();
+
         });
     }
 

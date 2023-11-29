@@ -24,7 +24,7 @@ use App\Http\Controllers\CctvController;
 */
 
 Route::get('/', function () {
-    return view('dashboard.index');
+    return view('/login/index');
 });
 
 Route::resource('/physical', PhysicalController::class)->middleware('auth');
@@ -49,7 +49,7 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
-Route::resource('/dashboard', DashboardController::class);
+Route::resource('/dashboard', DashboardController::class)->middleware('auth');
 
 Route::resource('/gacsirt', GacsirtController::class)->middleware('auth');
 Route::get('/gacsirt/search', 'GacsirtController@index');

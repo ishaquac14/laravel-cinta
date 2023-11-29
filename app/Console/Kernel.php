@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('mointernet:create')->dailyAt('00:01');
-        $schedule->command('mointernet:create')->everyMinute();
+        $schedule->command('mointernet:create')->daily()->hourly();
     }
 
     /**

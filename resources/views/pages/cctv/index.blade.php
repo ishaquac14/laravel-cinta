@@ -3,21 +3,21 @@
 @section('body')
 <div class="container">
         <div class="d-flex align-items-center justify-content-between mt-5">
-            <a href="{{ route('physical.index') }}">
+            <a href="{{ route('cctv.index') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
         
             <div class="text-center">
-                <h4>CHECKSHEET PHYSICAL SERVER</h4>
+                <h4>CHECKSHEET MONITORING CCTV</h4>
             </div>        
 
             <div class="d-flex align-items-center">
                 <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
-                <a href="{{ route('physical.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create Checksheet</a>
+                <a href="{{ route('cctv.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create Checksheet</a>
             </div>
         </div>
         <div class="col-md-3 offset-md-9 mb-3">
-            <form action="/physical" class="d-flex ml-auto mt-2" method="GET">
+            <form action="/cctv" class="d-flex ml-auto mt-2" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
@@ -39,19 +39,19 @@
                 </tr>
             </thead>
             <tbody>
-                @if($physicals->count() > 0)
+                @if($cctvs->count() > 0)
                 @php
-                    $baseNumber = ($physicals->currentPage() - 1) * $physicals->perPage() + 1;
+                    $baseNumber = ($cctvs->currentPage() - 1) * $cctvs->perPage() + 1;
                 @endphp
-                @foreach ($physicals as $physical)
+                @foreach ($cctvs as $cctv)
                     <tr class="table-light"> 
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
-                        <td class="align-middle text-center">{{ \Carbon\Carbon::parse($physical->created_at)->format('d-m-Y') }}</td>
-                        <td class="align-middle">{{ empty($physical->note) ? 'Tidak ada' : $physical->note }}</td>
-                        <td class="align-middle text-center">{{ $physical->users->name }}</td>
+                        <td class="align-middle text-center">{{ \Carbon\Carbon::parse($cctv->created_at)->format('d-m-Y') }}</td>
+                        <td class="align-middle">{{ empty($cctv->note) ? 'Tidak ada' : $cctv->note }}</td>
+                        <td class="align-middle text-center">{{ $cctv->users->name }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ route('physical.show', $physical->id) }}" class="btn btn-primary">Detail</a>
+                                <a href="{{ route('cctv.show', $cctv->id) }}" class="btn btn-primary">Detail</a>
                             </div>
                         </td>
                     </tr>
@@ -63,7 +63,7 @@
                 @endif
             </tbody>
         </table>
-        @include('layouts.pagination-physical', ['physicals' => $physicals])
+        @include('layouts.pagination-cctv', ['cctvs' => $cctvs])
     </div>
 </div>
 @endsection

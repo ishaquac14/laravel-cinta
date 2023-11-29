@@ -16,7 +16,7 @@
             <a href="{{ route('acserver.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create Checksheet</a>
         </div>
     </div>
-    <div class="col-md-3 offset-md-9 mb-3">
+    <div class="col-sm-3 offset-sm-9 mb-3">
         <form action="/acserver" class="d-flex ml-auto mt-2" method="GET">
             <input class="form-control me-2" type="search" name="search" placeholder="Search">
             <button class="btn btn-success" type="submit">Search</button>
