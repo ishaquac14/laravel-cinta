@@ -69,18 +69,39 @@
     <canvas id="myChart"></canvas>
 </div>
 
-<!-- Skrip Chart.js dan konfigurasi grafik -->
-<!-- Skrip Chart.js dan konfigurasi grafik -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Tambahkan jQuery -->
+
 <script>
+    // Fungsi untuk memuat data dari server
+    function loadData() {
+        $.ajax({
+            url: '/api/chart-data', // Gantilah dengan URL endpoint Anda
+            method: 'GET',
+            success: function (data) {
+                updateChart(data.labels, data.percentages);
+            },
+            error: function (error) {
+                console.error('Error loading data:', error);
+            }
+        });
+    }
+
+    // Fungsi untuk memperbarui grafik dengan data baru
+    function updateChart(labels, percentages) {
+        myChart.data.labels = labels;
+        myChart.data.datasets[0].data = percentages;
+        myChart.update();
+    }
+
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Persentase Selama Sebulan'],
+            labels: [], // Awalnya kosong, akan diisi oleh data dari server
             datasets: [{
                 label: 'Persentase',
-                data: [{{ $averagePercentage }}], // Ini adalah tempat di mana Anda harus menyampaikan data aktual Anda
+                data: [],
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
@@ -95,7 +116,11 @@
             }
         }
     });
-</script>
 
+    // Panggil fungsi loadData setiap 24 jam
+    setInterval(loadData, 24 * 60 * 60 * 1000); // 24 jam * 60 menit * 60 detik * 1000 milidetik
+    // Pertama kali panggil loadData saat halaman dimuat
+    loadData();
+</script>
 
 @endsection

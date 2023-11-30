@@ -12,6 +12,7 @@ use App\Http\Controllers\GacsirtController;
 use App\Http\Controllers\FujixeroxController;
 use App\Http\Controllers\MointernetController;
 use App\Http\Controllers\CctvController;
+use App\Http\Controllers\TapedriveController;
 /*  
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,3 +64,11 @@ Route::get('/fujixerox/search', 'FujixeroxController@index');
 Route::resource('/cctv', CctvController::class)->middleware('auth');
 Route::get('/cctv/search', 'CctvController@index');
 
+Route::resource('/tapedrive', TapedriveController::class)->middleware('auth');
+Route::get('/tapedrive/search', 'TapedriveController@index');
+
+Route::get('/chart-data', [MointernetController::class, 'getChartData']);
+
+Route::prefix('api')->group(function () {
+    Route::get('/chart-data', [MointernetController::class, 'getChartData']);
+});

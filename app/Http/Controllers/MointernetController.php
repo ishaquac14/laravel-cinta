@@ -88,13 +88,27 @@ private function calculateDuration($startTime, $endTime)
 
 private function updatePercentage()
 {
-    $totalEntries = Mointernet::count();
-    $percentage = ($totalEntries > 0) ? ($totalEntries - 1) / $totalEntries * 100 : 100;
+    $startDate = Carbon::now()->subMonth(); // Ambil tanggal satu bulan yang lalu dari sekarang
+    $totalEntries = Mointernet::where('created_at', '>=', $startDate)->count();
+    $percentage = ($totalEntries > 0) ? $totalEntries / max(1, Mointernet::count()) * 100 : 0;
 
     // Perbarui kolom persentase pada data yang baru saja dibuat
     Mointernet::latest()->first()->update(['percentage' => $percentage]);
 }
 
+public function getChartData()
+{
+    $startDate = now()->subMonth();
+    $data = Mointernet::where('created_at', '>=', $startDate)->get();
+
+    $labels = $data->pluck('created_at')->map(function ($date) {
+        return Carbon::parse($date)->format('M Y');
+    });
+
+    $percentages = $data->pluck('percentage');
+
+    return response()->json(['labels' => $labels, 'percentages' => $percentages]);
+}
 
 
     public function show($id)
