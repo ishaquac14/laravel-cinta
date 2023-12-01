@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mointernet;
+use App\Models\Grafikinternet;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -16,7 +17,31 @@ class MointernetController extends Controller
         $searchTerm = $request->input('search');
     
         $query = Mointernet::orderBy('id', 'DESC');
-    
+
+        // $now = Carbon::now();
+        // $current_year = $now->year;
+        // $current_month = $now->month;
+        // $data = Grafikinternet::whereYear('date', $current_year)->whereMonth('date', $current_month)->get();
+
+        $currentDate = now();
+    $currentYear = $currentDate->year;
+    $currentMonth = $currentDate->month;
+    $daysInMonth = $currentDate->daysInMonth;
+
+    // Mengambil data dari database
+    $dataFromDatabase = Grafikinternet::whereYear('date', $currentYear)
+        ->whereMonth('date', $currentMonth)
+        ->get();
+
+    // Membuat array data dengan nilai null untuk setiap tanggal
+    $data = array_fill(0, $daysInMonth, null);
+
+    // Mengisi data dengan nilai persen dari database
+    foreach ($dataFromDatabase as $item) {
+        $day = (int)Carbon::parse($item->date)->format('d') - 1; // -1 karena index array dimulai dari 0
+        $data[$day] = (float)$item->persen;
+    }
+
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
@@ -29,12 +54,10 @@ class MointernetController extends Controller
     
         // Menghitung total durasi dalam sebulan
         $totalDuration = $mointernets->sum('duration');
-
         // Menghitung rata-rata persentase
         $averagePercentage = ($mointernets->count() > 0) ? $mointernets->avg('percentage') : 0;
-    
         // Mengirimkan data ke tampilan
-        return view('pages.mointernet.index', compact('mointernets', 'averagePercentage', 'totalDuration'));
+        return view('pages.mointernet.index', compact('mointernets', 'averagePercentage', 'totalDuration', 'data'));
     }
     
 
@@ -148,4 +171,28 @@ public function getChartData()
     // {
     //     //
     // }
+    public function grafik_internet () {
+        $now = Carbon::now()->format("Y-m-d");
+
+        $mointernets = Mointernet::where('date', $now)->get();
+        dd($mointernets);
+        if (count($mointernets) > 0) {
+            $total_durasi = 0;
+            foreach ($mointernets as $mo) {
+                $total_durasi = $total_durasi + $mo->duration;
+            }
+            $persen = $total_durasi / (24*60) * 100;
+
+            $grafikinternets = Grafikinternet::create([
+                'date' => $now,
+                'persen' => $persen,
+            ]);            
+        } else {
+            $grafikinternets = Grafikinternet::create([
+                'date' => $now,
+                'persen' => "100%",
+            ]);
+        };
+
+    }
 }

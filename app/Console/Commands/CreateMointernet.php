@@ -27,12 +27,14 @@ class CreateMointernet extends Command
     public function handle()
     {
         $userId = 1;
+        $duration = 0;
         Mointernet::create([
             'user_id' => $userId,
             'date' => now()->toDateString(),
             'start_time', 
             'end_time', 
             'root_cause', 
+            'duration' => $duration 
         ]);
 
         $this->info('Mointernet data created successfully.');
