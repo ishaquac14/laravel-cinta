@@ -147,7 +147,7 @@ class MointernetController extends Controller
                 $total_durasi = $total_durasi + $mo->duration;
             }
             $persen = $total_durasi / (24 * 60) * 100;
-
+            $persen = 100 - $persen;
             $grafikinternets = Grafikinternet::create([
                 'date' => $now,
                 'persen' => $persen,
@@ -155,7 +155,7 @@ class MointernetController extends Controller
         } else {
             $grafikinternets = Grafikinternet::create([
                 'date' => $now,
-                'persen' => "100%",
+                'persen' => "100",
             ]);
         };
     }
