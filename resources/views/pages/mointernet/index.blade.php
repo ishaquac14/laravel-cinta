@@ -34,8 +34,10 @@
                     <tr>
                         <th width="4%">No</th>
                         <th width="20%">Tanggal</th>
-                        <th>Author</th>
-                        <th width="20%">Action</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Duration</th>
+                        <th>Root Cause</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,13 +49,10 @@
                             <tr class="table-light">
                                 <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                                 <td class="align-middle text-center">{{ $mointernet->date }}</td>
-                                <td class="align-middle text-center">{{ $mointernet->users->name }}</td>
-                                <td class="align-middle text-center">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{ route('mointernet.show', $mointernet->id) }}"
-                                            class="btn btn-primary">Detail</a>
-                                    </div>
-                                </td>
+                                <td class="text-center">{{ $mointernet->start_time }}</td>
+                                <td class="text-center">{{ $mointernet->end_time }}</td>
+                                <td class="align-middle text-center">{{ $mointernet->duration }} Menit</td>
+                                <td class="text-center">{{ $mointernet->root_cause }}</td>
                             </tr>
                         @endforeach
                     @else

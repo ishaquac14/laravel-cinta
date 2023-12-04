@@ -26,8 +26,8 @@
             <tbody>
                     <tr>
                         <td class="text-center">{{ $mointernet->date}}</td>
-                        <td class="text-center">{{ $mointernet->start_time ?: '-' }}</td>
-                        <td class="text-center">{{ $mointernet->end_time ?: '-' }}</td>
+                        <td class="text-center">{{ $mointernet->start_time }}</td>
+                        <td class="text-center">{{ $mointernet->end_time }}</td>
                         <td class="align-middle text-center">{{ $mointernet->users->name }}</td>
                     </tr>
             </tbody>
