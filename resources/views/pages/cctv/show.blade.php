@@ -25,7 +25,7 @@
                 </tr>
             </thead>            
             <tbody>
-                @for ($i = 1; $i <= 3; $i++)
+                @for ($i = 1; $i <= 117; $i++)
                     <tr>
                         <td class="text-center">{{ $i }}</td>
                         <td>CAM-{{ $i }}</td>

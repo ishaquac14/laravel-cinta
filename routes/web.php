@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AcserverController;
-use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\CsdatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
@@ -37,8 +37,8 @@ Route::post('/physical/store', [PhysicalController::class, 'store'])->name('phys
 Route::resource('/sanswitch', SanswitchController::class)->middleware('auth');
 Route::get('/sanswitch/search', 'SanswitchController@index');
 
-Route::resource('/database', DatabaseController::class)->middleware('auth');
-Route::get('/database/search', 'DatabaseController@index');
+Route::resource('/csdatabase', CsdatabaseController::class)->middleware('auth');
+Route::get('/csdatabase/search', 'CsdatabaseController@index');
 
 Route::resource('/acserver', AcserverController::class)->middleware('auth');
 Route::get('/acserver/search', 'AcserverController@index');

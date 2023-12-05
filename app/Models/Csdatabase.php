@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Database extends Model
+class Csdatabase extends Model
 {
 
     protected $guarded = [];

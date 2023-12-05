@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Database;
+use App\Models\Csdatabase;
 use Illuminate\Http\Request;
 
-class DatabaseController extends Controller
+class CsdatabaseController extends Controller
 {/**
      * Display a listierror of the resource.
      */
@@ -13,7 +13,7 @@ class DatabaseController extends Controller
     {
         $searchTerm = $request->input('search');
     
-        $query = Database::orderBy('id', 'DESC');
+        $query = Csdatabase::orderBy('id', 'DESC');
     
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
@@ -23,11 +23,11 @@ class DatabaseController extends Controller
         }
     
         // Menggunakan paginate(10) untuk mendapatkan data paginasi
-        $databases = $query->paginate(5);
+        $csdatabases = $query->paginate(5);
     
-        // dd($databases);
+        // dd($csdatabases);
         // Mengirimkan data ke tampilan
-        return view('pages.database.index', compact('databases'));
+        return view('pages.csdatabase.index', compact('csdatabases'));
     }    
 
 
@@ -36,7 +36,7 @@ class DatabaseController extends Controller
      */
     public function create()
     {
-        return view('pages.database.create');
+        return view('pages.csdatabase.create');
     }
 
     public function store(Request $request)
@@ -66,16 +66,16 @@ class DatabaseController extends Controller
         $data = $request->only(['asiic', 'avicenna', 'broadcast', 'cubic_pro', 'gary', 'iatf', 'lobby', 'maps_body', 
                                 'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy'
                                 , 'note']);
-        // Menyimpan data ke dalam database
+        // Menyimpan data ke dalam csdatabase
 
         $data['author'] = auth()->user()->name;
 
         $data['user_id'] = auth()->user()->id;
 
-        Database::create($data);
+        Csdatabase::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan
-        return redirect()->route('database.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -83,7 +83,7 @@ class DatabaseController extends Controller
      */
     public function show($id)
     {
-        $database = Database::findOrFail($id);
-        return view('pages.database.show', compact('database'));
+        $csdatabase = Csdatabase::findOrFail($id);
+        return view('pages.csdatabase.show', compact('csdatabase'));
     }
 }

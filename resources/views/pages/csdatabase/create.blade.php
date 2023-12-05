@@ -3,7 +3,7 @@
 @section('body')
 <div class="container">
     <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
-        <a href="{{ route('database.index') }}">
+        <a href="{{ route('csdatabase.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
@@ -13,7 +13,7 @@
     </div>
     <hr>
     
-    <form action="{{ route('database.store') }}" method="POST">
+    <form action="{{ route('csdatabase.store') }}" method="POST">
         @csrf
         <table class="table table-striped table-bordered">
             <thead class="table-primary text-center">
@@ -59,13 +59,13 @@
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $item['name'] }}" id="{{ $item['name'] }}" value="success" required>
-                            <label class="form-check-label" for="{{ $item['name'] }}">SUCCESS</label>
+                            <label class="form-check-label" for="{{ $item['name'] }}">Success</label>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $item['name'] }}" id="{{ $item['name'] }}" value="error" required>
-                            <label class="form-check-label" for="{{ $item['name'] }}">ERROR</label>
+                            <label class="form-check-label" for="{{ $item['name'] }}">Error</label>
                         </div>
                     </td>
                 </tr>

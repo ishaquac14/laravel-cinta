@@ -21,7 +21,7 @@
                 <th width="4%" scope="col">No</th>
                 <th scope="col">Device</th>
                 <th scope="col">Task List</th>
-                <th width="25%" scope="col">OK (Green)</th>
+                <th width="25%" scope="col">Ok (Green)</th>
                 <th width="25%" scope="col">Not Good (Orange)</th>
               </tr>
             </thead>
@@ -33,13 +33,13 @@
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="powerstatus" id="powerstatusok" value="OK" required>
-                        <label class="form-check-label" for="powerstatusok">OK</label>
+                        <label class="form-check-label" for="powerstatusok">Ok</label>
                     </div>
                 </td>
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="powerstatus" id="powerstatusng" value="NG" required>
-                        <label class="form-check-label" for="powerstatusng">NG</label>
+                        <label class="form-check-label" for="powerstatusng">Not Good</label>
                     </div>
                 </td>
               </tr>
@@ -49,13 +49,13 @@
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="notif" id="notifok" value="OK" required>
-                        <label class="form-check-label" for="notifok">OK</label>
+                        <label class="form-check-label" for="notifok">Ok</label>
                     </div>
                 </td>
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="notif" id="notifng" value="NG" required>
-                        <label class="form-check-label" for="notifng">NG</label>
+                        <label class="form-check-label" for="notifng">Not Good</label>
                     </div>
                 </td>
               </tr>
@@ -66,13 +66,13 @@
                         <td class="text-center">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="port<?php echo $i; ?>" id="port<?php echo $i; ?>ok" value="OK" required>
-                                <label class="form-check-label" for="port<?php echo $i; ?>ok">OK</label>
+                                <label class="form-check-label" for="port<?php echo $i; ?>ok">Ok</label>
                             </div>
                         </td>
                         <td class="text-center">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="port<?php echo $i; ?>" id="port<?php echo $i; ?>ng" value="NG" required>
-                                <label class="form-check-label" for="port<?php echo $i; ?>ng">NG</label>
+                                <label class="form-check-label" for="port<?php echo $i; ?>ng">Not Good</label>
                             </div>
                         </td>
                     </tr>
@@ -84,13 +84,13 @@
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="powerstatus_" id="powerstatusok_" value="OK" required>
-                        <label class="form-check-label" for="powerstatusok_">OK</label>
+                        <label class="form-check-label" for="powerstatusok_">Ok</label>
                     </div>
                 </td>
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="powerstatus_" id="powerstatusng_" value="NG" required>
-                        <label class="form-check-label" for="powerstatusng_">NG</label>
+                        <label class="form-check-label" for="powerstatusng_">Not Good</label>
                     </div>
                 </td>
               </tr>
@@ -100,13 +100,13 @@
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="notif_" id="notifok_" value="OK" required>
-                        <label class="form-check-label" for="notifok_">OK</label>
+                        <label class="form-check-label" for="notifok_">Ok</label>
                     </div>
                 </td>
                 <td class="text-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="notif_" id="notifng_" value="NG" required>
-                        <label class="form-check-label" for="notifng_">NG</label>
+                        <label class="form-check-label" for="notifng_">Not Good</label>
                     </div>
                 </td>
               </tr>
@@ -118,13 +118,13 @@
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="port_<?php echo $i ?>" id="port_<?php echo $i ?>ok" value="OK" required>
-                            <label class="form-check-label" for="port_<?php echo $i ?>ok">OK</label>
+                            <label class="form-check-label" for="port_<?php echo $i ?>ok">Ok</label>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="port_<?php echo $i ?>" id="port_<?php echo $i ?>ng" value="NG" required>
-                            <label class="form-check-label" for="port_<?php echo $i ?>ng">NG</label>
+                            <label class="form-check-label" for="port_<?php echo $i ?>ng">Not Good</label>
                         </div>
                     </td>
                 </tr>

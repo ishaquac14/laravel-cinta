@@ -41,11 +41,11 @@ class CctvController extends Controller
             'note' => 'nullable|string',
         ];
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 117; $i++) {
             $rules["cam{$i}"] = 'required|in:Ok,Ng';
         }
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 117; $i++) {
             $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal';
         }
 
@@ -55,12 +55,11 @@ class CctvController extends Controller
             'note' => $request->input('note')
         ];
         
-        // Tambahkan 'hdd1' hingga 'hdd19' ke dalam data untuk storage3
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 117; $i++) {
             $data["cam{$i}"] = $request->input("cam{$i}");
         }
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 117; $i++) {
             $data["kondisi_cam{$i}"] = $request->input("kondisi_cam{$i}");
         }
 

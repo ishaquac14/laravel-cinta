@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('grafik_internet')->everyMinute();
-        // $schedule->command('grafik_internet')->everyMinute();
+        $schedule->call('App\Http\Controllers\SchedulerController@runMointernetScheduler')
+                 ->daily();
     }
 
     /**

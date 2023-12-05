@@ -27,7 +27,7 @@
             </a>
           </li>
           <li class="nav-item" style="color: red;">
-            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('database.index') }}">
+            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('csdatabase.index') }}">
                 <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                 Backup Database
             </a>

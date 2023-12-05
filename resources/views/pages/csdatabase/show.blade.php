@@ -4,13 +4,13 @@
 
 <div class="container">
     <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
-        <a href="{{ route('database.index') }}">
+        <a href="{{ route('csdatabase.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
-            <a href="{{ route('database.index') }}" class="btn btn-dark">Kembali</a>
+            <a href="{{ route('csdatabase.index') }}" class="btn btn-dark">Kembali</a>
         </a>
     </div>
     <div class="mb-2">
-        <h4>DETAIL C/S DATABASE SERVER ({{ \Carbon\Carbon::parse($database->created_at)->format('d-m-Y H:i:s') }})</h4>
+        <h4>DETAIL C/S DATABASE SERVER ({{ \Carbon\Carbon::parse($csdatabase->created_at)->format('d-m-Y H:i:s') }})</h4>
     </div>    
     <hr>
     <div class="table-responsive">
@@ -32,15 +32,15 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td>{{ $item }}</td>
                         <td class="text-center">
-                            @if ($database["{$item}"] === 'success')
+                            @if ($csdatabase["{$item}"] === 'success')
                                 <span class="badge bg-success">Success</span>
-                            @elseif ($database["{$item}"] === 'error')
+                            @elseif ($csdatabase["{$item}"] === 'error')
                                 <span class="badge bg-danger">Error</span>
                             @else
-                                {{ $database["{$item}"] }}
+                                {{ $csdatabase["{$item}"] }}
                             @endif
                         </td>
-                        <td class="align-middle text-center">{{ $database->users->name }}</td>
+                        <td class="align-middle text-center">{{ $csdatabase->users->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -48,7 +48,7 @@
         <div class="row mt-4">
             <div class="col-md-12 mb-5">
                 <p>Note :</p>
-                <textarea class="form-control" name="note" rows="{{ substr_count($database->note, "\n") + 5 }}" readonly>{{ $database->note ?? 'Tidak ada' }}</textarea>
+                <textarea class="form-control" name="note" rows="{{ substr_count($csdatabase->note, "\n") + 5 }}" readonly>{{ $csdatabase->note ?? 'Tidak ada' }}</textarea>
             </div>
         </div>
     </div>

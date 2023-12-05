@@ -26,7 +26,7 @@
               </tr>
             </thead>
             <tbody>
-                <?php for ($i = 1; $i <= 3; $i++): ?>
+                <?php for ($i = 1; $i <= 117; $i++): ?>
                     <tr>
                         <th scope="row" class="text-center"><?php echo $i ?></th>
                         <td>CAM-<?php echo $i; ?></td>
@@ -59,7 +59,7 @@
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
         </div>
-        <div class="mt-4"><p><b>IMPORTANT:</b> If any orange, please email to: callcenter.fid@fujitsu.com</p></div>
+        <div class="mt-4"><p><b>IMPORTANT:</b> Jika terjadi problem atau masti langsung hubungi MSA</p></div>
         <div class="col">
             <div class="mt-3 mb-5">
                 <button class="btn btn-primary">SUBMIT</button>
