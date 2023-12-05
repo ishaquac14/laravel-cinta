@@ -32,11 +32,12 @@
             <thead class="table-primary text-center">
                 <tr>
                     <th width="4%">No</th>
-                    <th width="20%">Tanggal</th>
+                    <th width="15%">Tanggal</th>
                     <th>Note</th>
-                    <th width="25%">Author</th>
-                    <th>Status</th>
-                    <th width="20%">Action</th>
+                    <th width="15%">Suhu Ruangan</th>
+                    <th width="10%">Status</th>
+                    <th width="15%">Follow Up</th>
+                    <th width="10%">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,7 +51,7 @@
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y') }}</td>
                         <td class="align-middle">{{ empty($acserver->note) ? 'Tidak ada' : $acserver->note }}</td>
-                        <td class="align-middle text-center">{{ $acserver->users->name }}</td>
+                        <td class="text-center">{{ $acserver->suhu_ruangan . '°C' }}</td>
                         <td class="text-center">
                             @if ($acserver->status === 'ok')
                                 <span class="badge bg-success">Ok</span>
@@ -62,6 +63,7 @@
                                 {{ $acserver["{$item}"] }}
                             @endif
                         </td>
+                        <td>{{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('acserver.show', $acserver->id) }}" class="btn btn-primary">Detail</a>

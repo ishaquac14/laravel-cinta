@@ -56,7 +56,7 @@
               Monitoring CCTV
             </a>
           </li>
-          <li class="nav-item" style="fill: rgb(248, 13, 13)">
+          <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="{{ route('physical.index') }}">
               <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
               Physical Server
@@ -68,12 +68,21 @@
               Printer Fujixerox
             </a>
           </li>
-          <li class="nav-item" style="fill: rgb(248, 13, 13)">
+          <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="{{ route('sanswitch.index') }}">
               <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
               Sanswitch
             </a>
           </li>
+
+          @can('is_admin')
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('cobaadmin.index') }}">
+              <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
+              Coba Admin
+            </a>
+          </li>
+          @endcan
           </ul><br><br><br><br><br><br><br><br><br><br>
       </div>
     </div>

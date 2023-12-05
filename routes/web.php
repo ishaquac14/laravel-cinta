@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AcserverController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CsdatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
@@ -34,7 +35,7 @@ Route::resource('/physical', PhysicalController::class)->middleware('auth');
 Route::get('/physical/search', 'PhysicalController@index')->middleware('auth');
 Route::post('/physical/store', [PhysicalController::class, 'store'])->name('physical.store');
 
-Route::resource('/sanswitch', SanswitchController::class)->middleware('auth');
+Route::resource('/sanswitch', SanswitchController::class);
 Route::get('/sanswitch/search', 'SanswitchController@index');
 
 Route::resource('/csdatabase', CsdatabaseController::class)->middleware('auth');
@@ -74,3 +75,5 @@ Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 Route::prefix('api')->group(function () {
     Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 });
+
+Route::resource('/cobaadmin', AdminController::class)->middleware('is_admin');

@@ -50,14 +50,16 @@ class AcserverController extends Controller
             'ac-02_suhu' => 'string|nullable',
             'ac-03_suhu' => 'string|nullable',
             'ac-04_suhu' => 'string|nullable',
+            'suhu_ruangan' => 'string|required',
             'note' => 'string|nullable',
+            'follow_up' => 'string|nullable',
             'status' => 'required'
         ]);
         
 
         // Mendapatkan data dari permintaan
         $data = $request->only(['kondisi_ac-01', 'kondisi_ac-02', 'kondisi_ac-03', 'kondisi_ac-04', 
-                                'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'note', 'status'
+                                'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'suhu_ruangan' , 'note', 'follow_up' , 'status'
                                 ]);
         // Menyimpan data ke dalam acserver
         // dd($data);auth()->user()->name

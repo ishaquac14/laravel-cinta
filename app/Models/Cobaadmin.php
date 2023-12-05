@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
 
-
 use Illuminate\Database\Eloquent\Model;
 
-class Physical extends Model
+class Cobaadmin extends Model
 {
+    use HasFactory;
 
+    protected $table = 'cobaadmins';
     protected $guarded = [];
 
     public function __construct(array $attributes = [])
@@ -32,6 +33,10 @@ class Physical extends Model
 
         try {
             $columns = DB::getSchemaBuilder()->getColumnListing($table);
+
+            // Menghilangkan kolom timestamp dan id
+            $columns = array_diff($columns, ['created_at', 'updated_at', 'id']);
+
             return $columns;
         } catch (\Throwable $th) {
             // Tampilkan pesan kesalahan jika diperlukan

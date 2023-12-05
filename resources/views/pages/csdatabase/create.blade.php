@@ -73,7 +73,7 @@
             
             </tbody>
           </table>
-        <div class="">
+        <div>
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
         </div>

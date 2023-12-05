@@ -20,9 +20,9 @@
                     <tr>
                         <th width="4%" scope="col">No</th>
                         <th scope="col">AC Name</th>
-                        <th scope="col">Kondisi</th>
-                        <th scope="col">Jadwal Mati/Hidup</th>
-                        <th scope="col">Suhu</th>
+                        <th scope="col">Plan Kondisi</th>
+                        <th scope="col">Actual Kondisi</th>
+                        <th scope="col">Suhu Setting AC</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,16 +34,6 @@
                         <tr>
                             <th scope="row" class="text-center">{{ $index + 1 }}</th>
                             <td>{{ $item['display'] }}</td>
-                            <td class="text-center">
-                                <div class="text-center">
-                                    <select name="kondisi_{{ $item['name'] }}" class="form-select" id="KondisiSelect"
-                                        contenteditable="true" required>
-                                        <option value="" disabled selected>--Kondisi--</option>
-                                        <option value="Normal">Normal</option>
-                                        <option value="Rusak">Rusak</option>
-                                    </select>
-                                </div>
-                            </td>
                             <td class="text-center">
                                 @php
                                     // Mendapatkan tanggal sekarang
@@ -58,25 +48,50 @@
 
                                     // Menentukan kelas CSS berdasarkan jadwal
                                     $kelasWarna = $jadwal == 'Hidup' ? 'text-success' : 'text-danger';
+
+                                    $disabledSuhu = $jadwal == 'Mati' ? 'disabled' : '';
                                 @endphp
                                 <span class="{{ $kelasWarna }}">{{ $jadwal }}</span>
                             </td>
                             <td class="text-center">
                                 <div class="text-center">
-                                    <input type="text" class="form-control" name="{{ $item['name'] }}_suhu"
-                                        placeholder="INPUT SUHU (°C)" pattern="\d+(\.\d{1,2})?"
-                                        title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma">
+                                    <select name="kondisi_{{ $item['name'] }}" class="form-select text-center"
+                                        id="KondisiSelect" contenteditable="true" required>
+                                        <option value="" disabled selected>--- Kondisi ---</option>
+                                        <option value="Normal Hidup">Normal Hidup</option>
+                                        <option value="Normal Mati">Normal Mati</option>
+                                        <option value="Rusak">Rusak</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="text-center">
+                                    <input type="text" class="form-control text-center" name="{{ $item['name'] }}_suhu"
+                                        placeholder="STANDARD SUHU 19-23 (°C)" pattern="\d+(\.\d{1,2})?"
+                                        title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma"
+                                        {{ $disabledSuhu }}>
                                 </div>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <div class="">
-                <label for="exampleFormControlTextarea1" class="form-label"></label>
-                <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
+            <div>
+                <input type="text" name="suhu_ruangan" class="form-control mt-4" placeholder="INPUT SUHU RUANGAN">
             </div>
-            <div class="mt-3">
+            <div class="row">
+                <div class="@if(auth()->user() && auth()->user()->is_admin) col-md-6 @else col-md-12 @endif">
+                    <label for="exampleFormControlTextarea1" class="form-label"></label>
+                    <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="3" placeholder="Note"></textarea>
+                </div>
+                @can('is_admin')
+                    <div class="col-md-6">
+                        <label for="exampleFormControlTextarea1" class="form-label"></label>
+                        <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up"></textarea>
+                    </div>
+                @endcan
+            </div>
+            <div class="mt-4">
                 <select name="status" class="form-select" id="StatusSelect" contenteditable="true" required>
                     <option value="" disabled selected>--Status--</option>
                     <option value="ok">Ok</option>
