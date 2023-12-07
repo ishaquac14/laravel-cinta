@@ -33,11 +33,11 @@
                 <thead class="table-primary text-center">
                     <tr>
                         <th width="4%">No</th>
-                        <th width="20%">Tanggal</th>
+                        <th width="15%">Tanggal</th>
                         <th>Actual Media</th>
                         <th>Status</th>
-                        <th>Follow Up</th>
-                        <th width="25%">Author</th>
+                        <th width="20%">Follow Up</th>
+                        <th width="20%">Author</th>
                         <th width="20%">Action</th>
                     </tr>
                 </thead>

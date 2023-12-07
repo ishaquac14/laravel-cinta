@@ -52,8 +52,8 @@
                                 <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                                 <td class="align-middle text-center">
                                     {{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y') }}</td>
-                                <td class="text-center">{{ $acserver->suhu_ruangan . '°C' }}</td>
-                                <td class="text-center">
+                                <td class="align-middle text-center">{{ $acserver->suhu_ruangan . '°C' }}</td>
+                                <td class="align-middle text-center">
                                     @if ($acserver->status === 'ok')
                                         <span class="badge bg-success">Ok</span>
                                     @elseif ($acserver->status === 'warning')
@@ -64,8 +64,8 @@
                                         {{ $acserver["{$item}"] }}
                                     @endif
                                 </td>
-                                <td>{{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}</td>
-                                <td class="text-center">{{ $acserver->users->name }}</td>
+                                <td class="align-middle">{{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}</td>
+                                <td class="align-middle text-center">{{ $acserver->users->name }}</td>
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="{{ route('acserver.show', $acserver->id) }}"

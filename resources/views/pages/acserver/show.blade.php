@@ -9,7 +9,17 @@
             </a>
         </div>
         <div class="mb-2">
-            <h4>DETAIL C/S AC SERVER ({{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y H:i:s') }})</h4>
+            <h4>DETAIL C/S AC SERVER ({{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y H:i:s') }})
+                    @if ($acserver->status === 'ok')
+                        <span class="badge bg-success"></span>
+                    @elseif ($acserver->status === 'warning')
+                        <span class="badge bg-warning">Warning</span>
+                    @elseif ($acserver->status === 'not good')
+                        <span class="badge bg-danger">Not Good</span>
+                    @else
+                        {{ $acserver->status }}
+                    @endif
+            </h4>     
         </div>
         <hr>
         <div class="table-responsive">
@@ -17,10 +27,9 @@
                 <thead class="table-primary text-center">
                     <tr>
                         <th width="4%">No</th>
-                        <th width="15%">AC Name</th>
-                        <th width="15%">Suhu Setting AC</th>
-                        <th width="15%">Kondisi</th>
-                        <th width="15%">Status</th>
+                        <th>AC Name</th>
+                        <th>Suhu Setting AC</th>
+                        <th>Kondisi</th>
                         <th>Author</th>
                     </tr>
                 </thead>
@@ -42,17 +51,6 @@
                                     {{ $acserver->{'kondisi_' . $item} }}
                                 @endif
                             </td>
-                            <td class="text-center">
-                                @if ($acserver->status === 'ok')
-                                    <span class="badge bg-success">Ok</span>
-                                @elseif ($acserver->status === 'warning')
-                                    <span class="badge bg-warning">Warning</span>
-                                @elseif ($acserver->status === 'not good')
-                                    <span class="badge bg-danger">Not Good</span>
-                                @else
-                                    {{ $acserver["{$item}"] }}
-                                @endif
-                            </td>
                             <td class="align-middle text-center">{{ $acserver->users->name }}</td>
                         </tr>
                     @endforeach
@@ -61,11 +59,11 @@
             <div class="row mt-4">
                 <div class="col-md-6 mb-5">
                     <p><b>Note :</b></p>
-                    <textarea class="form-control" name="note" rows="{{ substr_count($acserver->note, "\n") + 5 }}" readonly>{{ $acserver->note ?? 'Tidak ada' }}</textarea>
+                    <textarea class="form-control" name="note" rows="{{ substr_count($acserver->note, "\n") + 5 }}" disabled>{{ $acserver->note ?? 'Tidak ada' }}</textarea>
                 </div>
                 <div class="col-md-6 mb-5">
                     <p><b>Follow Up :</b></p>
-                    <textarea class="form-control" name="follow_up" rows="{{ substr_count($acserver->follow_up, "\n") + 5 }}" readonly>{{ $acserver->follow_up ?? 'Tidak ada' }}</textarea>
+                    <textarea class="form-control" name="follow_up" rows="{{ substr_count($acserver->follow_up, "\n") + 5 }}" disabled>{{ $acserver->follow_up ?? 'Tidak ada' }}</textarea>
                 </div>
             </div>                
         </div>

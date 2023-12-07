@@ -49,7 +49,6 @@
                                     // Menentukan kelas CSS berdasarkan jadwal
                                     $kelasWarna = $jadwal == 'Hidup' ? 'text-success' : 'text-danger';
 
-                                    $disabledSuhu = $jadwal == 'Mati' ? 'disabled' : '';
                                 @endphp
                                 <span class="{{ $kelasWarna }}">{{ $jadwal }}</span>
                             </td>
@@ -68,8 +67,7 @@
                                 <div class="text-center">
                                     <input type="text" class="form-control text-center" name="{{ $item['name'] }}_suhu"
                                         placeholder="STANDARD SUHU 19-23 (°C)" pattern="\d+(\.\d{1,2})?"
-                                        title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma"
-                                        {{ $disabledSuhu }}>
+                                        title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma">
                                 </div>
                             </td>
                         </tr>
@@ -77,7 +75,7 @@
                 </tbody>
             </table>
             <div>
-                <input type="text" name="suhu_ruangan" class="form-control mt-4" placeholder="INPUT SUHU RUANGAN">
+                <input type="text" name="suhu_ruangan" class="form-control mt-4" placeholder="INPUT SUHU RUANGAN (°C)">
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -99,9 +97,9 @@
                 </div>
                 <div class="col-md-6">
                     <label for="exampleFormControlTextarea1" class="form-label"></label>
-                    <textarea class="form-control text-left" id="exampleFormControlTextarea1" rows="3" readonly>
+                    <textarea class="form-control text-left" id="exampleFormControlTextarea1" rows="3" disabled>
     - Standard suhu AC berada diantara 19-23° Celcius.
-    - Standar Ac menyala adalah 2 unit.
+    - Standar AC menyala adalah 2 unit.
     - Jika terjadi kerusakan fungsi AC dan Abnormal segera lakukan SCW.
                 </textarea>
                 </div>

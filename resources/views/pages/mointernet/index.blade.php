@@ -32,12 +32,16 @@
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
                     <tr>
-                        <th width="4%">No</th>
+                        <th width="2%">No</th>
                         <th width="20%">Tanggal</th>
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Duration</th>
                         <th>Root Cause</th>
+                        <th>Follow Up</th>
+                        @can('is_admin')
+                        <th>Action</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -49,38 +53,50 @@
                             <tr class="table-light">
                                 <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                                 <td class="align-middle text-center">{{ $mointernet->date }}</td>
-                                <td class="text-center">{{ $mointernet->start_time }}</td>
-                                <td class="text-center">{{ $mointernet->end_time }}</td>
+                                <td class="align-middle text-center">{{ $mointernet->start_time }}</td>
+                                <td class="align-middle text-center">{{ $mointernet->end_time }}</td>
                                 <td class="align-middle text-center">{{ $mointernet->duration }} Menit</td>
-                                <td class="text-center">{{ $mointernet->root_cause }}</td>
+                                <td class="align-middle text-center">{{ $mointernet->root_cause }}</td>
+                                <td class="align-middle">{{ empty($mointernet->follow_up) ? 'Tidak Ada' : $mointernet->follow_up }}</td>
+                                @can('is_admin')
+                                    <td class="align-middle text-center">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="{{ route('mointernet.edit', $mointernet->id) }}"
+                                                class="btn btn-warning">Edit</a>
+                                            <form action="{{ route('mointernet.destroy', $mointernet->id) }}" method="POST"
+                                                onsubmit="return confirm('Hapus data ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td class="text-center" colspan="6">Data tidak ditemukan</td>
+                            <td class="text-center" colspan="8">Data tidak ditemukan</td>
                         </tr>
                     @endif
                 </tbody>
             </table>
-            
+
             @include('layouts.pagination-mointernet', ['mointernets' => $mointernets])
         </div>
     </div>
 
-    {{-- <div>
-        <canvas id="myChart"></canvas>
-    </div> --}}
     <div id="container">
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Tambahkan jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Mendapatkan tanggal untuk bulan ini
             var currentDate = new Date();
             var currentMonth = currentDate.getMonth();
@@ -103,7 +119,9 @@
                     }
                 },
                 xAxis: {
-                    categories: Array.from({ length: daysInMonth }, (_, i) => (i + 1).toString()),
+                    categories: Array.from({
+                        length: daysInMonth
+                    }, (_, i) => (i + 1).toString()),
                     accessibility: {
                         rangeDescription: 'Range: 1 to ' + daysInMonth
                     }
@@ -134,17 +152,16 @@
                     }]
                 }
             };
-    
-            // Membuat grafik menggunakan konfigurasi yang telah diatur
+
             Highcharts.chart('container', chartOptions);
         });
     </script>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Mendapatkan data dari controller
             var data = @json($data);
-    
+
             // Update konfigurasi Highcharts dengan data yang dihasilkan
             var chartOptions = {
                 title: {
@@ -157,7 +174,9 @@
                     }
                 },
                 xAxis: {
-                    categories: Array.from({ length: data.length }, (_, i) => (i + 0).toString()),
+                    categories: Array.from({
+                        length: data.length
+                    }, (_, i) => (i + 0).toString()),
                     accessibility: {
                         rangeDescription: 'Range: 1 to ' + data.length
                     }
@@ -189,7 +208,7 @@
                     }]
                 }
             };
-    
+
             // Membuat grafik menggunakan konfigurasi yang telah diatur
             Highcharts.chart('container', chartOptions);
         });

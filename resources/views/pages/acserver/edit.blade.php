@@ -44,7 +44,6 @@
                                         $jadwal = $currentDate->day > 15 ? 'Hidup' : 'Mati';
                                     }
                                     $kelasWarna = $jadwal == 'Hidup' ? 'text-success' : 'text-danger';
-                                    $disabledSuhu = $jadwal == 'Mati' ? 'disabled' : '';
                                 @endphp
                                 <span class="{{ $kelasWarna }}">{{ $jadwal }}</span>
                             </td>
@@ -64,7 +63,7 @@
                                     <input type="text" class="form-control text-center" name="{{ $item['name'] }}_suhu"
                                         placeholder="STANDARD SUHU 19-23 (°C)" pattern="\d+(\.\d{1,2})?"
                                         title="Masukkan suhu dalam format angka dengan maksimal dua digit di belakang koma"
-                                        {{ $disabledSuhu }} value="{{ $acserver[$item['name'] . '_suhu'] }}">
+                                        value="{{ $acserver[$item['name'] . '_suhu'] }}">
                                 </div>
                             </td>
                         </tr>

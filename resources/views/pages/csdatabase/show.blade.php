@@ -48,11 +48,11 @@
         <div class="row mt-4">
             <div class="col-md-6 mb-5">
                 <p><b>Note :</b></p>
-                <textarea class="form-control" name="note" rows="{{ substr_count($csdatabase->note, "\n") + 5 }}" readonly>{{ $csdatabase->note ?? 'Tidak ada' }}</textarea>
+                <textarea class="form-control" name="note" rows="{{ substr_count($csdatabase->note, "\n") + 5 }}" disabled>{{ $csdatabase->note ?? 'Tidak ada' }}</textarea>
             </div>
             <div class="col-md-6 mb-5">
                 <p><b>Follow Up :</b></p>
-                <textarea class="form-control" name="follow_up" rows="{{ substr_count($csdatabase->follow_up, "\n") + 5 }}" readonly>{{ $csdatabase->follow_up ?? 'Tidak ada' }}</textarea>
+                <textarea class="form-control" name="follow_up" rows="{{ substr_count($csdatabase->follow_up, "\n") + 5 }}" disabled>{{ $csdatabase->follow_up ?? 'Tidak ada' }}</textarea>
             </div>
         </div>   
     </div>

@@ -10,19 +10,19 @@ class GacsirtController extends Controller
     public function index(Request $request)
     {
         $searchTerm = $request->input('search');
-    
+
         $query = Gacsirt::orderBy('id', 'DESC');
-    
+
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('note', 'LIKE', '%' . $searchTerm . '%');
             });
         }
-    
+
         // Menggunakan paginate(10) untuk mendapatkan data paginasi
         $gacsirts = $query->paginate(5);
-    
+
         // Mengirimkan data ke tampilan
         return view('pages.gacsirt.index', compact('gacsirts'));
     }
@@ -42,10 +42,11 @@ class GacsirtController extends Controller
             'tcompleted' => 'string|nullable',
             'completed' => 'string|nullable',
             'status' => 'string|required',
-            'note' => 'nullable'
+            'follow_up' => 'string|required',
         ]);
 
-        $data = $request->only(['date', 'tincoming', 'incoming', 'tcompleted', 'completed', 'status', 'note'
+        $data = $request->only([
+            'date', 'tincoming', 'incoming', 'tcompleted', 'completed', 'status', 'follow_up'
         ]);
 
         $data['author'] = auth()->user()->name;
@@ -61,5 +62,51 @@ class GacsirtController extends Controller
     {
         $gacsirt = Gacsirt::findOrFail($id);
         return view('pages.gacsirt.show', compact('gacsirt'));
+    }
+
+    public function edit($id)
+    {
+        $gacsirt = Gacsirt::findOrFail($id);
+
+        return view('pages.gacsirt.edit', compact('gacsirt'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $gacsirt = Gacsirt::findOrFail($id);
+
+        $request->validate([
+            'date' => 'string|nullable',
+            'tincoming' => 'string|nullable',
+            'incoming' => 'string|nullable',
+            'tcompleted' => 'string|nullable',
+            'completed' => 'string|nullable',
+            'status' => 'string|required',
+            'follow_up' => 'nullable'
+        ]);
+
+        // Ambil data dari formulir yang diubah oleh pengguna
+        $gacsirt->update($request->only(
+            'date',
+            'tincoming',
+            'incoming',
+            'tcompleted',
+            'completed',
+            'status',
+            'follow_up'
+        ));
+
+        return redirect()->route('gacsirt.index')->with('success', 'GA Csirt berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $gacsirt = Gacsirt::findOrFail($id);
+        $gacsirt->delete();
+
+        return redirect()->route('gacsirt.index')->with('success', 'GA Csirt berhasil dihapus.');
     }
 }

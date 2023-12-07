@@ -74,9 +74,10 @@ class MointernetController extends Controller
             'start_time' => 'nullable',
             'end_time' => 'nullable',
             'root_cause' => 'nullable',
+            'follow_up' => 'nullable',
         ]);
 
-        $data = $request->only(['date', 'start_time', 'end_time', 'root_cause']);
+        $data = $request->only(['date', 'start_time', 'end_time', 'root_cause', 'follow_up']);
         $data['author'] = auth()->user()->name;
         $data['user_id'] = auth()->user()->id;
 
@@ -158,5 +159,47 @@ class MointernetController extends Controller
                 'persen' => "100",
             ]);
         };
+    }
+
+    public function edit($id)
+    {
+        $mointernet = Mointernet::findOrFail($id);
+
+        return view('pages.mointernet.edit', compact('mointernet'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $mointernet = Mointernet::findOrFail($id);
+
+        $request->validate([
+            'date' => 'required',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
+            'root_cause' => 'nullable',
+            'follow_up' => 'nullable',
+        ]);
+
+        // Ambil data dari formulir yang diubah oleh pengguna
+        $mointernet->update($request->only(
+            'date',
+            'start_time',
+            'end_time',
+            'root_cause',
+            'follow_up'
+        ));
+
+        return redirect()->route('mointernet.index')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $mointernet = Mointernet::findOrFail($id);
+        $mointernet->delete();
+
+        return redirect()->route('mointernet.index')->with('success', 'Data berhasil dihapus.');
     }
 }

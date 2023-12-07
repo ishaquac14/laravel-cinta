@@ -10,7 +10,7 @@
     </div>
     <div class="mb-3">
 
-        <h4>C/S MONITORING GA-CSIRT</h4>
+        <h4>C/S MONITORING GA CSIRT</h4>
     </div>
     <hr>
     
@@ -21,9 +21,9 @@
               <tr>
                 <th width="4%" scope="col">Date</th>
                 <th scope="col">Total Incoming CSIRT</th>
-                <th scope="col">Incoming CSIRT Number</th>
+                <th scope="col">Incoming CSIRT</th>
                 <th scope="col">Total Completed CSIRT</th>
-                <th scope="col">Completed CSIRT Number</th>
+                <th scope="col">Completed CSIRT</th>
                 <th scope="col">Status</th>
               </tr>
             </thead>
@@ -31,27 +31,27 @@
             <tr>
                 <td>
                     <div>
-                        <input type="date" class="form-control" name="date" placeholder="INPUT TANGGAL" required>
+                        <input type="date" class="allign-middle form-control text-center" name="date" placeholder="INPUT TANGGAL" required>
                     </div>
                 </td>
                 <td>
                     <div>
-                        <input type="number" class="form-control" name="tincoming" placeholder="TOTAL INCOMING">
+                        <input type="number" class="allign-middle form-control text-center" name="tincoming" placeholder="TOTAL INCOMING">
                     </div>  
                 </td>
                 <td>
                     <div>
-                        <input type="text" class="form-control" name="incoming" placeholder="INCOMING NUMBER">
+                        <input type="text" class="allign-middle form-control text-center" name="incoming" placeholder="INCOMING NUMBER">
                     </div>
                 </td>
                 <td>
                     <div>
-                        <input type="number" class="form-control" name="tcompleted" placeholder="TOTAL COMPLETED">
+                        <input type="number" class="allign-middle form-control text-center" name="tcompleted" placeholder="TOTAL COMPLETED">
                     </div>
                 </td>
                 <td>
                     <div>
-                        <input type="text" class="form-control" name="completed" placeholder="COMPLETED NUMBER">
+                        <input type="text" class="allign-middle form-control text-center" name="completed" placeholder="COMPLETED NUMBER">
                     </div>
                 </td>
                 <td>
@@ -72,7 +72,7 @@
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
         </div>
 
-        <div class="mt-5 mb-5">
+        <div class="mt-4 mb-5">
             <button class="btn btn-primary">SUBMIT</button>
         </div>
     </form>
