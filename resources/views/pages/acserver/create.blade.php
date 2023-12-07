@@ -100,9 +100,9 @@
                 <div class="col-md-6">
                     <label for="exampleFormControlTextarea1" class="form-label"></label>
                     <textarea class="form-control text-left" id="exampleFormControlTextarea1" rows="3" readonly>
-Note : Standard suhu AC berada diantara 19-23° Celcius.
-          Standar Ac menyala adalah 2 unit.
-          Jika terjadi kerusakan fungsi AC dan Abnormal segera lakukan SCW.
+    - Standard suhu AC berada diantara 19-23° Celcius.
+    - Standar Ac menyala adalah 2 unit.
+    - Jika terjadi kerusakan fungsi AC dan Abnormal segera lakukan SCW.
                 </textarea>
                 </div>
             </div>

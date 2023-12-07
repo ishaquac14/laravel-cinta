@@ -128,7 +128,7 @@ class AcserverController extends Controller
 
     public function destroy($id)
     {
-        $acserver = AcServer::findOrFail($id);
+        $acserver = Acserver::findOrFail($id);
         $acserver->delete();
 
         return redirect()->route('acserver.index')->with('success', 'AC Server berhasil dihapus.');

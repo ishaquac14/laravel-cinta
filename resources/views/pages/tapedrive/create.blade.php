@@ -29,7 +29,7 @@
                 <tr>
                     <td class="text-center">
                         <div class="text-center">
-                            <select name="plan_media" class="form-select" id="PlanSelect" contenteditable="true" required>
+                            <select name="plan_media" class="form-select text-center" id="PlanSelect" contenteditable="true" required>
                                 <option value="" disabled selected>--- Plan Media ---</option>
                                 <option value="full_monthly">FULL MONTHLY</option>
                                 <option value="full_once">FULL ONCE</option>
@@ -39,7 +39,7 @@
                     </td>
                     <td class="text-center">
                         <div class="text-center">
-                            <select name="actual_media" class="form-select" id="ActualSelect" contenteditable="true" required>
+                            <select name="actual_media" class="form-select text-center" id="ActualSelect" contenteditable="true" required>
                                 <option value="" disabled selected>--- Actual Media ---</option>
                                 <option value="full_monthly_act">FULL MONTHLY</option>
                                 <option value="full_once_act">FULL ONCE</option>
@@ -54,7 +54,7 @@
                     </td>
                     <td class="text-center">
                         <div class="text-center">
-                            <select name="status" class="form-select" id="StatusSelect" contenteditable="true" required>
+                            <select name="status" class="form-select text-center" id="StatusSelect" contenteditable="true" required>
                                 <option value="" disabled selected>--- Status ---</option>
                                 <option value="Finished">Finished</option>
                                 <option value="Failed">Failed</option>
@@ -69,8 +69,8 @@
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
         </div>
-        
-        <div class="mt-5 mb-5">
+        <div class="mt-4"><p><b>IMPORTANT:</b> If any failed, please email to: callcenter.fid@fujitsu.com</p></div>
+        <div class="mt-4 mb-5">
             <button class="btn btn-primary">SUBMIT</button>
         </div>
     </form>

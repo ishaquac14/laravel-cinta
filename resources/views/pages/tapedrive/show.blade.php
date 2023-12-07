@@ -63,11 +63,15 @@
             </tbody>
         </table>
         <div class="row mt-4">
-            <div class="col-md-12 mb-5">
-                <p>Note :</p>
+            <div class="col-md-6 mb-5">
+                <p><b>Note :</b></p>
                 <textarea class="form-control" name="note" rows="{{ substr_count($tapedrive->note, "\n") + 5 }}" readonly>{{ $tapedrive->note ?? 'Tidak ada' }}</textarea>
             </div>
-        </div>        
+            <div class="col-md-6 mb-5">
+                <p><b>Follow Up :</b></p>
+                <textarea class="form-control" name="follow_up" rows="{{ substr_count($tapedrive->follow_up, "\n") + 5 }}" readonly>{{ $tapedrive->follow_up ?? 'Tidak ada' }}</textarea>
+            </div>
+        </div>          
     </div>
 </div>
 

@@ -41,11 +41,12 @@ class TapedriveController extends Controller
             'tape_id' => 'string|required',
             'status' => 'string|required',
             'note' => 'string|nullable',
+            'follow_up' => 'string|nullable',
         ]);
         
 
         // Mendapatkan data dari permintaan
-        $data = $request->only(['plan_media', 'actual_media', 'tape_id', 'status', 'note']);
+        $data = $request->only(['plan_media', 'actual_media', 'tape_id', 'status', 'note', 'follow_up']);
         // Menyimpan data ke dalam tapedrive
         // dd($data);auth()->user()->name
         $data['author'] = auth()->user()->name;
@@ -65,6 +66,40 @@ class TapedriveController extends Controller
     {
         $tapedrive = Tapedrive::findOrFail($id);
         return view('pages.tapedrive.show', compact('tapedrive'));
+    }
+
+    public function edit($id)
+    {
+        $tapedrive = Tapedrive::findOrFail($id);
+
+        return view('pages.tapedrive.edit', compact('tapedrive'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $tapedrive = Tapedrive::findOrFail($id);
+
+        $request->validate([
+            'plan_media' => 'string|required',
+            'actual_media' => 'string|required',
+            'tape_id' => 'string|required',
+            'status' => 'string|required',
+            'note' => 'string|nullable',
+            'follow_up' => 'string|nullable',
+        ]);
+
+        // Ambil data dari formulir yang diubah oleh pengguna
+        $tapedrive->update($request->only('plan_media', 'actual_media', 'tape_id', 'status', 'note', 'follow_up'));
+
+        return redirect()->route('tapedrive.index')->with('success', 'Tape Drive berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $tapedrive = Tapedrive::findOrFail($id);
+        $tapedrive->delete();
+
+        return redirect()->route('tapedrive.index')->with('success', 'Tape Drive berhasil dihapus.');
     }
 
 }

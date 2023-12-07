@@ -52,7 +52,7 @@
                                 <td class="align-middle text-center">
                                     {{ \Carbon\Carbon::parse($csdatabase->created_at)->format('d-m-Y') }}</td>
                                 <td class="align-middle">{{ empty($csdatabase->note) ? 'Tidak ada' : $csdatabase->note }}</td>
-                                <td>{{ empty($csdatabase->follow_up) ? 'Tidak Ada' : $csdatabase->follow_up }}</td>
+                                <td class="align-middle">{{ empty($csdatabase->follow_up) ? 'Tidak Ada' : $csdatabase->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $csdatabase->users->name }}</td>
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
