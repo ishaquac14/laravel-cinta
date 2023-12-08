@@ -61,7 +61,7 @@ class PhysicalController extends Controller
 
         // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
         for ($i = 1; $i <= 10; $i++) {
-            $rules["hdd_" . ($i + 19)] = 'required|in:OK,NG';
+            $rules["hdd_" . ($i)] = 'required|in:OK,NG';
         }
 
         $request->validate($rules);
@@ -83,7 +83,7 @@ class PhysicalController extends Controller
 
         // Tambahkan 'hdd1' hingga 'hdd10' ke dalam data untuk storage4
         for ($i = 1; $i <= 10; $i++) {
-            $data["hdd_" . ($i)] = $request->input("hdd_" . ($i + 19));
+            $data["hdd_" . ($i)] = $request->input("hdd_" . ($i));
         }
         // dd($data);
 
@@ -113,10 +113,11 @@ class PhysicalController extends Controller
 
         return view('pages.physical.edit', compact('physical'));
     }
-
+    
     public function update(Request $request, $id)
     {
-
+        $physical = Physical::findOrFail($id);
+        
         $rules = [
             'host3' => 'required|in:OK,NG',
             'storage3' => 'required|in:OK,NG',
@@ -133,33 +134,34 @@ class PhysicalController extends Controller
 
         // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
         for ($i = 1; $i <= 10; $i++) {
-            $rules["hdd_" . ($i + 19)] = 'required|in:OK,NG';
+            $rules["hdd_" . ($i)] = 'required|in:OK,NG';
         }
 
         $request->validate($rules);
 
-        $physical = Physical::findOrFail($id);
+        $data = [
+            'host3' => $request->input('host3'),
+            'storage3' => $request->input('storage3'),
+            'host4' => $request->input('host4'),
+            'storage4' => $request->input('storage4'),
+            'note' => $request->input('note'),
+            'follow_up' => $request->input('follow_up')
+        ];
 
-        $physical->host3 = $request->input('host3');
-        $physical->storage3 = $request->input('storage3');
-
+        // Tambahkan 'hdd1' hingga 'hdd19' ke dalam data untuk storage3
         for ($i = 1; $i <= 19; $i++) {
-            $physical["hdd{$i}"] = $request->input("hdd{$i}");
+            $data["hdd{$i}"] = $request->input("hdd{$i}");
         }
 
-        $physical->host4 = $request->input('host4');
-        $physical->storage4 = $request->input('storage4');
-
+        // Tambahkan 'hdd1' hingga 'hdd10' ke dalam data untuk storage4
         for ($i = 1; $i <= 10; $i++) {
-            $physical["hdd_" . ($i + 19)] = $request->input("hdd_" . ($i + 19));
+            $data["hdd_" . ($i)] = $request->input("hdd_" . ($i));
         }
 
-        $physical->note = $request->input('note');
-        $physical->follow_up = $request->input('follow_up');
+        // Simpan data ke model
+        $physical->update($data);
 
-        $physical->save();
-        
-        return redirect()->route('physical.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('physical.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -167,6 +169,6 @@ class PhysicalController extends Controller
         $physical = Physical::findOrFail($id);
         $physical->delete();
 
-        return redirect()->route('physical.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('physical.index')->with('success', 'Data berhasil dihapus.');
     }
 }

@@ -10,7 +10,7 @@
         </a>
     </div>
     <div class="mb-2">
-        <h4>DETAIL C/S DATABASE SERVER ({{ \Carbon\Carbon::parse($csdatabase->created_at)->format('d-m-Y H:i:s') }})</h4>
+        <h4>C/S DETAIL BACKUP DATABASE ({{ \Carbon\Carbon::parse($csdatabase->created_at)->format('d-m-Y H:i:s') }})</h4>
     </div>    
     <hr>
     <div class="table-responsive">

@@ -47,7 +47,7 @@ class CctvController extends Controller
         }
 
         for ($i = 1; $i <= 117; $i++) {
-            $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal';
+            $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal,Rusak';
         }
 
         $request->validate($rules);
@@ -96,38 +96,36 @@ class CctvController extends Controller
     public function update(Request $request, $id)
     {
         $cctv = Cctv::findOrFail($id);
-
+    
         $rules = [
             'note' => 'nullable|string',
             'follow_up' => 'nullable|string',
         ];
-
+    
         for ($i = 1; $i <= 117; $i++) {
             $rules["cam{$i}"] = 'required|in:Ok,Ng';
+            $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal,Rusak';
         }
-
-        for ($i = 1; $i <= 117; $i++) {
-            $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal';
-        }
-
+    
         $request->validate($rules);
-
+    
         $data = [
             'note' => $request->input('note'),
             'follow_up' => $request->input('follow_up')
         ];
-        
+    
         for ($i = 1; $i <= 117; $i++) {
             $data["cam{$i}"] = $request->input("cam{$i}");
             $data["kondisi_cam{$i}"] = $request->input("kondisi_cam{$i}");
         }
-
+    
         $cctv->update($data);
-        $cctv->note = $request->input('note', 'follow_up');
+    
         $cctv->save();
-
+    
         return redirect()->route('cctv.index')->with('success', 'Data berhasil diperbarui');
     }
+    
 
     public function destroy($id)
     {

@@ -59,6 +59,7 @@
                             <div class="text-center">
                                 <select name="status" class="form-select text-center" id="StatusSelect" contenteditable="true" required>
                                     <option value="" disabled selected>--- Status ---</option>
+                                    <option value="Active" {{ $tapedrive->status === 'Active' ? 'selected' : ''}}>Active</option>
                                     <option value="Finished" {{ $tapedrive->status === 'Finished' ? 'selected' : ''}}>Finished</option>
                                     <option value="Failed" {{ $tapedrive->status === 'Failed' ? 'selected' : ''}}>Failed</option>
                                 </select>

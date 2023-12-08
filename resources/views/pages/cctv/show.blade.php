@@ -34,6 +34,8 @@
                                 <span class="badge bg-success text-white">Normal</span>
                             @elseif ($cctv["kondisi_cam{$i}"] == 'Kotor')
                                 <span class="badge bg-warning text-white">Kotor</span>
+                            @elseif ($cctv["kondisi_cam{$i}"] == 'Rusak')
+                                <span class="badge bg-danger text-white">Rusak</span>
                             @else
                                 {{ $cctv["kondisi_cam{$i}"] }}
                             @endif

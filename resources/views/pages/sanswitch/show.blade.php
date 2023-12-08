@@ -119,10 +119,16 @@
                 @endfor
             </tbody>
         </table>
-        <div class="col-md-12 mb-5">
-            <p>Note :</p>
-            <textarea class="form-control" name="note" rows="{{ substr_count($sanswitch->note, "\n") + 5 }}" readonly>{{ $sanswitch->note ?? 'Tidak ada' }}</textarea>
-        </div>
+        <div class="row mt-4">
+            <div class="col-md-6 mb-5">
+                <p><b>Note :</b></p>
+                <textarea class="form-control" name="note" rows="{{ substr_count($sanswitch->note, "\n") + 5 }}" disabled>{{ $sanswitch->note ?? 'Tidak ada' }}</textarea>
+            </div>
+            <div class="col-md-6 mb-5">
+                <p><b>Follow Up :</b></p>
+                <textarea class="form-control" name="follow_up" rows="{{ substr_count($sanswitch->follow_up, "\n") + 5 }}" disabled>{{ $sanswitch->follow_up ?? 'Tidak ada' }}</textarea>
+            </div>
+        </div> 
     </div>
 </div>
 

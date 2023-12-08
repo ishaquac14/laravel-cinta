@@ -56,6 +56,7 @@
                         <div class="text-center">
                             <select name="status" class="form-select text-center" id="StatusSelect" contenteditable="true" required>
                                 <option value="" disabled selected>--- Status ---</option>
+                                <option value="Active">Active</option>
                                 <option value="Finished">Finished</option>
                                 <option value="Failed">Failed</option>
                             </select>

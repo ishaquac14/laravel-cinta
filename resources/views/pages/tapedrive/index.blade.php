@@ -64,7 +64,9 @@
                                     @endif
                                 </td>
                                 <td class="align-middle text-center">
-                                    @if ($tapedrive->status === 'Finished')
+                                    @if ($tapedrive->status === 'Active')
+                                        <span class="badge bg-primary">Active</span>
+                                    @elseif ($tapedrive->status === 'Finished')
                                         <span class="badge bg-success">Finished</span>
                                     @elseif ($tapedrive->status === 'Failed')
                                         <span class="badge bg-danger">Failed</span>

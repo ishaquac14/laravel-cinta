@@ -98,7 +98,7 @@ class GacsirtController extends Controller
             'follow_up'
         ));
 
-        return redirect()->route('gacsirt.index')->with('success', 'GA Csirt berhasil diperbarui.');
+        return redirect()->route('gacsirt.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -106,6 +106,6 @@ class GacsirtController extends Controller
         $gacsirt = Gacsirt::findOrFail($id);
         $gacsirt->delete();
 
-        return redirect()->route('gacsirt.index')->with('success', 'GA Csirt berhasil dihapus.');
+        return redirect()->route('gacsirt.index')->with('success', 'Data berhasil dihapus.');
     }
 }

@@ -9,7 +9,17 @@
             </a>
         </div>
         <div class="mb-3">
-            <h4>UPDATE C/S AC SERVER</h4>
+            <h4>C/S UPDATE MONITORING AC SERVER
+                @if ($acserver->status === 'ok')
+                    <span class="badge bg-success"></span>
+                @elseif ($acserver->status === 'warning')
+                    <span class="badge bg-warning">Warning</span>
+                @elseif ($acserver->status === 'not good')
+                    <span class="badge bg-danger">Not Good</span>
+                @else
+                    {{ $acserver->status }}
+                @endif
+            </h4>
         </div>
         <hr>
 
@@ -52,9 +62,15 @@
                                     <select name="kondisi_{{ $item['name'] }}" class="form-select text-center"
                                         id="KondisiSelect" contenteditable="true" required>
                                         <option value="" disabled selected>--- Kondisi ---</option>
-                                        <option value="Normal Hidup" {{ $acserver["kondisi_" . $item['name']] == 'Normal Hidup' ? 'selected' : '' }}>Normal Hidup</option>
-                                        <option value="Normal Mati" {{ $acserver["kondisi_" . $item['name']] == 'Normal Mati' ? 'selected' : '' }}>Normal Mati</option>
-                                        <option value="Rusak" {{ $acserver["kondisi_" . $item['name']] == 'Rusak' ? 'selected' : '' }}>Rusak</option>
+                                        <option value="Normal Hidup"
+                                            {{ $acserver['kondisi_' . $item['name']] == 'Normal Hidup' ? 'selected' : '' }}>
+                                            Normal Hidup</option>
+                                        <option value="Normal Mati"
+                                            {{ $acserver['kondisi_' . $item['name']] == 'Normal Mati' ? 'selected' : '' }}>
+                                            Normal Mati</option>
+                                        <option value="Rusak"
+                                            {{ $acserver['kondisi_' . $item['name']] == 'Rusak' ? 'selected' : '' }}>Rusak
+                                        </option>
                                     </select>
                                 </div>
                             </td>
@@ -71,10 +87,11 @@
                 </tbody>
             </table>
             <div>
-                <input type="text" name="suhu_ruangan" class="form-control mt-4" placeholder="INPUT SUHU RUANGAN" value="{{ $acserver->suhu_ruangan }}">
+                <input type="text" name="suhu_ruangan" class="form-control mt-4" placeholder="INPUT SUHU RUANGAN"
+                    value="{{ $acserver->suhu_ruangan }}">
             </div>
             <div class="row">
-                <div class="@if(auth()->user() && auth()->user()->is_admin) col-md-6 @else col-md-12 @endif">
+                <div class="@if (auth()->user() && auth()->user()->is_admin) col-md-6 @else col-md-12 @endif">
                     <label for="exampleFormControlTextarea1" class="form-label"></label>
                     <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="3" placeholder="Note">{{ $acserver->note }}</textarea>
                 </div>

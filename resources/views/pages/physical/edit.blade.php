@@ -134,7 +134,7 @@
                     <?php for ($i = 1; $i <= 10; $i++): ?>
                     <tr>
                         <th scope="row" class="text-center">{{ $i + 23 }}</th>
-                        <td>HDD{{ $i }}-Str3</td>
+                        <td>HDD{{ $i }}-Str4</td>
                         <td class="text-center">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hdd_{{ $i }}"

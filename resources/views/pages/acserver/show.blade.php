@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="mb-2">
-            <h4>DETAIL C/S AC SERVER ({{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y H:i:s') }})
+            <h4>C/S DETAIL MONITORING AC SERVER ({{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y H:i:s') }})
                     @if ($acserver->status === 'ok')
                         <span class="badge bg-success"></span>
                     @elseif ($acserver->status === 'warning')

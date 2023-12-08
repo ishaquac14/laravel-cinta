@@ -52,6 +52,7 @@ class SanswitchController extends Controller
             'powerstatus_' => 'required|in:OK,NG',
             'notif' => 'required|in:OK,NG',
             'note' => 'nullable|string',
+            'follow_up' => 'nullable|string',
         ];
 
         for ($i = 0; $i <= 3; $i++) {
@@ -70,7 +71,8 @@ class SanswitchController extends Controller
             'notif' => $request->input('notif'),
             'powerstatus_' => $request->input('powerstatus_'),
             'notif_' => $request->input('notif_'),
-            'note' => $request->input('note')
+            'note' => $request->input('note'),
+            'follow_up' => $request->input('note')
         ];
         
         // Tambahkan 'hdd1' hingga 'hdd19' ke dalam data untuk storage3
@@ -101,6 +103,64 @@ class SanswitchController extends Controller
     {
         $sanswitch = Sanswitch::findOrFail($id);
         return view('pages.sanswitch.show', compact('sanswitch'));
+    }
+
+    public function edit($id)
+    {
+        $sanswitch = Sanswitch::findOrFail($id);
+
+        return view('pages.sanswitch.edit', compact('sanswitch'));
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $sanswitch = Sanswitch::findOrFail($id);
+        
+        $rules = [
+            'powerstatus' => 'required|in:OK,NG',
+            'notif_' => 'required|in:OK,NG',
+            'powerstatus_' => 'required|in:OK,NG',
+            'notif' => 'required|in:OK,NG',
+            'note' => 'nullable|string',
+            'follow_up' => 'nullable|string',
+        ];
+
+        for ($i = 0; $i <= 3; $i++) {
+            $rules["port{$i}"] = 'required|in:OK,NG';
+        }
+
+        for ($i = 0; $i <= 4; $i++) {
+            $rules["port_{$i}"] = 'required|in:OK,NG';
+        }
+
+        $request->validate($rules);
+
+        $data = [
+            'powerstatus' => $request->input('powerstatus'),
+            'notif' => $request->input('notif'),
+            'powerstatus_' => $request->input('powerstatus_'),
+            'notif_' => $request->input('notif_'),
+            'note' => $request->input('note'),
+            'follow_up' => $request->input('follow_up')
+        ];
+
+        for ($i = 0; $i <= 4; $i++) {
+            $data["port{$i}"] = $request->input("port{$i}");
+            $data["port_{$i}"] = $request->input("port_{$i}");
+        }
+
+        // Simpan data ke model
+        $sanswitch->update($data);
+
+        return redirect()->route('sanswitch.index')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $sanswitch = Sanswitch::findOrFail($id);
+        $sanswitch->delete();
+
+        return redirect()->route('sanswitch.index')->with('success', 'Data berhasil dihapus.');
     }
         
 }

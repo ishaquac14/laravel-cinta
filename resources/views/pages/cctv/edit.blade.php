@@ -47,11 +47,11 @@
                             <div>
                                 <select name="kondisi_cam<?php echo $i; ?>" class="form-select text-center" id="KondisiSelect" contenteditable="true">
                                     <option value="" disabled selected>--- Status CCTV ---</option>
-                                    <option value="Normal" <?php echo ($cctv->{"kondisi_cam{$i}"} === 'Normal') ? 'selected' : ''; ?>>Normal</option>
-                                    <option value="Kotor" <?php echo ($cctv->{"kondisi_cam{$i}"} === 'Kotor') ? 'selected' : ''; ?>>Kotor</option>
-                                    <option value="Rusak" <?php echo ($cctv->{"kondisi_cam{$i}"} === 'Rusak') ? 'selected' : ''; ?>>Rusak</option>
+                                    <option value="Normal" <?php echo ($cctv->{"kondisi_cam" . $i} === 'Normal') ? 'selected' : ''; ?>>Normal</option>
+                                    <option value="Kotor" <?php echo ($cctv->{"kondisi_cam" . $i} === 'Kotor') ? 'selected' : ''; ?>>Kotor</option>
+                                    <option value="Rusak" <?php echo ($cctv->{"kondisi_cam" . $i} === 'Rusak') ? 'selected' : ''; ?>>Rusak</option>
                                 </select>
-                            </div>
+                            </div>                                                     
                         </td>
                     </tr>
                 <?php endfor; ?>
