@@ -34,6 +34,7 @@
                     <th width="4%">No</th>
                     <th width="20%">Tanggal</th>
                     <th>Note</th>
+                    <th>Follow Up</th>
                     <th>Author</th>
                     <th width="20%">Action</th>
                 </tr>
@@ -48,10 +49,22 @@
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($physical->created_at)->format('d-m-Y') }}</td>
                         <td class="align-middle">{{ empty($physical->note) ? 'Tidak ada' : $physical->note }}</td>
+                        <td class="align-middle">{{ empty($csdatabase->follow_up) ? 'Tidak Ada' : $physical->follow_up }}</td>
                         <td class="align-middle text-center">{{ $physical->users->name }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ route('physical.show', $physical->id) }}" class="btn btn-primary">Detail</a>
+                                <a href="{{ route('physical.show', $physical->id) }}"
+                                    class="btn btn-primary">Detail</a>
+                                @can('is_admin')
+                                    <a href="{{ route('physical.edit', $physical->id) }}"
+                                        class="btn btn-warning">Edit</a>
+                                    <form action="{{ route('physical.destroy', $physical->id) }}" method="POST"
+                                        onsubmit="return confirm('Hapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                @endcan
                             </div>
                         </td>
                     </tr>

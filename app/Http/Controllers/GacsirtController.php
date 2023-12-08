@@ -16,7 +16,7 @@ class GacsirtController extends Controller
         if ($searchTerm) {
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('note', 'LIKE', '%' . $searchTerm . '%');
+                    ->orWhere('', 'LIKE', '%' . $searchTerm . '%');
             });
         }
 
@@ -42,7 +42,7 @@ class GacsirtController extends Controller
             'tcompleted' => 'string|nullable',
             'completed' => 'string|nullable',
             'status' => 'string|required',
-            'follow_up' => 'string|required',
+            'follow_up' => 'string|nullable',
         ]);
 
         $data = $request->only([
@@ -88,7 +88,6 @@ class GacsirtController extends Controller
             'follow_up' => 'nullable'
         ]);
 
-        // Ambil data dari formulir yang diubah oleh pengguna
         $gacsirt->update($request->only(
             'date',
             'tincoming',

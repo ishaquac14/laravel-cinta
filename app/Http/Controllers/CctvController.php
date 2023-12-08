@@ -39,6 +39,7 @@ class CctvController extends Controller
     {
         $rules = [
             'note' => 'nullable|string',
+            'follow_up' => 'nullable|string',
         ];
 
         for ($i = 1; $i <= 117; $i++) {
@@ -52,8 +53,10 @@ class CctvController extends Controller
         $request->validate($rules);
 
         $data = [
-            'note' => $request->input('note')
+            'note' => $request->input('note'),
+            'follow_up' => $request->input('follow_up')
         ];
+        
         
         for ($i = 1; $i <= 117; $i++) {
             $data["cam{$i}"] = $request->input("cam{$i}");
@@ -81,5 +84,56 @@ class CctvController extends Controller
     {
         $cctv = Cctv::findOrFail($id);
         return view('pages.cctv.show', compact('cctv'));
+    }
+
+    public function edit($id)
+    {
+        $cctv = Cctv::findOrFail($id);
+
+        return view('pages.cctv.edit', compact('cctv'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $cctv = Cctv::findOrFail($id);
+
+        $rules = [
+            'note' => 'nullable|string',
+            'follow_up' => 'nullable|string',
+        ];
+
+        for ($i = 1; $i <= 117; $i++) {
+            $rules["cam{$i}"] = 'required|in:Ok,Ng';
+        }
+
+        for ($i = 1; $i <= 117; $i++) {
+            $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal';
+        }
+
+        $request->validate($rules);
+
+        $data = [
+            'note' => $request->input('note'),
+            'follow_up' => $request->input('follow_up')
+        ];
+        
+        for ($i = 1; $i <= 117; $i++) {
+            $data["cam{$i}"] = $request->input("cam{$i}");
+            $data["kondisi_cam{$i}"] = $request->input("kondisi_cam{$i}");
+        }
+
+        $cctv->update($data);
+        $cctv->note = $request->input('note', 'follow_up');
+        $cctv->save();
+
+        return redirect()->route('cctv.index')->with('success', 'Data berhasil diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $cctv = Cctv::findOrFail($id);
+        $cctv->delete();
+
+        return redirect()->route('cctv.index')->with('success', 'Data berhasil dihapus');
     }
 }

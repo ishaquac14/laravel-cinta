@@ -17,12 +17,12 @@ return new class extends Migration
         
             for ($i = 1; $i <= 117; $i++) {
                 $columnName = "cam{$i}";
-                $table->text($columnName);
+                $table->string($columnName, 8);
             }
         
             for ($i = 1; $i <= 117; $i++) {
                 $columnName = "kondisi_cam{$i}";
-                $table->text($columnName)->nullable();
+                $table->string($columnName, 8)->nullable();
             }
         
             $table->text('note')->nullable();

@@ -46,8 +46,9 @@
                             <div>
                                 <select name="kondisi_cam<?php echo $i; ?>" class="form-select text-center" id="KondisiSelect" contenteditable="true">
                                     <option value="" disabled selected>--- Status CCTV ---</option>
-                                    <option value="Kotor">Kotor</option>
                                     <option value="Normal">Normal</option>
+                                    <option value="Kotor">Kotor</option>
+                                    <option value="Rusak">Rusak</option>
                                 </select>
                             </div>
                         </td>
