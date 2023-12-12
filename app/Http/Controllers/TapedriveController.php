@@ -91,7 +91,7 @@ class TapedriveController extends Controller
         // Ambil data dari formulir yang diubah oleh pengguna
         $tapedrive->update($request->only('plan_media', 'actual_media', 'tape_id', 'status', 'note', 'follow_up'));
 
-        return redirect()->route('tapedrive.index')->with('success', 'Tape Drive berhasil diperbarui.');
+        return redirect()->route('tapedrive.index')->with('success', 'Tape Drive berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -99,7 +99,7 @@ class TapedriveController extends Controller
         $tapedrive = Tapedrive::findOrFail($id);
         $tapedrive->delete();
 
-        return redirect()->route('tapedrive.index')->with('success', 'Tape Drive berhasil dihapus.');
+        return redirect()->route('tapedrive.index')->with('success', 'Tape Drive berhasil dihapus');
     }
 
 }

@@ -160,8 +160,7 @@ class PhysicalController extends Controller
 
         // Simpan data ke model
         $physical->update($data);
-
-        return redirect()->route('physical.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('physical.index')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -169,6 +168,6 @@ class PhysicalController extends Controller
         $physical = Physical::findOrFail($id);
         $physical->delete();
 
-        return redirect()->route('physical.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('physical.index')->with('success', 'Data berhasil dihapus');
     }
 }

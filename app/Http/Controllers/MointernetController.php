@@ -44,7 +44,6 @@ class MointernetController extends Controller
             });
         }
 
-        // Menggunakan paginate(5) untuk mendapatkan data paginasi
         $mointernets = $query->paginate(5);
 
         // Menghitung total durasi dalam sebulan
@@ -192,7 +191,7 @@ class MointernetController extends Controller
             'follow_up'
         ));
 
-        return redirect()->route('mointernet.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('mointernet.index')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -200,6 +199,6 @@ class MointernetController extends Controller
         $mointernet = Mointernet::findOrFail($id);
         $mointernet->delete();
 
-        return redirect()->route('mointernet.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('mointernet.index')->with('success', 'Data berhasil dihapus');
     }
 }

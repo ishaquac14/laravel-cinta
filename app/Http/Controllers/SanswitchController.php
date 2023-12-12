@@ -152,7 +152,7 @@ class SanswitchController extends Controller
         // Simpan data ke model
         $sanswitch->update($data);
 
-        return redirect()->route('sanswitch.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('sanswitch.index')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -160,7 +160,7 @@ class SanswitchController extends Controller
         $sanswitch = Sanswitch::findOrFail($id);
         $sanswitch->delete();
 
-        return redirect()->route('sanswitch.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('sanswitch.index')->with('success', 'Data berhasil dihapus');
     }
         
 }

@@ -94,7 +94,7 @@ class FujixeroxController extends Controller
             'status'
         ));
 
-        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -102,6 +102,6 @@ class FujixeroxController extends Controller
         $fujixerox = Fujixerox::findOrFail($id);
         $fujixerox->delete();
 
-        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil dihapus');
     }
 }

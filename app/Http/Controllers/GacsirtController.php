@@ -70,10 +70,7 @@ class GacsirtController extends Controller
 
         return view('pages.gacsirt.edit', compact('gacsirt'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, $id)
     {
         $gacsirt = Gacsirt::findOrFail($id);
@@ -98,7 +95,7 @@ class GacsirtController extends Controller
             'follow_up'
         ));
 
-        return redirect()->route('gacsirt.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('gacsirt.index')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -106,6 +103,6 @@ class GacsirtController extends Controller
         $gacsirt = Gacsirt::findOrFail($id);
         $gacsirt->delete();
 
-        return redirect()->route('gacsirt.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('gacsirt.index')->with('success', 'Data berhasil dihapus');
     }
 }

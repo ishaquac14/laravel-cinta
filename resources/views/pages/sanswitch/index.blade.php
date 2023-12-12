@@ -51,7 +51,8 @@
                                 <td class="align-middle text-center">
                                     {{ \Carbon\Carbon::parse($sanswitch->created_at)->format('d-m-Y') }}</td>
                                 <td class="align-middle">{{ empty($sanswitch->note) ? 'Tidak ada' : $sanswitch->note }}</td>
-                                <td class="align-middle">{{ empty($sanswitch->follow_up) ? 'Tidak Ada' : $sanswitch->follow_up }}</td>
+                                <td class="align-middle">
+                                    {{ empty($sanswitch->follow_up) ? 'Tidak Ada' : $sanswitch->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $sanswitch->users->name }}</td>
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">

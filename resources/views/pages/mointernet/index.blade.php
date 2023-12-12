@@ -40,7 +40,7 @@
                         <th>Root Cause</th>
                         <th>Follow Up</th>
                         @can('is_admin')
-                        <th>Action</th>
+                            <th>Action</th>
                         @endcan
                     </tr>
                 </thead>
@@ -57,7 +57,8 @@
                                 <td class="align-middle text-center">{{ $mointernet->end_time }}</td>
                                 <td class="align-middle text-center">{{ $mointernet->duration }} Menit</td>
                                 <td class="align-middle text-center">{{ $mointernet->root_cause }}</td>
-                                <td class="align-middle">{{ empty($mointernet->follow_up) ? 'Tidak Ada' : $mointernet->follow_up }}</td>
+                                <td class="align-middle">
+                                    {{ empty($mointernet->follow_up) ? 'Tidak Ada' : $mointernet->follow_up }}</td>
                                 @can('is_admin')
                                     <td class="align-middle text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
@@ -88,129 +89,128 @@
 
     <div id="container">
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Mendapatkan tanggal untuk bulan ini
+                var currentDate = new Date();
+                var currentMonth = currentDate.getMonth();
+                var daysInMonth = new Date(currentDate.getFullYear(), currentMonth + 1, 0).getDate();
+
+                // Inisialisasi data dengan nilai null untuk setiap tanggal
+                var data = [];
+                for (var i = 0; i < daysInMonth; i++) {
+                    data.push(null);
+                }
+                // Update konfigurasi Highcharts dengan data yang dihasilkan
+                var chartOptions = {
+                    title: {
+                        text: 'Persentase wkwkw',
+                        align: 'center'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Persentase'
+                        }
+                    },
+                    xAxis: {
+                        categories: Array.from({
+                            length: daysInMonth
+                        }, (_, i) => (i + 1).toString()),
+                        accessibility: {
+                            rangeDescription: 'Range: 1 to ' + daysInMonth
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            label: {
+                                connectorAllowed: false
+                            },
+                        }
+                    },
+                    series: [{
+                        name: 'Monitoring Internet',
+                        data: data
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+                };
+
+                Highcharts.chart('container', chartOptions);
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Mendapatkan data dari controller
+                var data = @json($data);
+
+                // Update konfigurasi Highcharts dengan data yang dihasilkan
+                var chartOptions = {
+                    title: {
+                        text: 'Persentase Internet',
+                        align: 'center'
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Persentase'
+                        }
+                    },
+                    xAxis: {
+                        categories: Array.from({
+                            length: data.length
+                        }, (_, i) => (i + 0).toString()),
+                        accessibility: {
+                            rangeDescription: 'Range: 1 to ' + data.length
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            label: {
+                                connectorAllowed: false
+                            },
+                            pointStart: 1
+                        }
+                    },
+                    series: [{
+                        name: 'Monitoring Internet',
+                        data: data
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+                };
+
+                // Membuat grafik menggunakan konfigurasi yang telah diatur
+                Highcharts.chart('container', chartOptions);
+            });
+        </script>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mendapatkan tanggal untuk bulan ini
-            var currentDate = new Date();
-            var currentMonth = currentDate.getMonth();
-            var daysInMonth = new Date(currentDate.getFullYear(), currentMonth + 1, 0).getDate();
-
-            // Inisialisasi data dengan nilai null untuk setiap tanggal
-            var data = [];
-            for (var i = 0; i < daysInMonth; i++) {
-                data.push(null);
-            }
-            // Update konfigurasi Highcharts dengan data yang dihasilkan
-            var chartOptions = {
-                title: {
-                    text: 'Persentase wkwkw',
-                    align: 'center'
-                },
-                yAxis: {
-                    title: {
-                        text: 'Persentase'
-                    }
-                },
-                xAxis: {
-                    categories: Array.from({
-                        length: daysInMonth
-                    }, (_, i) => (i + 1).toString()),
-                    accessibility: {
-                        rangeDescription: 'Range: 1 to ' + daysInMonth
-                    }
-                },
-                plotOptions: {
-                    series: {
-                        label: {
-                            connectorAllowed: false
-                        },
-                    }
-                },
-                series: [{
-                    name: 'Monitoring Internet',
-                    data: data
-                }],
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
-                        chartOptions: {
-                            legend: {
-                                layout: 'horizontal',
-                                align: 'center',
-                                verticalAlign: 'bottom'
-                            }
-                        }
-                    }]
-                }
-            };
-
-            Highcharts.chart('container', chartOptions);
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mendapatkan data dari controller
-            var data = @json($data);
-
-            // Update konfigurasi Highcharts dengan data yang dihasilkan
-            var chartOptions = {
-                title: {
-                    text: 'Persentase Internet',
-                    align: 'center'
-                },
-                yAxis: {
-                    title: {
-                        text: 'Persentase'
-                    }
-                },
-                xAxis: {
-                    categories: Array.from({
-                        length: data.length
-                    }, (_, i) => (i + 0).toString()),
-                    accessibility: {
-                        rangeDescription: 'Range: 1 to ' + data.length
-                    }
-                },
-                plotOptions: {
-                    series: {
-                        label: {
-                            connectorAllowed: false
-                        },
-                        pointStart: 1
-                    }
-                },
-                series: [{
-                    name: 'Monitoring Internet',
-                    data: data
-                }],
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
-                        chartOptions: {
-                            legend: {
-                                layout: 'horizontal',
-                                align: 'center',
-                                verticalAlign: 'bottom'
-                            }
-                        }
-                    }]
-                }
-            };
-
-            // Membuat grafik menggunakan konfigurasi yang telah diatur
-            Highcharts.chart('container', chartOptions);
-        });
-    </script>
 @endsection
