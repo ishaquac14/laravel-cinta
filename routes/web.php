@@ -33,7 +33,7 @@ Route::get('/mointernet/persen_grafik_monitoring_internet ', [MointernetControll
 
 Route::resource('/physical', PhysicalController::class)->middleware('auth');
 Route::get('/physical/search', 'PhysicalController@index')->middleware('auth');
-Route::post('/physical/store', [PhysicalController::class, 'store'])->name('physical.store');
+// Route::post('/physical/store', [PhysicalController::class, 'store'])->name('physical.store');
 
 Route::resource('/sanswitch', SanswitchController::class);
 Route::get('/sanswitch/search', 'SanswitchController@index');
@@ -42,7 +42,7 @@ Route::resource('/csdatabase', CsdatabaseController::class)->middleware('auth');
 Route::get('/csdatabase/search', 'CsdatabaseController@index');
 
 Route::resource('/acserver', AcserverController::class)->middleware('auth');
-Route::get('/acserver/search', 'AcserverController@index');
+Route::get('/acserver/search', [LoginController::class, 'index']);
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -72,8 +72,10 @@ Route::get('/tapedrive/search', 'TapedriveController@index');
 
 Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 
-Route::prefix('api')->group(function () {
-    Route::get('/chart-data', [MointernetController::class, 'getChartData']);
-});
+// Route::prefix('api')->group(function () {
+//     Route::get('/chart-data', [MointernetController::class, 'getChartData']);
+// });
 
 Route::resource('/cobaadmin', AdminController::class)->middleware('is_admin');
+
+Route::get('/test', [AcserverController::class, 'alert'])->name('alert');

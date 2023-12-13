@@ -14,8 +14,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call('App\Http\Controllers\SchedulerController@runMointernetScheduler')
-                 ->everyMinute();
+        $schedule->call('App\Http\Controllers\SchedulerController@runMointernetScheduler')->everyMinute();
+        $schedule->command('app:whatsapp-acserver')->everyMinute();
+        $schedule->command('app:whatsapp-cctv')->everyMinute();
+        $schedule->command('app:whatsapp-csdatabase')->everyMinute();
+        $schedule->command('app:whatsapp-fujixerox')->everyMinute();
+        $schedule->command('app:whatsapp-gacsirt')->everyMinute();
+        $schedule->command('app:whatsapp-sanswitch')->everyMinute();
+        $schedule->command('app:whatsapp-physical')->everyMinute();
+        $schedule->command('app:whatsapp-tapedrive')->everyMinute();
     }
 
     /**
@@ -23,9 +30,13 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
-    
+
+    // protected $commands = [
+    //     \App\Console\Commands\SendWhatsAppMessage::class,
+    // ];
+
 }
