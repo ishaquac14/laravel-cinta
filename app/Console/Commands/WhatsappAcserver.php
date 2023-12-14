@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use App\Console\Commands\Record;
 use App\Models\Acserver;
+use Carbon\Carbon;
 
 class WhatsappAcserver extends Command
 {
@@ -28,12 +29,14 @@ class WhatsappAcserver extends Command
      */
     public function handle()
     {
-        if (!Acserver::whereDate('created_at', today())->exists()) {
-            $nomor = ['081223506433']; 
-            $isi = 'Halo';
+        if (!Acserver::whereDate('created_at', Carbon::yesterday())->exists()) {
+            $nomor = ['6281223506433']; 
+
+            $isi = "WARNING !!!\n\n"; 
+            $isi .= "Hari ini Checksheet AC SERVER tidak diisi !";
 
             $token = "v2n49drKeWNoRDN4jgqcdsR8a6bcochcmk6YphL6vLcCpRZdV1";
-            $message = sprintf("-------------------------%c$isi%c------------------------- ", 10, 10);
+            $message = sprintf("------------CINTA------------%c$isi%c------------------------- ", 10, 10);
 
             $curl = curl_init();
             curl_setopt_array($curl, array(

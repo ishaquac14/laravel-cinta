@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acserver;
-use App\Models\Mointernet;
-use App\Models\Grafikinternet;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 
 class AcserverController extends Controller
@@ -77,67 +74,6 @@ class AcserverController extends Controller
 
         // Redirect atau memberikan respons sesuai kebutuhan
         return redirect()->route('acserver.index')->with('success', 'Data berhasil disimpan');
-    }
-
-    private function calculateDuration($startTime, $endTime)
-    {
-        if ($startTime && $endTime) {
-            $start = Carbon::parse($startTime);
-            $end = Carbon::parse($endTime);
-
-            return $end->diffInMinutes($start);
-        }
-
-        return 0;
-    }
-
-    private function updatePercentage()
-    {
-        $startDate = Carbon::now()->subMonth(); // Ambil tanggal satu bulan yang lalu dari sekarang
-        $totalEntries = Mointernet::where('created_at', '>=', $startDate)->count();
-        $percentage = ($totalEntries > 0) ? $totalEntries / max(1, Mointernet::count()) * 100 : 0;
-
-        // Perbarui kolom persentase pada data yang baru saja dibuat
-        Mointernet::latest()->first()->update(['percentage' => $percentage]);
-    }
-
-    public function getChartData()
-    {
-        $startDate = now()->subMonth();
-        $data = Mointernet::where('created_at', '>=', $startDate)->get();
-
-        $labels = $data->pluck('created_at')->map(function ($date) {
-            return Carbon::parse($date)->format('M Y');
-        });
-
-        $percentages = $data->pluck('percentage');
-
-        return response()->json(['labels' => $labels, 'percentages' => $percentages]);
-    }
-
-    public function grafik_internet()
-    {
-        $now = Carbon::now()->format("Y-m-d");
-
-        $mointernets = Mointernet::where('date', $now)->get();
-        // dd($mointernets);
-        if (count($mointernets) > 0) {
-            $total_durasi = 0;
-            foreach ($mointernets as $mo) {
-                $total_durasi = $total_durasi + $mo->duration;
-            }
-            $persen = $total_durasi / (24 * 60) * 100;
-            $persen = 100 - $persen;
-            $grafikinternets = Grafikinternet::create([
-                'date' => $now,
-                'persen' => $persen,
-            ]);
-        } else {
-            $grafikinternets = Grafikinternet::create([
-                'date' => $now,
-                'persen' => "100",
-            ]);
-        };
     }
 
     public function show($id)

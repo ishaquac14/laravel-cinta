@@ -28,7 +28,8 @@ class WhatsappSanswitch extends Command
     {
         if (!Sanswitch::whereDate('created_at', today())->exists()) {
             $nomor = ['081223506433']; 
-            $isi = 'Halo Fujixerox';
+            $isi = "WARNING !!!\n\n"; 
+            $isi .= "Hari ini Checksheet Sanswitch tidak diisi !";
 
             $token = "v2n49drKeWNoRDN4jgqcdsR8a6bcochcmk6YphL6vLcCpRZdV1";
             $message = sprintf("-------------------------%c$isi%c------------------------- ", 10, 10);

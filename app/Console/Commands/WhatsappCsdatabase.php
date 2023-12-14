@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Csdatabase;
 use Illuminate\Console\Command;
 
-class Csdatabase extends Command
+
+class WhatsappCsdatabase extends Command
 {
     /**
      * The name and signature of the console command.
@@ -26,8 +28,10 @@ class Csdatabase extends Command
     public function handle()
     {
         if (!Csdatabase::whereDate('created_at', today())->exists()) {
-            $nomor = ['081223506433']; 
-            $isi = 'Halo Backup Database';
+            // $nomor = "081223506433"; https://chat.whatsapp.com/FTjZkUfpNkrEcs3LFHiXMn
+            $nomor = "FTjZkUfpNkrEcs3LFHiXMn";
+            $isi = "WARNING !!!\n\n"; 
+            $isi .= "Hari ini Checksheet Backup Database tidak diisi !";
 
             $token = "v2n49drKeWNoRDN4jgqcdsR8a6bcochcmk6YphL6vLcCpRZdV1";
             $message = sprintf("-------------------------%c$isi%c------------------------- ", 10, 10);

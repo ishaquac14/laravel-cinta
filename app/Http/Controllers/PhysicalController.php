@@ -61,7 +61,7 @@ class PhysicalController extends Controller
 
         // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
         for ($i = 1; $i <= 10; $i++) {
-            $rules["hdd_" . ($i)] = 'required|in:OK,NG';
+            $rules["hdd_{$i}"] = 'required|in:OK,NG';
         }
 
         $request->validate($rules);
@@ -83,7 +83,7 @@ class PhysicalController extends Controller
 
         // Tambahkan 'hdd1' hingga 'hdd10' ke dalam data untuk storage4
         for ($i = 1; $i <= 10; $i++) {
-            $data["hdd_" . ($i)] = $request->input("hdd_" . ($i));
+            $data["hdd_{$i}"] = $request->input("hdd_" . ($i));
         }
         // dd($data);
 
@@ -134,7 +134,7 @@ class PhysicalController extends Controller
 
         // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
         for ($i = 1; $i <= 10; $i++) {
-            $rules["hdd_" . ($i)] = 'required|in:OK,NG';
+            $rules["hdd_{$i}"] = 'required|in:OK,NG';
         }
 
         $request->validate($rules);
@@ -155,7 +155,7 @@ class PhysicalController extends Controller
 
         // Tambahkan 'hdd1' hingga 'hdd10' ke dalam data untuk storage4
         for ($i = 1; $i <= 10; $i++) {
-            $data["hdd_" . ($i)] = $request->input("hdd_" . ($i));
+            $data["hdd_{$i}"] = $request->input("hdd_{$i}");
         }
 
         // Simpan data ke model

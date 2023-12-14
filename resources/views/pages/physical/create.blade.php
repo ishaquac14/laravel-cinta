@@ -113,14 +113,14 @@
                     <td>HDD<?php echo $i; ?>-Str4</td>
                     <td class="text-center">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="hdd_<?php echo $i + 10; ?>" id="hdd_<?php echo $i + 10; ?>ok" value="OK" required>
-                            <label class="form-check-label" for="hdd_<?php echo $i + 10; ?>ok">Ok</label>
+                            <input class="form-check-input" type="radio" name="hdd_<?php echo $i?>" id="hdd_<?php echo $i?>ok" value="OK" required>
+                            <label class="form-check-label" for="hdd_<?php echo $i?>ok">Ok</label>
                         </div>
                     </td>
                     <td class="text-center">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="hdd_<?php echo $i + 10; ?>" id="hdd_<?php echo $i + 10; ?>ng" value="NG" required>
-                            <label class="form-check-label" for="hdd_<?php echo $i + 10; ?>ng">Not Good</label>
+                            <input class="form-check-input" type="radio" name="hdd_<?php echo $i?>" id="hdd_<?php echo $i?>ng" value="NG" required>
+                            <label class="form-check-label" for="hdd_<?php echo $i?>ng">Not Good</label>
                         </div>
                     </td>
                 </tr>
