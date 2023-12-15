@@ -29,7 +29,7 @@ class WhatsappCsdatabase extends Command
     {
         if (!Csdatabase::whereDate('created_at', today())->exists()) {
             // $nomor = "081223506433"; https://chat.whatsapp.com/FTjZkUfpNkrEcs3LFHiXMn
-            $nomor = "FTjZkUfpNkrEcs3LFHiXMn";
+            $nomor = ['6285282716716', '6282260050066']; 
             $isi = "WARNING !!!\n\n"; 
             $isi .= "Hari ini Checksheet Backup Database tidak diisi !";
 

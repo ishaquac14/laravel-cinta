@@ -30,7 +30,7 @@ class WhatsappAcserver extends Command
     public function handle()
     {
         if (!Acserver::whereDate('created_at', Carbon::yesterday())->exists()) {
-            $nomor = ['6281223506433']; 
+            $nomor = ['6285282716716', '6282260050066']; 
 
             $isi = "WARNING !!!\n\n"; 
             $isi .= "Hari ini Checksheet AC SERVER tidak diisi !";

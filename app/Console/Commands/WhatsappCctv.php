@@ -27,7 +27,7 @@ class WhatsappCctv extends Command
     public function handle()
     {
         if (!Cctv::whereDate('created_at', today())->exists()) {
-            $nomor = ['081223506433']; 
+            $nomor = ['6285282716716', '6282260050066'];  
             $isi = "WARNING !!!\n\n"; 
             $isi .= "Hari ini Checksheet CCTV tidak diisi !";
 
