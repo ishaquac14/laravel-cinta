@@ -49,7 +49,7 @@
                         <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                         <td class="align-middle text-center">{{ \Carbon\Carbon::parse($physical->created_at)->format('d-m-Y') }}</td>
                         <td class="align-middle">{{ empty($physical->note) ? 'Tidak ada' : $physical->note }}</td>
-                        <td class="align-middle">{{ empty($csdatabase->follow_up) ? 'Tidak Ada' : $physical->follow_up }}</td>
+                        <td class="align-middle">{{ empty($physical->follow_up) ? 'Tidak Ada' : $physical->follow_up }}</td>
                         <td class="align-middle text-center">{{ $physical->users->name }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">

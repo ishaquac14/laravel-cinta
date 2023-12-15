@@ -44,27 +44,28 @@ class PhysicalController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         // Validasi form input
-        $rules = [
+        $request->validate ([
             'host3' => 'required|in:OK,NG',
             'storage3' => 'required|in:OK,NG',
             'host4' => 'required|in:OK,NG',
             'storage4' => 'required|in:OK,NG',
             'note' => 'nullable|string',
             'follow_up' => 'nullable|string',
-        ];
+        ]);
 
-        // Validasi untuk 'hdd1' hingga 'hdd19' di storage3
-        for ($i = 1; $i <= 19; $i++) {
-            $rules["hdd{$i}"] = 'required|in:OK,NG';
-        }
+        // // Validasi untuk 'hdd1' hingga 'hdd19' di storage3
+        // for ($i = 1; $i <= 19; $i++) {
+        //     $rules["hdd{$i}"] = 'required|in:OK,NG';
+        // }
 
-        // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
-        for ($i = 1; $i <= 10; $i++) {
-            $rules["hdd_{$i}"] = 'required|in:OK,NG';
-        }
+        // // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $rules["hdd_{$i}"] = 'required|in:OK,NG';
+        // }
 
-        $request->validate($rules);
+        // $request->validate($rules);
 
         // Simpan data ke database
         $data = [
@@ -78,12 +79,12 @@ class PhysicalController extends Controller
 
         // Tambahkan 'hdd1' hingga 'hdd19' ke dalam data untuk storage3
         for ($i = 1; $i <= 19; $i++) {
-            $data["hdd{$i}"] = $request->input("hdd{$i}");
+            $data["hdd{$i}"] = $request->input("hdd" . $i);
         }
 
         // Tambahkan 'hdd1' hingga 'hdd10' ke dalam data untuk storage4
         for ($i = 1; $i <= 10; $i++) {
-            $data["hdd_{$i}"] = $request->input("hdd_" . ($i));
+            $data["hdd_{$i}"] = $request->input("hdd_" . $i);
         }
         // dd($data);
 
@@ -117,49 +118,30 @@ class PhysicalController extends Controller
     public function update(Request $request, $id)
     {
         $physical = Physical::findOrFail($id);
-        
-        $rules = [
+    
+        $request->validate([
             'host3' => 'required|in:OK,NG',
             'storage3' => 'required|in:OK,NG',
             'host4' => 'required|in:OK,NG',
             'storage4' => 'required|in:OK,NG',
             'note' => 'nullable|string',
             'follow_up' => 'nullable|string',
-        ];
-
-        // Validasi untuk 'hdd1' hingga 'hdd19' di storage3
+        ]);
+    
+        $data = $request->only([
+            'host3', 'storage3', 'host4', 'storage4', 'note', 'follow_up'
+        ]);
+    
         for ($i = 1; $i <= 19; $i++) {
-            $rules["hdd{$i}"] = 'required|in:OK,NG';
+            $data["hdd{$i}"] = $request->input("hdd" . $i);
         }
-
-        // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
+    
         for ($i = 1; $i <= 10; $i++) {
-            $rules["hdd_{$i}"] = 'required|in:OK,NG';
+            $data["hdd_{$i}"] = $request->input("hdd_" . $i);
         }
-
-        $request->validate($rules);
-
-        $data = [
-            'host3' => $request->input('host3'),
-            'storage3' => $request->input('storage3'),
-            'host4' => $request->input('host4'),
-            'storage4' => $request->input('storage4'),
-            'note' => $request->input('note'),
-            'follow_up' => $request->input('follow_up')
-        ];
-
-        // Tambahkan 'hdd1' hingga 'hdd19' ke dalam data untuk storage3
-        for ($i = 1; $i <= 19; $i++) {
-            $data["hdd{$i}"] = $request->input("hdd{$i}");
-        }
-
-        // Tambahkan 'hdd1' hingga 'hdd10' ke dalam data untuk storage4
-        for ($i = 1; $i <= 10; $i++) {
-            $data["hdd_{$i}"] = $request->input("hdd_{$i}");
-        }
-
-        // Simpan data ke model
+    
         $physical->update($data);
+    
         return redirect()->route('physical.index')->with('success', 'Data berhasil diperbarui');
     }
 
