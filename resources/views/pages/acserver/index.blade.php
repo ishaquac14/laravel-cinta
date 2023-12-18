@@ -64,13 +64,24 @@
                                         {{ $acserver["{$item}"] }}
                                     @endif
                                 </td>
-                                <td class="align-middle">{{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}</td>
+                                <td class="align-middle">
+                                    {{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $acserver->users->name }}</td>
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="{{ route('acserver.show', $acserver->id) }}"
                                             class="btn btn-primary">Detail</a>
-                                        @can('is_admin')
+                                        @can('admin')
+                                            <a href="{{ route('acserver.edit', $acserver->id) }}"
+                                                class="btn btn-warning">Edit</a>
+                                            <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
+                                                onsubmit="return confirm('Hapus data ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        @endcan
+                                        @can('superadmin')
                                             <a href="{{ route('acserver.edit', $acserver->id) }}"
                                                 class="btn btn-warning">Edit</a>
                                             <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"

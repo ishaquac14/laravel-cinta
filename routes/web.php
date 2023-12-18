@@ -76,6 +76,6 @@ Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 //     Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 // });
 
-Route::resource('/cobaadmin', AdminController::class)->middleware('is_admin');
+Route::resource('/cobaadmin', AdminController::class)->middleware('role');
 
 Route::get('/test', [AcserverController::class, 'alert'])->name('alert');

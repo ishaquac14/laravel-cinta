@@ -99,7 +99,7 @@
                     </a>
                 </li>
                 <br>
-                @can('is_admin')
+                @can('admin')
                     <h5
                         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-3 text-body-secondary text-uppercase">
                         <span>ADMINISTRATOR</span>
