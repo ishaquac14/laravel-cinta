@@ -18,42 +18,37 @@
         <table class="table table-striped table-bordered">
             <thead class="table-primary text-center">
               <tr>
-                <th scope="col" style="width: 4% ;" class="text-center">No</th>
-                <th scope="col">Task List</th>
-                <th width="20%" scope="col">Ok</th>
-                <th width="20%" scope="col">Not Good</th>
-                <th width="20%" scope="col">Kondisi</th>
+                <th style="width: 1%;" class="text-center">No</th>
+                <th style="width: 150px;">Task List</th>
+                <th style="width: 150px;">Building</th>
+                <th style="width: 150px;">Lokasi</th>
+                <th>Ok</th>
+                <th>Not Good</th>
+                <th>Kondisi</th>
               </tr>
             </thead>
             <tbody>
-                <?php for ($i = 1; $i <= 117; $i++): ?>
-                    <tr>
-                        <th scope="row" class="text-center"><?php echo $i ?></th>
-                        <td>CAM-<?php echo $i; ?></td>
-                        <td class="text-center">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="cam<?php echo $i; ?>" id="cam<?php echo $i; ?>ok" value="Ok">
-                                <label class="form-check-label" for="cam<?php echo $i; ?>ok">Ok</label>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="cam<?php echo $i; ?>" id="cam<?php echo $i; ?>ng" value="Ng">
-                                <label class="form-check-label" for="cam<?php echo $i; ?>ng">Not Good</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <select name="kondisi_cam<?php echo $i; ?>" class="form-select text-center" id="KondisiSelect" contenteditable="true">
-                                    <option value="" disabled selected>--- Status CCTV ---</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Kotor">Kotor</option>
-                                    <option value="Rusak">Rusak</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endfor; ?>
+                @php
+                    $no = 1;
+                @endphp
+                @foreach($cctvs as $cctv)
+                <tr>
+                    <td class="text-center">{{ $no++ }}</td>
+                    <td class="text-center">{{ $cctv['id_cctv'] }}</td>
+                    <td class="text-center">{{ $cctv['building_name'] }}</td>
+                    <td class="text-center">{{ $cctv['lokasi_name'] }}</td>
+                    <td>
+                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK"> OK
+                    </td>
+                    <td>
+                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG"> NG
+                    </td>
+                    <td>
+                        <!-- Jika perlu tambahkan elemen input hidden untuk mengirimkan id_cctv -->
+                        <input type="hidden" name="id_cctv[]" value="{{ $cctv['id_cctv'] }}">
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
           </table>
         <div class="">

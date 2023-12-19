@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cctv;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Http;
+
 class CctvController extends Controller
 {
     public function index(Request $request)
@@ -27,53 +29,85 @@ class CctvController extends Controller
         return view('pages.cctv.index', compact('cctvs'));
     }
 
+    // public function create()
+    // {
+    //     return view('pages.cctv.create');
+    // }
+
     public function create()
     {
-        return view('pages.cctv.create');
+        $response = Http::withOptions(['verify' => false])->get('https://devita-dev.aiia.co.id/api_data_cctv');
+
+        $cctvs = $response->json()['cctvs'];
+
+        return view('pages.cctv.create', ['cctvs' => $cctvs]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     dd($request);
+    //     $rules = [
+    //         'note' => 'nullable|string',
+    //         'follow_up' => 'nullable|string',
+    //     ];
+
+    //     for ($i = 1; $i <= 117; $i++) {
+    //         $rules["cam{$i}"] = 'required|in:Ok,Ng';
+    //     }
+
+    //     for ($i = 1; $i <= 117; $i++) {
+    //         $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal,Rusak';
+    //     }
+
+    //     $request->validate($rules);
+
+    //     $data = [
+    //         'note' => $request->input('note'),
+    //         'follow_up' => $request->input('follow_up')
+    //     ];
+        
+        
+    //     for ($i = 1; $i <= 117; $i++) {
+    //         $data["cam{$i}"] = $request->input("cam{$i}");
+    //     }
+
+    //     for ($i = 1; $i <= 117; $i++) {
+    //         $data["kondisi_cam{$i}"] = $request->input("kondisi_cam{$i}");
+    //     }
+
+    //     $data['author'] = auth()->user()->name;
+
+    //     $data['user_id'] = auth()->user()->id;
+
+    //     Cctv::create($data);
+        
+
+    //     // Redirect atau memberikan respons sesuai kebutuhan
+    //     return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan');
+    // }
+
     public function store(Request $request)
     {
-        $rules = [
-            'note' => 'nullable|string',
-            'follow_up' => 'nullable|string',
-        ];
-
-        for ($i = 1; $i <= 117; $i++) {
-            $rules["cam{$i}"] = 'required|in:Ok,Ng';
+        $idCctvArray = $request->input('id_cctv', []); // Menggunakan nilai default array kosong jika tidak ada data
+        $statusArray = $request->input('status', []);
+        // Lakukan validasi atau operasi lainnya jika diperlukan
+        // Simpan data sesuai dengan id_cctv dan status yang dikirimkan
+        foreach ($idCctvArray as $key => $idCctv) {
+            $status = $statusArray[$key];
+            dd($status);
+            // Lakukan operasi penyimpanan ke database
+            // Misalnya, menggunakan model untuk menyimpan ke tabel
+            $model = Cctv::where('id_cctv', $idCctv)->first(); // Ubah NamaModel sesuai dengan nama model Anda
+            dd($model);
+            if ($model) {
+                $model->status = $status;
+                $model->save();
+            }
         }
 
-        for ($i = 1; $i <= 117; $i++) {
-            $rules["kondisi_cam{$i}"] = 'nullable|in:Kotor,Normal,Rusak';
-        }
-
-        $request->validate($rules);
-
-        $data = [
-            'note' => $request->input('note'),
-            'follow_up' => $request->input('follow_up')
-        ];
-        
-        
-        for ($i = 1; $i <= 117; $i++) {
-            $data["cam{$i}"] = $request->input("cam{$i}");
-        }
-
-        for ($i = 1; $i <= 117; $i++) {
-            $data["kondisi_cam{$i}"] = $request->input("kondisi_cam{$i}");
-        }
-
-        $data['author'] = auth()->user()->name;
-
-        $data['user_id'] = auth()->user()->id;
-
-        Cctv::create($data);
-        
-
-        // Redirect atau memberikan respons sesuai kebutuhan
         return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan');
     }
 
