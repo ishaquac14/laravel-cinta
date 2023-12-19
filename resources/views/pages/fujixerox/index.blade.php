@@ -39,7 +39,12 @@
                         <th>Status</th>
                         <th>Follow Up</th>
                         <th>Author</th>
+                        @can('admin')
                         <th width="15%">Action</th>
+                        @endcan
+                        @can('superadmin')
+                        <th width="15%">Action</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -65,18 +70,53 @@
                                 <td class="align-middle">
                                     {{ empty($fujixerox->follow_up) ? 'Tidak Ada' : $fujixerox->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $fujixerox->users->name }}</td>
-                                <td class="align-middle text-center">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{ route('fujixerox.edit', $fujixerox->id) }}"
-                                            class="btn btn-warning">Edit</a>
-                                        @can('is_admin')
-                                            <form action="{{ route('fujixerox.destroy', $fujixerox->id) }}" method="POST"
-                                                onsubmit="return confirm('Hapus data ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                @can('admin')
+                                    <td class="align-middle text-center">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            @if (!$fujixerox->is_approved)
+                                                <a href="{{ route('fujixerox.edit', $fujixerox->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('fujixerox.destroy', $fujixerox->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                                <span class="badge bg-success">Sudah diapproved</span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                @endcan
+                                @can('superadmin')
+                                    <td class="align-middle text-center">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            @if (!$fujixerox->is_approved)
+                                                <a href="{{ route('fujixerox.edit', $fujixerox->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('fujixerox.destroy', $fujixerox->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('fujixerox.edit', $fujixerox->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('fujixerox.destroy', $fujixerox->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @endif
                                         @endcan
+                                        @if (auth()->user()->can('superadmin') && !$fujixerox->is_approved)
+                                            <form action="{{ route('approvalFujixerox', $fujixerox->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success">Approval</button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

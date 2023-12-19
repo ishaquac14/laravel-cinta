@@ -112,6 +112,20 @@
                             Setting
                         </a>
                     </li>
+                @endcan
+                @can('superadmin')
+                    <h5
+                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-3 text-body-secondary text-uppercase">
+                        <span>ADMINISTRATOR</span>
+                    </h5>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('cobaadmin.index') }}">
+                            <svg class="bi">
+                                <use xlink:href="#file-earmark-text" />
+                            </svg>
+                            Setting
+                        </a>
+                    </li>
                 @endcan <br><br><br><br><br>
         </div>
     </div>

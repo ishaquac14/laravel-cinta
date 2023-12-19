@@ -80,5 +80,15 @@ Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 Route::resource('/cobaadmin', AdminController::class)->middleware('role');
 
 Route::get('/test', [AcserverController::class, 'alert'])->name('alert');
-Route::post('/acserver/approval/{id}', [ApprovalController::class, 'approve'])->name('approval.action');
+Route::post('/acserver/approval/{id}', [ApprovalController::class, 'ApproveAcserver'])->name('approvalAcserver');
+Route::post('/csdatabase/approval/{id}', [ApprovalController::class, 'ApproveCsdatabase'])->name('approvalCsdatabase');
+Route::post('/tapedrive/approval/{id}', [ApprovalController::class, 'ApproveTapedrive'])->name('approvalTapedrive');
+Route::post('/gacsirt/approval/{id}', [ApprovalController::class, 'ApproveGacsirt'])->name('approvalGacsirt');
+Route::post('/mointernet/approval/{id}', [ApprovalController::class, 'ApproveMointernet'])->name('approvalMointernet');
+Route::post('/physical/approval/{id}', [ApprovalController::class, 'ApprovePhysical'])->name('approvalPhysical');
+Route::post('/fujixerox/approval/{id}', [ApprovalController::class, 'ApproveFujixerox'])->name('approvalFujixerox');
+Route::post('/sanswitch/approval/{id}', [ApprovalController::class, 'ApproveSanswitch'])->name('approvalSanswitch');
+
+
+
 // Route::post('approval/{id}', 'ApprovalController@approve')->name('approval.action');

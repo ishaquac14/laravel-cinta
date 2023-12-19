@@ -22,7 +22,7 @@
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
         </div>
-    @if(Session::has('success'))
+    @if(Session::has('success'))    
     <div class="alert alert-success" role="alert">
         {{ Session::get('success') }}
     </div>
@@ -31,12 +31,12 @@
         <table id="example" class="table table-striped table-bordered">
             <thead class="table-primary text-center">
                 <tr>
-                    <th width="4%">No</th>
-                    <th width="20%">Tanggal</th>
+                    <th width="2%">No</th>
+                    <th>Tanggal</th>
                     <th>Note</th>
                     <th>Follow Up</th>
                     <th>Author</th>
-                    <th width="20%">Action</th>
+                    <th width="15%">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,16 +55,46 @@
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('physical.show', $physical->id) }}"
                                     class="btn btn-primary">Detail</a>
-                                @can('is_admin')
-                                    <a href="{{ route('physical.edit', $physical->id) }}"
-                                        class="btn btn-warning">Edit</a>
-                                    <form action="{{ route('physical.destroy', $physical->id) }}" method="POST"
-                                        onsubmit="return confirm('Hapus data ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
+                                @can('admin')
+                                    @if (!$physical->is_approved)
+                                        <a href="{{ route('physical.edit', $physical->id) }}"
+                                            class="btn btn-warning">Edit</a>
+                                        <form action="{{ route('physical.destroy', $physical->id) }}" method="POST"
+                                            onsubmit="return confirm('Hapus data ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    @else
+                                    @endif
                                 @endcan
+                                @can('superadmin')
+                                    @if (!$physical->is_approved)
+                                        <a href="{{ route('physical.edit', $physical->id) }}"
+                                            class="btn btn-warning">Edit</a>
+                                        <form action="{{ route('physical.destroy', $physical->id) }}" method="POST"
+                                            onsubmit="return confirm('Hapus data ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('physical.edit', $physical->id) }}"
+                                            class="btn btn-warning">Edit</a>
+                                        <form action="{{ route('physical.destroy', $physical->id) }}" method="POST"
+                                            onsubmit="return confirm('Hapus data ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    @endif
+                                @endcan
+                                @if (auth()->user()->can('superadmin') && !$physical->is_approved)
+                                    <form action="{{ route('approvalPhysical', $physical->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success">Approval</button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

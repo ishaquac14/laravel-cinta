@@ -8,7 +8,7 @@
             </a>
 
             <div class="text-center">
-                <h4>CHECKSHEET GACSIRT</h4>
+                <h4>CHECKSHEET GA-CSIRT</h4>
             </div>
 
             <div class="d-flex align-items-center">
@@ -39,8 +39,11 @@
                         <th>Status</th>
                         <th>Follow Up</th>
                         <th>Author</th>
-                        @can('is_admin')
-                            <th>Action</th>
+                        @can('admin')
+                        <th width="15%">Action</th>
+                        @endcan
+                        @can('superadmin')
+                        <th width="15%">Action</th>
                         @endcan
                     </tr>
                 </thead>
@@ -66,31 +69,67 @@
                                         {{ $gacsirt["{$item}"] }}
                                     @endif
                                 </td>
-                                <td class="align-middle">{{ empty($gacsirt->follow_up) ? 'Tidak Ada' : $gacsirt->follow_up }}</td>
+                                <td class="align-middle">
+                                    {{ empty($gacsirt->follow_up) ? 'Tidak Ada' : $gacsirt->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $gacsirt->users->name }}</td>
-                                @can('is_admin')
+                                @can('admin')
                                     <td class="align-middle text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('gacsirt.edit', $gacsirt->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
-                                                onsubmit="return confirm('Hapus data ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                            @if (!$gacsirt->is_approved)
+                                                <a href="{{ route('gacsirt.edit', $gacsirt->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                                <span class="badge bg-success">Sudah diapproved</span>
+                                            @endif
                                         </div>
                                     </td>
                                 @endcan
-                            </tr>
-                        @endforeach
-                    @else
+                                @can('superadmin')
+                                    <td class="align-middle text-center">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            @if (!$gacsirt->is_approved)
+                                                <a href="{{ route('gacsirt.edit', $gacsirt->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('gacsirt.edit', $gacsirt->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @endif
+                                        @endcan
+                                        @if (auth()->user()->can('superadmin') && !$gacsirt->is_approved)
+                                            <form action="{{ route('approvalGacsirt', $gacsirt->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success">Approval</button>
+                                            </form>
+                                        @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
                         <tr>
                             <td class="text-center" colspan="8">Data tidak ditemukan</td>
                         </tr>
-                    @endif
-                </tbody>
-            </table>
+                        @endif
+                    </tbody>
+                </table>
             @include('layouts.pagination-gacsirt', ['gacsirts' => $gacsirts])
         </div>
     </div>

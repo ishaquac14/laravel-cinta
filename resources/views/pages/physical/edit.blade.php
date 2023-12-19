@@ -158,15 +158,20 @@
             </table>
 
             <div class="row">
-                <div class="@if (auth()->user() && auth()->user()->is_admin) col-md-6 @else col-md-12 @endif">
+                <div class="@if (auth()->user() && auth()->user()->role) col-md-6 @else col-md-12 @endif">
                     <label for="exampleFormControlTextarea1" class="form-label"></label>
                     <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="3" placeholder="Note">{{ $physical->note }}</textarea>
                 </div>
-                @can('is_admin')
+                @can('admin')
                     <div class="col-md-6">
                         <label for="exampleFormControlTextarea1" class="form-label"></label>
-                        <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3"
-                            placeholder="Follow Up">{{ $physical->follow_up }}</textarea>
+                        <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $physical->follow_up }}</textarea>
+                    </div>
+                @endcan
+                @can('superadmin')
+                    <div class="col-md-6">
+                        <label for="exampleFormControlTextarea1" class="form-label"></label>
+                        <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $physical->follow_up }}</textarea>
                     </div>
                 @endcan
             </div>

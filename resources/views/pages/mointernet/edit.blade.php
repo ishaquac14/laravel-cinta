@@ -52,8 +52,15 @@
                 </tbody>
             </table>
             
-            <div>
-                @can('is_admin')
+            <div class="row">
+                @can('admin')
+                    <div class="col-md-12 mt-4">
+                        <div><b>Follow Up :</b></div>
+                        <label for="exampleFormControlTextarea1" class="form-label "></label>
+                        <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $mointernet->follow_up }}</textarea>
+                    </div>
+                @endcan
+                @can('superadmin')
                     <div class="col-md-12">
                         <label for="exampleFormControlTextarea1" class="form-label"></label>
                         <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $mointernet->follow_up }}</textarea>

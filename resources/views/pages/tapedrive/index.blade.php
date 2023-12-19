@@ -32,13 +32,13 @@
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
                     <tr>
-                        <th width="4%">No</th>
-                        <th width="15%">Tanggal</th>
+                        <th width="2%">No</th>
+                        <th>Tanggal</th>
                         <th>Actual Media</th>
                         <th>Status</th>
-                        <th width="20%">Follow Up</th>
-                        <th width="20%">Author</th>
-                        <th width="20%">Action</th>
+                        <th>Follow Up</th>
+                        <th>Author</th>
+                        <th width="15%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,20 +76,50 @@
                                 </td>
                                 <td class="align-middle">{{ empty($tapedrive->follow_up) ? 'Tidak Ada' : $tapedrive->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $tapedrive->users->name }}</td>
-                                <td class="text-center">
+                                <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="{{ route('tapedrive.show', $tapedrive->id) }}"
                                             class="btn btn-primary">Detail</a>
-                                        @can('is_admin')
-                                            <a href="{{ route('tapedrive.edit', $tapedrive->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <form action="{{ route('tapedrive.destroy', $tapedrive->id) }}" method="POST"
-                                                onsubmit="return confirm('Hapus data ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                        @can('admin')
+                                            @if (!$tapedrive->is_approved)
+                                                <a href="{{ route('tapedrive.edit', $tapedrive->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('tapedrive.destroy', $tapedrive->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                            @endif
                                         @endcan
+                                        @can('superadmin')
+                                            @if (!$tapedrive->is_approved)
+                                                <a href="{{ route('tapedrive.edit', $tapedrive->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('tapedrive.destroy', $tapedrive->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('tapedrive.edit', $tapedrive->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('tapedrive.destroy', $tapedrive->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @endif
+                                        @endcan
+                                        @if (auth()->user()->can('superadmin') && !$tapedrive->is_approved)
+                                            <form action="{{ route('approvalTapedrive', $tapedrive->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success">Approval</button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

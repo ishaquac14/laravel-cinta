@@ -63,14 +63,19 @@
                 </tbody>
             </table>
             <div class="row">
-                <div class="col-md-6">
-                    <label for="note_id" class="form-label"></label>
-                    <textarea class="form-control" name="note" id="note_id" rows="3" placeholder="Note">{{ $fujixerox->note }}</textarea>
-                </div>
-                <div class="col-md-6">
-                    <label for="follow_up_id" class="form-label"></label>
-                    <textarea class="form-control" name="follow_up" id="follow_up_id" rows="3" placeholder="Follow Up" {{ auth()->user()->can('is_admin') ? '' : 'disabled' }}>{{ $fujixerox->follow_up }}</textarea>
-                </div>                
+                @can('admin')
+                    <div class="col-md-12 mt-4">
+                        <div><b>Follow Up :</b></div>
+                        <label for="exampleFormControlTextarea1" class="form-label "></label>
+                        <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $fujixerox->follow_up }}</textarea>
+                    </div>
+                @endcan
+                @can('superadmin')
+                    <div class="col-md-12">
+                        <label for="exampleFormControlTextarea1" class="form-label"></label>
+                        <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $fujixerox->follow_up }}</textarea>
+                    </div>
+                @endcan
             </div>
             <div class="mt-4 mb-5">
                 <button type="submit" class="btn btn-warning">UPDATE</button>

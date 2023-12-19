@@ -115,11 +115,15 @@
             </tbody>
         </table>
         <div class="row mt-4">
-            <div class="col-md-12 mb-5">
-                <p>Note :</p>
-                <textarea class="form-control" name="note" rows="{{ substr_count($physical->note, "\n") + 5 }}" readonly>{{ $physical->note ?? 'Tidak ada' }}</textarea>
+            <div class="col-md-6 mb-5">
+                <p><b>Note :</b></p>
+                <textarea class="form-control" name="note" rows="{{ substr_count($physical->note, "\n") + 5 }}" disabled>{{ $physical->note ?? 'Tidak ada' }}</textarea>
             </div>
-        </div>
+            <div class="col-md-6 mb-5">
+                <p><b>Follow Up :</b></p>
+                <textarea class="form-control" name="follow_up" rows="{{ substr_count($physical->follow_up, "\n") + 5 }}" disabled>{{ $physical->follow_up ?? 'Tidak ada' }}</textarea>
+            </div>
+        </div> 
     </div>
 </div>
 

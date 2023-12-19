@@ -32,12 +32,12 @@
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
                     <tr>
-                        <th width="4%">No</th>
-                        <th width="20%">Tanggal</th>
+                        <th width="2%">No</th>
+                        <th>Tanggal</th>
                         <th>Note</th>
                         <th>Follow Up</th>
                         <th>Author</th>
-                        <th width="20%">Action</th>
+                        <th width="15%">Action</th>
                     </tr>
                 </thead>
                 <tbody>

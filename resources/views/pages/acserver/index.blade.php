@@ -32,13 +32,13 @@
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
                     <tr>
-                        <th width="4%">No</th>
+                        <th width="2%">No</th>
                         <th>Tanggal</th>
                         <th>Suhu Ruangan</th>
                         <th>Status</th>
-                        <th width="20%">Follow Up</th>
+                        <th>Follow Up</th>
                         <th>Author</th>
-                        <th width="20%">Action</th>
+                        <th width="15%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,8 +71,6 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="{{ route('acserver.show', $acserver->id) }}"
                                             class="btn btn-primary">Detail</a>
-
-
                                         @can('admin')
                                             @if (!$acserver->is_approved)
                                                 <a href="{{ route('acserver.edit', $acserver->id) }}"
@@ -108,7 +106,7 @@
                                             @endif
                                         @endcan
                                         @if (auth()->user()->can('superadmin') && !$acserver->is_approved)
-                                            <form action="{{ route('approval.action', $acserver->id) }}" method="POST">
+                                            <form action="{{ route('approvalAcserver', $acserver->id) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-success">Approval</button>
                                             </form>

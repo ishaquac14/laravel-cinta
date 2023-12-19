@@ -33,14 +33,18 @@
                 <thead class="table-primary text-center">
                     <tr>
                         <th width="2%">No</th>
-                        <th width="20%">Tanggal</th>
+                        <th>Tanggal</th>
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Duration</th>
                         <th>Root Cause</th>
                         <th>Follow Up</th>
-                        @can('is_admin')
-                            <th>Action</th>
+                        <th>Author</th>
+                        @can('admin')
+                        <th width="15%">Action</th>
+                        @endcan
+                        @can('superadmin')
+                        <th width="15%">Action</th>
                         @endcan
                     </tr>
                 </thead>
@@ -57,22 +61,58 @@
                                 <td class="align-middle text-center">{{ $mointernet->end_time }}</td>
                                 <td class="align-middle text-center">{{ $mointernet->duration }} Menit</td>
                                 <td class="align-middle text-center">{{ $mointernet->root_cause }}</td>
-                                <td class="align-middle">
-                                    {{ empty($mointernet->follow_up) ? 'Tidak Ada' : $mointernet->follow_up }}</td>
-                                @can('is_admin')
+                                <td class="align-middle">{{ empty($mointernet->follow_up) ? 'Tidak Ada' : $mointernet->follow_up }}</td>
+                                <td class="align-middle text-center">{{ $mointernet->users->name }}</td>
+                                @can('admin')
                                     <td class="align-middle text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ route('mointernet.edit', $mointernet->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <form action="{{ route('mointernet.destroy', $mointernet->id) }}" method="POST"
-                                                onsubmit="return confirm('Hapus data ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                            @if (!$mointernet->is_approved)
+                                                <a href="{{ route('mointernet.edit', $mointernet->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('mointernet.destroy', $mointernet->id) }}"
+                                                    method="POST" onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                            <span class="badge bg-success">Sudah diapproved</span>
+                                            @endif
                                         </div>
                                     </td>
                                 @endcan
+                                @can('superadmin')
+                                    <td class="align-middle text-center">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            @if (!$mointernet->is_approved)
+                                                <a href="{{ route('mointernet.edit', $mointernet->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('mointernet.destroy', $mointernet->id) }}"
+                                                    method="POST" onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('mointernet.edit', $mointernet->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('mointernet.destroy', $mointernet->id) }}"
+                                                    method="POST" onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @endif
+                                        @endcan
+                                        @if (auth()->user()->can('superadmin') && !$mointernet->is_approved)
+                                            <form action="{{ route('approvalMointernet', $mointernet->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success">Approval</button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     @else
