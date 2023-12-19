@@ -31,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
         
         Gate::define('superadmin', function (User $user) {
             return $user->role === 'superadmin';
-        });      
+        }); 
     }
 }

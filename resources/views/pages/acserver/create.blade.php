@@ -75,7 +75,7 @@
                 </tbody>
             </table>
             <div>
-                <input type="text" name="suhu_ruangan" class="form-control mt-4" placeholder="INPUT SUHU RUANGAN (°C)">
+                <input type="text" name="suhu_ruangan" class="form-control mt-4" placeholder="INPUT SUHU RUANGAN (°C)" required>
             </div>
             <div class="row">
                 <div class="col-md-12">

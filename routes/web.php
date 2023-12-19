@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AcserverController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\CsdatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
@@ -79,3 +80,5 @@ Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 Route::resource('/cobaadmin', AdminController::class)->middleware('role');
 
 Route::get('/test', [AcserverController::class, 'alert'])->name('alert');
+Route::post('/acserver/approval/{id}', [ApprovalController::class, 'approve'])->name('approval.action');
+// Route::post('approval/{id}', 'ApprovalController@approve')->name('approval.action');

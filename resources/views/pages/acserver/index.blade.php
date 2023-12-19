@@ -71,26 +71,48 @@
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="{{ route('acserver.show', $acserver->id) }}"
                                             class="btn btn-primary">Detail</a>
+
+
                                         @can('admin')
-                                            <a href="{{ route('acserver.edit', $acserver->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
-                                                onsubmit="return confirm('Hapus data ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                            @if (!$acserver->is_approved)
+                                                <a href="{{ route('acserver.edit', $acserver->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                            @endif
                                         @endcan
                                         @can('superadmin')
-                                            <a href="{{ route('acserver.edit', $acserver->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
-                                                onsubmit="return confirm('Hapus data ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                            @if (!$acserver->is_approved)
+                                                <a href="{{ route('acserver.edit', $acserver->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('acserver.edit', $acserver->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
+                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            @endif
                                         @endcan
+                                        @if (auth()->user()->can('superadmin') && !$acserver->is_approved)
+                                            <form action="{{ route('approval.action', $acserver->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success">Approval</button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
