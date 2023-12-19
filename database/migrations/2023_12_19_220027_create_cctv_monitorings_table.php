@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cctvs', function (Blueprint $table) {
+        Schema::create('cctv_monitorings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->text('follow_up')->nullable();
-            $table->text('note')->nullable();
+            $table->integer('cctv_id');
+            $table->string('id_cctv');
+            $table->string('building_name');
+            $table->string('lokasi_name');
+            $table->string('status');
+            $table->string('condition')->nullable();
             $table->timestamps();
-        });        
+        });
     }
 
     /**
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cctvs');
+        Schema::dropIfExists('cctv_monitorings');
     }
 };

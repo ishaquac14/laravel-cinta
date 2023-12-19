@@ -18,7 +18,7 @@
             <table class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
                     <tr>
-                        <th width="4%" scope="col">No</th>
+                        <th width="2%">No</th>
                         <th scope="col">AC Name</th>
                         <th scope="col">Plan Kondisi</th>
                         <th scope="col">Actual Kondisi</th>
@@ -32,9 +32,9 @@
 
                     @foreach ($data as $index => $item)
                         <tr>
-                            <th scope="row" class="text-center">{{ $index + 1 }}</th>
-                            <td>{{ $item['display'] }}</td>
-                            <td class="text-center">
+                            <td scope="row" class="text-center align-middle">{{ $index + 1 }}</td>
+                            <td class="text-center align-middle">{{ $item['display'] }}</td>
+                            <td class="text-center align-middle">
                                 @php
                                     // Mendapatkan tanggal sekarang
                                     $currentDate = now();
@@ -52,7 +52,7 @@
                                 @endphp
                                 <span class="{{ $kelasWarna }}">{{ $jadwal }}</span>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 <div class="text-center">
                                     <select name="kondisi_{{ $item['name'] }}" class="form-select text-center"
                                         id="KondisiSelect" contenteditable="true" required>
@@ -63,7 +63,7 @@
                                     </select>
                                 </div>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 <div class="text-center">
                                     <input type="text" class="form-control text-center" name="{{ $item['name'] }}_suhu"
                                         placeholder="STANDARD SUHU 19-23 (°C)" pattern="\d+(\.\d{1,2})?"

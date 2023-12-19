@@ -17,42 +17,15 @@
         <table class="table table-bordered table-striped">
             <thead class="table-primary text-center">
                 <tr>
-                    <th width="5%">No</th>
-                    <th width="40%">Task List</th>
-                    <th width="15%">Kondisi</th>
-                    <th width="15%">Judgment</th>
-                    <th width="40%">Author</th>
+                    <th>No</th>
+                    <th>ID CCTV</th>
+                    <th>Nama Gedung</th>
+                    <th>Nama Lokasi</th>
+                    <th>Status</th>
+                    <th>Kondisi</th>
                 </tr>
-            </thead>            
-            <tbody>
-                @for ($i = 1; $i <= 117; $i++)
-                    <tr>
-                        <td class="text-center">{{ $i }}</td>
-                        <td>CAM-{{ $i }}</td>
-                        <td class="text-center">
-                            @if (empty($cctv["kondisi_cam{$i}"]) || $cctv["kondisi_cam{$i}"] == 'Normal')
-                                <span class="badge bg-success text-white">Normal</span>
-                            @elseif ($cctv["kondisi_cam{$i}"] == 'Kotor')
-                                <span class="badge bg-warning text-white">Kotor</span>
-                            @elseif ($cctv["kondisi_cam{$i}"] == 'Rusak')
-                                <span class="badge bg-danger text-white">Rusak</span>
-                            @else
-                                {{ $cctv["kondisi_cam{$i}"] }}
-                            @endif
-                        </td>                        
-                        <td class="text-center">
-                            @if ($cctv["cam{$i}"] == 'Ok')
-                                <span class="badge bg-success text-white">Ok</span>
-                            @elseif ($cctv["cam{$i}"] == 'Ng')
-                                <span class="badge bg-danger text-white">Not Good</span>
-                            @else
-                                {{ $cctv["cam{$i}"] }}
-                            @endif
-                        </td>
-                        <td class="align-middle text-center">{{ $cctv->users->name }}</td>
-                    </tr>
-                @endfor
-            </tbody>
+            </thead>
+            @include('cctv.partials.cctv_table')
         </table>
         <div class="row mt-4">
             <div class="col-md-12 mb-5">

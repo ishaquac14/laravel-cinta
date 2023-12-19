@@ -17,15 +17,15 @@
         @csrf
         <table class="table table-striped table-bordered">
             <thead class="table-primary text-center">
-              <tr>
-                <th style="width: 1%;" class="text-center">No</th>
-                <th style="width: 150px;">Task List</th>
-                <th style="width: 150px;">Building</th>
-                <th style="width: 150px;">Lokasi</th>
-                <th>Ok</th>
-                <th>Not Good</th>
-                <th>Kondisi</th>
-              </tr>
+                <tr>
+                    <th style="width: 1%;" class="text-center">No</th>
+                    <th style="width: 150px;">Task List</th>
+                    <th style="width: 150px;">Building</th>
+                    <th style="width: 150px;">Lokasi</th>
+                    <th>Ok</th>
+                    <th>Not Good</th>
+                    <th>Kondisi</th>
+                </tr>
             </thead>
             <tbody>
                 @php
@@ -44,18 +44,25 @@
                         <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG"> NG
                     </td>
                     <td>
+                        <select name="condition[{{ $cctv['id_cctv'] }}]" class="form-select text-center" id="StatusSelect" contenteditable="true">
+                            <option value="" disabled selected>---Kondisi---</option>
+                            <option value="bersih">Bersih</option>
+                            <option value="kotor">Kotor</option>
+                        </select>
+                    </td>
+                    <td>
                         <!-- Jika perlu tambahkan elemen input hidden untuk mengirimkan id_cctv -->
                         <input type="hidden" name="id_cctv[]" value="{{ $cctv['id_cctv'] }}">
                     </td>
                 </tr>
                 @endforeach
             </tbody>
-          </table>
+        </table>        
         <div class="">
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
         </div>
-        <div class="mt-4"><p><b>IMPORTANT:</b> Jika terjadi problem atau masti langsung hubungi MSA</p></div>
+        <div class="mt-4"><p><b>IMPORTANT:</b> Jika terjadi problem atau mati langsung hubungi MSA</p></div>
         <div class="col">
             <div class="mt-3 mb-5">
                 <button class="btn btn-primary">SUBMIT</button>

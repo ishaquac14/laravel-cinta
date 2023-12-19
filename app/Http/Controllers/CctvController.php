@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cctv;
+use App\Models\CctvMonitoring;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Http;
@@ -91,25 +92,40 @@ class CctvController extends Controller
 
     public function store(Request $request)
     {
-        $idCctvArray = $request->input('id_cctv', []); // Menggunakan nilai default array kosong jika tidak ada data
-        $statusArray = $request->input('status', []);
-        // Lakukan validasi atau operasi lainnya jika diperlukan
-        // Simpan data sesuai dengan id_cctv dan status yang dikirimkan
-        foreach ($idCctvArray as $key => $idCctv) {
-            $status = $statusArray[$key];
-            dd($status);
-            // Lakukan operasi penyimpanan ke database
-            // Misalnya, menggunakan model untuk menyimpan ke tabel
-            $model = Cctv::where('id_cctv', $idCctv)->first(); // Ubah NamaModel sesuai dengan nama model Anda
-            dd($model);
-            if ($model) {
-                $model->status = $status;
-                $model->save();
-            }
+        // dd($request);
+        // Validasi data permintaan
+        $request->validate([
+            'note' => 'nullable|string',
+            // Tambahkan aturan validasi lainnya sesuai kebutuhan
+        ]);
+
+        $cctvs = Cctv::create([
+            "user_id" => auth()->id(),
+            "note" => $request->note,
+        ]);
+
+        // Memproses pengiriman formulir dan menyimpan data
+        foreach ($request->input('status') as $id_cctv => $status) {
+            $condition = $request->input("condition.$id_cctv");
+
+            // Pastikan untuk menyesuaikan ini dengan struktur database Anda
+            // Contoh: Menyimpan dalam model Cctv
+            $cctv = new CctvMonitoring;
+            $cctv->cctv_id = $cctvs->id;
+            $cctv->id_cctv = $id_cctv;
+            $cctv->building_name = $request->input("building_name.$id_cctv"); // Sesuaikan dengan nama input yang sesuai
+            $cctv->lokasi_name = $request->input("lokasi_name.$id_cctv"); // Sesuaikan dengan nama input yang sesuai
+            $cctv->status = $status;
+            $cctv->condition = $condition;
+            $cctv->save();
         }
 
-        return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan');
+        // Redirect ke halaman sukses atau kembali ke formulir dengan pesan keberhasilan
+        return redirect()->route('cctv.index')->with('success', 'Formulir berhasil dikirim');
     }
+
+
+    
 
     /**
      * Display the specified resource.
