@@ -10,30 +10,58 @@
         </a>
     </div>
     <div class="mb-2">
-        <h4>DETAIL C/S MONITORING CCTV ({{ \Carbon\Carbon::parse($cctv->created_at)->format('d-m-Y H:i:s') }})</h4>
+        <h4>DETAIL C/S MONITORING CCTV ({{ \Carbon\Carbon::parse($cctvs->created_at)->format('d-m-Y H:i:s') }})</h4>
     </div>
     <hr>
     <div class="table-responsive">
-        <table class="table table-bordered table-striped">
+        <table class="table table-striped table-bordered">
             <thead class="table-primary text-center">
                 <tr>
-                    <th>No</th>
-                    <th>ID CCTV</th>
-                    <th>Nama Gedung</th>
-                    <th>Nama Lokasi</th>
-                    <th>Status</th>
+                    <th style="width: 1%;" class="text-center">No</th>
+                    <th style="width: 150px;">Task List</th>
+                    <th style="width: 150px;">Gedung</th>
+                    <th style="width: 150px;">Lokasi</th>
+                    <th>OK</th>
+                    <th>Not Good</th>
                     <th>Kondisi</th>
                 </tr>
             </thead>
-            @include('cctv.partials.cctv_table')
+            <tbody>
+                @php
+                    $no = 1;
+                @endphp
+                @if(is_array($cctvs) && count($cctvs) >= 0)
+                @foreach($cctvs as $cctv)
+                <tr>
+                    <td class="text-center">{{ $no++ }}</td>
+                    <td class="text-center">{{ $cctv['cctv_id'] }}</td>
+                    <td class="text-center">{{ $cctv['building_name'] }}</td>
+                    <td class="text-center">{{ $cctv['lokasi_name'] }}</td>
+                    <td>
+                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK"> OK
+                    </td>
+                    <td>
+                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG"> NG
+                    </td>
+                    <td>
+                        <select name="condition[{{ $cctv['id_cctv'] }}]" class="form-select text-center" id="StatusSelect" contenteditable="true">
+                            <option value="" disabled selected>---Kondisi---</option>
+                            <option value="bersih">Bersih</option>
+                            <option value="kotor">Kotor</option>
+                        </select>
+                    </td>
+                </tr>
+                @endforeach
+                @else
+                @endif
+            </tbody>
         </table>
         <div class="row mt-4">
             <div class="col-md-12 mb-5">
                 <p>Note :</p>
-                <textarea class="form-control" name="note" rows="{{ substr_count($cctv->note, "\n") + 5 }}" readonly>{{ $cctv->note ?? 'Tidak ada' }}</textarea>
+                <textarea class="form-control" name="note" rows="{{ substr_count($cctvs->note, "\n") + 5 }}" readonly>{{ $cctv->note ?? 'Tidak ada' }}</textarea>
             </div>
         </div>
     </div>
 </div>
-
 @endsection

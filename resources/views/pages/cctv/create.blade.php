@@ -51,13 +51,12 @@
                         </select>
                     </td>
                     <td>
-                        <!-- Jika perlu tambahkan elemen input hidden untuk mengirimkan id_cctv -->
                         <input type="hidden" name="id_cctv[]" value="{{ $cctv['id_cctv'] }}">
                     </td>
                 </tr>
                 @endforeach
             </tbody>
-        </table>        
+        </table>     
         <div class="">
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
