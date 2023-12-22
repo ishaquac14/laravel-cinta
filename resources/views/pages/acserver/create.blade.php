@@ -38,14 +38,12 @@
                                 @php
                                     // Mendapatkan tanggal sekarang
                                     $currentDate = now();
-
                                     // Menentukan jadwal berdasarkan ac
                                     if ($item['name'] == 'ac-01' || $item['name'] == 'ac-02') {
                                         $jadwal = $currentDate->day <= 15 ? 'Hidup' : 'Mati';
                                     } else {
                                         $jadwal = $currentDate->day > 15 ? 'Hidup' : 'Mati';
                                     }
-
                                     // Menentukan kelas CSS berdasarkan jadwal
                                     $kelasWarna = $jadwal == 'Hidup' ? 'text-success' : 'text-danger';
 
