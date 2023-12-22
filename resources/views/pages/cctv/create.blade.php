@@ -19,9 +19,9 @@
             <thead class="table-primary text-center">
                 <tr>
                     <th style="width: 1%;" class="text-center">No</th>
-                    <th style="width: 150px;">Task List</th>
-                    <th style="width: 150px;">Building</th>
-                    <th style="width: 150px;">Lokasi</th>
+                    <th style="width: 150px;">Server</th>
+                    <th style="width: 150px;">Area</th>
+                    <th style="width: 150px;">ID CCTV</th>
                     <th>Ok</th>
                     <th>Not Good</th>
                     <th>Kondisi</th>
@@ -33,10 +33,14 @@
                 @endphp
                 @foreach($cctvs as $cctv)
                 <tr>
+                    @php
+                        $servercctv = $cctv['servercctv'];
+                        $namaserver = preg_replace("/\([^)]+\)/", "", $servercctv);
+                    @endphp
                     <td class="text-center">{{ $no++ }}</td>
-                    <td class="text-center">{{ $cctv['id_cctv'] }}</td>
+                    <td class="text-center">{{ $namaserver }}</td>
                     <td class="text-center">{{ $cctv['building_name'] }}</td>
-                    <td class="text-center">{{ $cctv['lokasi_name'] }}</td>
+                    <td class="text-center">{{ $cctv['id_cctv'] }}</td>
                     <td>
                         <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK"> OK
                     </td>

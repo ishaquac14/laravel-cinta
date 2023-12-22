@@ -133,7 +133,9 @@ class CctvController extends Controller
     public function show($id)
     {
         $cctv = Cctv::findOrFail($id);
-        return view('pages.cctv.show', compact('cctv'));
+        $cctv_monitoring = CctvMonitoring::where('cctv_id', $id)->orderBy('id_cctv', 'asc')->get();
+
+        return view('pages.cctv.show', compact('cctv', 'cctv_monitoring'));
     }
 
     public function edit($id)
