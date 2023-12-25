@@ -53,7 +53,7 @@ class CctvController extends Controller
             $condition = $request->input("condition.$id_cctv");
 
             $cctv = new CctvMonitoring;
-            $cctv->cctv_id = $cctvs->id;
+            $cctv->cctv_id = $cctvs->id;    
             $cctv->id_cctv = $id_cctv;
             $cctv->building_name = $request->input("building_name.$id_cctv"); 
             $cctv->lokasi_name = $request->input("lokasi_name.$id_cctv"); 

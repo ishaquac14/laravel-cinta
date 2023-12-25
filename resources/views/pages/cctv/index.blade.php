@@ -12,7 +12,9 @@
             </div>
 
             <div class="d-flex align-items-center">
-                <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
+                @can('superadmin')
+                <a href="#" class="btn btn-success">Approve</a>
+                @endcan
                 <a href="{{ route('cctv.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
                     Checksheet</a>
             </div>

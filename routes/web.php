@@ -25,6 +25,7 @@ use App\Http\Controllers\TapedriveController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::post('/acserver/approval', [AcserverController::class, 'approval_acserver'])->name('approval_acserver');
 
 Route::get('/', function () {
     return view('/login/index');
@@ -80,7 +81,6 @@ Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 Route::resource('/cobaadmin', AdminController::class)->middleware('role');
 
 Route::get('/test', [AcserverController::class, 'alert'])->name('alert');
-Route::post('/acserver/approval/{id}', [ApprovalController::class, 'ApproveAcserver'])->name('approvalAcserver');
 Route::post('/csdatabase/approval/{id}', [ApprovalController::class, 'ApproveCsdatabase'])->name('approvalCsdatabase');
 Route::post('/tapedrive/approval/{id}', [ApprovalController::class, 'ApproveTapedrive'])->name('approvalTapedrive');
 Route::post('/gacsirt/approval/{id}', [ApprovalController::class, 'ApproveGacsirt'])->name('approvalGacsirt');

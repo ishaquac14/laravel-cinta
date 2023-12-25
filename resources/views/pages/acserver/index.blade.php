@@ -12,7 +12,10 @@
             </div>
 
             <div class="d-flex align-items-center">
-                <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
+                @can('superadmin')
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                        data-bs-target="#approve_modal">Approve</button>
+                @endcan
                 <a href="{{ route('acserver.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
                     Checksheet</a>
             </div>
@@ -20,7 +23,7 @@
         <div class="col-sm-3 offset-sm-9 mb-3">
             <form action="/acserver" class="d-flex ml-auto mt-2" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-success" type="submit">Search</button>
+                <button class="btn btn-dark" type="submit">Search</button>
             </form>
         </div>
         @if (Session::has('success'))
@@ -38,6 +41,7 @@
                         <th>Status</th>
                         <th>Follow Up</th>
                         <th>Author</th>
+                        <th>Approval</th>
                         <th width="15%">Action</th>
                     </tr>
                 </thead>
@@ -68,11 +72,18 @@
                                     {{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $acserver->users->name }}</td>
                                 <td class="align-middle text-center">
+                                    @if ($acserver->is_approved === 0)
+                                        <span class="badge bg-secondary">Belum Approval</span>
+                                    @else
+                                        <span class="badge bg-success">Sudah Approval</span>
+                                    @endif
+                                </td>
+                                <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <a href="{{ route('acserver.show', $acserver->id) }}"
                                             class="btn btn-primary">Detail</a>
                                         @can('admin')
-                                            @if (!$acserver->is_approved)
+                                            @if ($acserver->is_approved === 0)
                                                 <a href="{{ route('acserver.edit', $acserver->id) }}"
                                                     class="btn btn-warning">Edit</a>
                                                 <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
@@ -81,36 +92,18 @@
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
-                                            @else
                                             @endif
                                         @endcan
                                         @can('superadmin')
-                                            @if (!$acserver->is_approved)
-                                                <a href="{{ route('acserver.edit', $acserver->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
-                                                    onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @else
-                                                <a href="{{ route('acserver.edit', $acserver->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
-                                                    onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @endif
-                                        @endcan
-                                        @if (auth()->user()->can('superadmin') && !$acserver->is_approved)
-                                            <form action="{{ route('approvalAcserver', $acserver->id) }}" method="POST">
+                                            <a href="{{ route('acserver.edit', $acserver->id) }}" class="btn btn-warning"
+                                                style="margin-right: 5px; margin-left: 5px;">Edit</a>
+                                            <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
+                                                onsubmit="return confirm('Hapus data ini?')">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success">Approval</button>
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
-                                        @endif
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -123,6 +116,33 @@
                 </tbody>
             </table>
             @include('layouts.pagination-acserver', ['acservers' => $acservers])
+        </div>
+    </div>
+
+    <div class="modal fade" id="approve_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        @php
+                            $now = Carbon\Carbon::now();
+                            $month_before = $now->subMonth();
+                            $month = $month_before->format('F');
+                        @endphp
+                        Approve Checksheet Bulan {{ $month }} !
+                    </div>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ route('approval_acserver') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

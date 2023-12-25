@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Acserver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Carbon\Carbon;
 
 class AcserverController extends Controller
 {
@@ -130,5 +131,22 @@ class AcserverController extends Controller
         $acserver->delete();
 
         return redirect()->route('acserver.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function approval_acserver(Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $acservers = Acserver::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($acservers as $acserver)
+        {
+            $acserver->is_approved = 1;
+            $acserver->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
     }
 }

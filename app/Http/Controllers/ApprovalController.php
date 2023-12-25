@@ -11,12 +11,16 @@ use App\Models\Physical;
 use App\Models\Sanswitch;
 use App\Models\Fujixerox;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ApprovalController extends Controller
 {
-    public function ApproveAcserver($id)
-    {
-        $acserver = Acserver::findOrFail($id);
+    public function ApproveAcserver(Request $request)
+    {   
+        $now = Carbon::now();
+        $month = $now->month;
+        $acserver = Acserver::where('created_at', $month - 1)->get();
+        dd($acserver);
         $acserver->is_approved = true;
         $acserver->save();
     
