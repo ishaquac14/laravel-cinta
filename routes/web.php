@@ -61,7 +61,7 @@ Route::resource('/tapedrive', TapedriveController::class)->middleware('auth');
 Route::get('/tapedrive/search', 'TapedriveController@index');
 
 Route::get('/chart-data', [MointernetController::class, 'getChartData']);
-Route::post('/cobaadmin', AdminController::class)->middleware('role');
+// Route::post('/cobaadmin', AdminController::class)->middleware('role');
 
 // Route::get('/test', [AcserverController::class, 'alert'])->name('alert');
 // Route::post('/csdatabase/approval/{id}', [ApprovalController::class, 'ApproveCsdatabase'])->name('approvalCsdatabase');

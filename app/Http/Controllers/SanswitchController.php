@@ -25,7 +25,7 @@ class SanswitchController extends Controller
         }
     
         // Menggunakan paginate(10) untuk mendapatkan data paginasi
-        $sanswitchs = $query->paginate(2);
+        $sanswitchs = $query->paginate(5);
     
         // Mengirimkan data ke tampilan    
     
