@@ -80,12 +80,16 @@
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{ route('acserver.show', $acserver->id) }}"
-                                            class="btn btn-primary">Detail</a>
+                                        <form action="{{ route('acserver.show', $acserver->id) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">Detail</button>
+                                        </form>
                                         @can('admin')
                                             @if ($acserver->is_approved === 0)
-                                                <a href="{{ route('acserver.edit', $acserver->id) }}"
-                                                    class="btn btn-warning">Edit</a>
+                                                <form action="{{ route('acserver.edit', $acserver->id) }}">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-warning">Edit</button>
+                                                </form>
                                                 <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
                                                     onsubmit="return confirm('Hapus data ini?')">
                                                     @csrf
@@ -95,8 +99,11 @@
                                             @endif
                                         @endcan
                                         @can('superadmin')
-                                            <a href="{{ route('acserver.edit', $acserver->id) }}" class="btn btn-warning"
-                                                style="margin-right: 5px; margin-left: 5px;">Edit</a>
+                                            <form action="{{ route('acserver.edit', $acserver->id) }}"
+                                                style="margin-right: 5px; margin-left: 5px;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning">Edit</button>
+                                            </form>
                                             <form action="{{ route('acserver.destroy', $acserver->id) }}" method="POST"
                                                 onsubmit="return confirm('Hapus data ini?')">
                                                 @csrf

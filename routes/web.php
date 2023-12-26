@@ -25,7 +25,6 @@ use App\Http\Controllers\TapedriveController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::post('/acserver/approval', [AcserverController::class, 'approval_acserver'])->name('approval_acserver');
 
 Route::get('/', function () {
     return view('/login/index');
@@ -80,14 +79,17 @@ Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 
 Route::resource('/cobaadmin', AdminController::class)->middleware('role');
 
-Route::get('/test', [AcserverController::class, 'alert'])->name('alert');
-Route::post('/csdatabase/approval/{id}', [ApprovalController::class, 'ApproveCsdatabase'])->name('approvalCsdatabase');
-Route::post('/tapedrive/approval/{id}', [ApprovalController::class, 'ApproveTapedrive'])->name('approvalTapedrive');
-Route::post('/gacsirt/approval/{id}', [ApprovalController::class, 'ApproveGacsirt'])->name('approvalGacsirt');
-Route::post('/mointernet/approval/{id}', [ApprovalController::class, 'ApproveMointernet'])->name('approvalMointernet');
-Route::post('/physical/approval/{id}', [ApprovalController::class, 'ApprovePhysical'])->name('approvalPhysical');
-Route::post('/fujixerox/approval/{id}', [ApprovalController::class, 'ApproveFujixerox'])->name('approvalFujixerox');
-Route::post('/sanswitch/approval/{id}', [ApprovalController::class, 'ApproveSanswitch'])->name('approvalSanswitch');
+// Route::get('/test', [AcserverController::class, 'alert'])->name('alert');
+// Route::post('/csdatabase/approval/{id}', [ApprovalController::class, 'ApproveCsdatabase'])->name('approvalCsdatabase');
+// Route::post('/tapedrive/approval/{id}', [ApprovalController::class, 'ApproveTapedrive'])->name('approvalTapedrive');
+// Route::post('/gacsirt/approval/{id}', [ApprovalController::class, 'ApproveGacsirt'])->name('approvalGacsirt');
+// Route::post('/mointernet/approval/{id}', [ApprovalController::class, 'ApproveMointernet'])->name('approvalMointernet');
+// Route::post('/physical/approval/{id}', [ApprovalController::class, 'ApprovePhysical'])->name('approvalPhysical');
+// Route::post('/fujixerox/approval/{id}', [ApprovalController::class, 'ApproveFujixerox'])->name('approvalFujixerox');
+// Route::post('/sanswitch/approval/{id}', [ApprovalController::class, 'ApproveSanswitch'])->name('approvalSanswitch');
+
+Route::post('/acserver/approval', [AcserverController::class, 'approval_acserver'])->name('approval_acserver');
+Route::post('/csdatabase/approval', [CsdatabaseController::class, 'approval_csdatabase'])->name('approval_csdatabase');
 
 
 

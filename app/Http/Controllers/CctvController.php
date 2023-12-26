@@ -68,19 +68,10 @@ class CctvController extends Controller
 
     public function show($id)
     {
-<<<<<<< HEAD
         $cctv = Cctv::findOrFail($id);
         $cctv_monitoring = CctvMonitoring::where('cctv_id', $id)->orderBy('id_cctv', 'asc')->get();
 
         return view('pages.cctv.show', compact('cctv', 'cctv_monitoring'));
-=======
-        // $response = Http::withOptions(['verify' => false])->get('https://devita-dev.aiia.co.id/api_data_cctv');
-        // $cctvs = $response->json()['cctvs'];
-    
-        $cctvs = CctvMonitoring::where('cctv_id', $id)->first();
-
-        return view('pages.cctv.show', compact('cctvs'));
->>>>>>> d3340eb6c01bdb3d36173b0d6e8aa70070900a1f
     }
 
     public function edit($id)

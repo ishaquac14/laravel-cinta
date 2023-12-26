@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Csdatabase;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CsdatabaseController extends Controller
 {
@@ -151,5 +152,22 @@ class CsdatabaseController extends Controller
         $csdatabase->delete();
 
         return redirect()->route('csdatabase.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function approval_csdatabase (Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $csdatabase = Csdatabase::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($csdatabase as $csdatabase)
+        {
+            $csdatabase->is_approved = 1;
+            $csdatabase->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
     }
 }
