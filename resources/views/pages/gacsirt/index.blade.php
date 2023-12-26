@@ -12,7 +12,10 @@
             </div>
 
             <div class="d-flex align-items-center">
-                <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
+                @can('superadmin')
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                        data-bs-target="#approve_modal">Approve</button>
+                @endcan
                 <a href="{{ route('gacsirt.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
                     Checksheet</a>
             </div>
@@ -20,7 +23,7 @@
         <div class="col-md-3 offset-md-9 mb-3">
             <form action="/gacsirt" class="d-flex ml-auto mt-2" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-success" type="submit">Search</button>
+                <button class="btn btn-dark" type="submit">Search</button>
             </form>
         </div>
         @if (Session::has('success'))
@@ -39,11 +42,12 @@
                         <th>Status</th>
                         <th>Follow Up</th>
                         <th>Author</th>
+                        <th>Approval</th>
                         @can('admin')
-                        <th width="15%">Action</th>
+                            <th>Action</th>
                         @endcan
                         @can('superadmin')
-                        <th width="15%">Action</th>
+                            <th>Action</th>
                         @endcan
                     </tr>
                 </thead>
@@ -72,12 +76,23 @@
                                 <td class="align-middle">
                                     {{ empty($gacsirt->follow_up) ? 'Tidak Ada' : $gacsirt->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $gacsirt->users->name }}</td>
+                                <td class="align-middle text-center">
+                                    @if ($gacsirt->is_approved === 0)
+                                        <span class="badge bg-secondary">Belum Approval</span>
+                                    @else
+                                        <span class="badge bg-success">Sudah Approval</span>
+                                    @endif
+                                </td>
                                 @can('admin')
                                     <td class="align-middle text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if (!$gacsirt->is_approved)
-                                                <a href="{{ route('gacsirt.edit', $gacsirt->id) }}"
-                                                    class="btn btn-warning">Edit</a>
+                                            @if ($gacsirt->is_approved === 0)
+                                                <form action="{{ route('gacsirt.edit', $gacsirt->id) }}"
+                                                    style="margin-right: 5px; margin-left: 5px;>
+                                                    @csrf
+                                                    <button type="submit"
+                                                    class="btn btn-warning">Edit</button>
+                                                </form>
                                                 <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
                                                     onsubmit="return confirm('Hapus data ini?')">
                                                     @csrf
@@ -85,7 +100,7 @@
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             @else
-                                                <span class="badge bg-success">Sudah diapproved</span>
+                                                <span class="badge bg-secondary">Can't Action</span>
                                             @endif
                                         </div>
                                     </td>
@@ -93,44 +108,57 @@
                                 @can('superadmin')
                                     <td class="align-middle text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if (!$gacsirt->is_approved)
-                                                <a href="{{ route('gacsirt.edit', $gacsirt->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
-                                                    onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @else
-                                                <a href="{{ route('gacsirt.edit', $gacsirt->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
-                                                    onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @endif
-                                        @endcan
-                                        @if (auth()->user()->can('superadmin') && !$gacsirt->is_approved)
-                                            <form action="{{ route('approvalGacsirt', $gacsirt->id) }}" method="POST">
+                                            <form action="{{ route('gacsirt.edit', $gacsirt->id) }}"
+                                                style="margin-right: 5px; margin-left: 5px;">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success">Approval</button>
+                                                <button type="submit" class="btn btn-warning">Edit</button>
                                             </form>
-                                        @endif
+                                            <form action="{{ route('gacsirt.destroy', $gacsirt->id) }}" method="POST"
+                                                onsubmit="return confirm('Hapus data ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
                                         </div>
                                     </td>
-                                </tr>
-                            @endforeach
-                        @else
+                                @endcan
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
                             <td class="text-center" colspan="8">Data tidak ditemukan</td>
                         </tr>
-                        @endif
-                    </tbody>
-                </table>
+                    @endif
+                </tbody>
+            </table>
             @include('layouts.pagination-gacsirt', ['gacsirts' => $gacsirts])
+        </div>
+    </div>
+
+    <div class="modal fade" id="approve_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        @php
+                            $now = Carbon\Carbon::now();
+                            $month_before = $now->subMonth();
+                            $month = $month_before->format('F');
+                        @endphp
+                        Approve Checksheet Bulan {{ $month }} !
+                    </div>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ route('approval_gacsirt') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

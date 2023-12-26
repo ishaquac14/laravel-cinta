@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fujixerox;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FujixeroxController extends Controller
 {
@@ -103,5 +104,22 @@ class FujixeroxController extends Controller
         $fujixerox->delete();
 
         return redirect()->route('fujixerox.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function approval_fujixerox(Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $fujixeroxs = Fujixerox::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($fujixeroxs as $fujixerox)
+        {
+            $fujixerox->is_approved = 1;
+            $fujixerox->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
     }
 }

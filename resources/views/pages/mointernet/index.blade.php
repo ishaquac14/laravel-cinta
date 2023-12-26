@@ -3,7 +3,7 @@
 @section('body')
     <div class="container">
         <div class="d-flex align-items-center justify-content-between mt-5">
-            <a href="{{ route('mointernet.index') }}">
+            <a href="{{ route('grafik_internet') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
 
@@ -12,7 +12,10 @@
             </div>
 
             <div class="d-flex align-items-center">
-                <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
+                @can('superadmin')
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                        data-bs-target="#approve_modal">Approve</button>
+                @endcan
                 <a href="{{ route('mointernet.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
                     Checksheet</a>
             </div>
@@ -20,7 +23,7 @@
         <div class="col-md-3 offset-md-9 mb-3">
             <form action="/mointernet" class="d-flex ml-auto mt-2" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-success" type="submit">Search</button>
+                <button class="btn btn-dark" type="submit">Search</button>
             </form>
         </div>
         @if (Session::has('success'))
@@ -40,11 +43,12 @@
                         <th>Root Cause</th>
                         <th>Follow Up</th>
                         <th>Author</th>
+                        <th>Approval</th>
                         @can('admin')
-                        <th width="15%">Action</th>
+                            <th>Action</th>
                         @endcan
                         @can('superadmin')
-                        <th width="15%">Action</th>
+                            <th>Action</th>
                         @endcan
                     </tr>
                 </thead>
@@ -61,14 +65,26 @@
                                 <td class="align-middle text-center">{{ $mointernet->end_time }}</td>
                                 <td class="align-middle text-center">{{ $mointernet->duration }} Menit</td>
                                 <td class="align-middle text-center">{{ $mointernet->root_cause }}</td>
-                                <td class="align-middle">{{ empty($mointernet->follow_up) ? 'Tidak Ada' : $mointernet->follow_up }}</td>
+                                <td class="align-middle">
+                                    {{ empty($mointernet->follow_up) ? 'Tidak Ada' : $mointernet->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $mointernet->users->name }}</td>
+                                <td class="align-middle text-center">
+                                    @if ($mointernet->is_approved === 0)
+                                        <span class="badge bg-secondary">Belum Approval</span>
+                                    @else
+                                        <span class="badge bg-success">Sudah Approval</span>
+                                    @endif
+                                </td>
                                 @can('admin')
                                     <td class="align-middle text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if (!$mointernet->is_approved)
-                                                <a href="{{ route('mointernet.edit', $mointernet->id) }}"
-                                                    class="btn btn-warning">Edit</a>
+                                            @if ($mointernet->is_approved === 0)
+                                                <form action="{{ route('mointernet.edit', $mointernet->id) }}"
+                                                    style="margin-right: 5px; margin-left: 5px;>
+                                                    @csrf
+                                                    <button type="submit"
+                                                    class="btn btn-warning">Edit</button>
+                                                </form>
                                                 <form action="{{ route('mointernet.destroy', $mointernet->id) }}"
                                                     method="POST" onsubmit="return confirm('Hapus data ini?')">
                                                     @csrf
@@ -76,7 +92,7 @@
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             @else
-                                            <span class="badge bg-success">Sudah diapproved</span>
+                                                <span class="badge bg-secondary">Can't Action</span>
                                             @endif
                                         </div>
                                     </td>
@@ -84,35 +100,20 @@
                                 @can('superadmin')
                                     <td class="align-middle text-center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            @if (!$mointernet->is_approved)
-                                                <a href="{{ route('mointernet.edit', $mointernet->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('mointernet.destroy', $mointernet->id) }}"
-                                                    method="POST" onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @else
-                                                <a href="{{ route('mointernet.edit', $mointernet->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('mointernet.destroy', $mointernet->id) }}"
-                                                    method="POST" onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @endif
-                                        @endcan
-                                        @if (auth()->user()->can('superadmin') && !$mointernet->is_approved)
-                                            <form action="{{ route('approvalMointernet', $mointernet->id) }}"
-                                                method="POST">
+                                            <form action="{{ route('mointernet.edit', $mointernet->id) }}"
+                                                style="margin-right: 5px; margin-left: 5px;">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success">Approval</button>
+                                                <button type="submit" class="btn btn-warning">Edit</button>
                                             </form>
-                                        @endif
-                                    </div>
-                                </td>
+                                            <form action="{{ route('mointernet.destroy', $mointernet->id) }}" method="POST"
+                                                onsubmit="return confirm('Hapus data ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                @endcan
                             </tr>
                         @endforeach
                     @else
@@ -252,5 +253,32 @@
                 Highcharts.chart('container', chartOptions);
             });
         </script>
+    </div>
+
+    <div class="modal fade" id="approve_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        @php
+                            $now = Carbon\Carbon::now();
+                            $month_before = $now->subMonth();
+                            $month = $month_before->format('F');
+                        @endphp
+                        Approve Checksheet Bulan {{ $month }} !
+                    </div>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ route('approval_mointernet') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

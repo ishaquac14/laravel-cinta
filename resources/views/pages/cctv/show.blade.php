@@ -34,15 +34,17 @@
                             <td>{{ $cctv->id_cctv }}</td>
                             <td>
                                 @if ($cctv->status === 'OK')
-                                    <span class="badge bg-success">{{ $cctv->status }}</span>
+                                    <span class="badge bg-success">Ok</span>
                                 @elseif($cctv->status === 'NG')
-                                    <span class="badge bg-danger">{{ $cctv->status }}</span>
+                                    <span class="badge bg-danger">Not Good</span>
+                                @else
+                                    {{ $cctv->status }}
                                 @endif
                             </td>
                             <td>
-                                @if ($cctv->condition === 'bersih')
-                                    <span class="badge bg-success">{{ $cctv->condition }}</span>
-                                @elseif($cctv->condition === 'kotor')
+                                @if ($cctv->condition === 'Bersih' || is_null($cctv->condition))
+                                    <span class="badge bg-success">{{ $cctv->condition ?? 'Bersih' }}</span>
+                                @elseif($cctv->condition === 'Kotor')
                                     <span class="badge bg-danger">{{ $cctv->condition }}</span>
                                 @endif
                             </td>

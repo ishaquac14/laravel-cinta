@@ -30,7 +30,7 @@ Route::get('/', function () {
     return view('/login/index');
 });
 
-Route::get('/mointernet/persen_grafik_monitoring_internet ', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
+Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
 
 Route::resource('/physical', PhysicalController::class)->middleware('auth');
 Route::get('/physical/search', 'PhysicalController@index')->middleware('auth');
@@ -90,6 +90,12 @@ Route::resource('/cobaadmin', AdminController::class)->middleware('role');
 
 Route::post('/acserver/approval', [AcserverController::class, 'approval_acserver'])->name('approval_acserver');
 Route::post('/csdatabase/approval', [CsdatabaseController::class, 'approval_csdatabase'])->name('approval_csdatabase');
+Route::post('/tapedrive/approval', [TapedriveController::class, 'approval_tapedrive'])->name('approval_tapedrive');
+Route::post('/gacsirt/approval', [GacsirtController::class, 'approval_gacsirt'])->name('approval_gacsirt');
+Route::post('/mointernet/approval', [MointernetController::class, 'approval_mointernet'])->name('approval_mointernet');
+Route::post('/physical/approval', [PhysicalController::class, 'approval_physical'])->name('approval_physical');
+Route::post('/fujixerox/approval', [FujixeroxController::class, 'approval_fujixerox'])->name('approval_fujixerox');
+Route::post('/cctv/approval', [CctvController::class, 'approval_cctv'])->name('approval_cctv');
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Physical;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PhysicalController extends Controller
 {
@@ -151,5 +152,22 @@ class PhysicalController extends Controller
         $physical->delete();
 
         return redirect()->route('physical.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function approval_physical(Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $physicals = Physical::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($physicals as $physical)
+        {
+            $physical->is_approved = 1;
+            $physical->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
     }
 }

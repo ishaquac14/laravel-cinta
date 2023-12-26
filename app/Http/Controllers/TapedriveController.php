@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tapedrive;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class TapedriveController extends Controller
 {
@@ -100,6 +101,23 @@ class TapedriveController extends Controller
         $tapedrive->delete();
 
         return redirect()->route('tapedrive.index')->with('success', 'Tape Drive berhasil dihapus');
+    }
+
+    public function approval_tapedrive(Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $tapedrives = Tapedrive::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($tapedrives as $tapedrive)
+        {
+            $tapedrive->is_approved = 1;
+            $tapedrive->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
     }
 
 }

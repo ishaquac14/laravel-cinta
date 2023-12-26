@@ -41,17 +41,29 @@
                     <td class="text-center">{{ $namaserver }}</td>
                     <td class="text-center">{{ $cctv['building_name'] }}</td>
                     <td class="text-center">{{ $cctv['id_cctv'] }}</td>
-                    <td>
-                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK"> OK
+                    {{-- <td>
+                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK" required> OK
                     </td>
                     <td>
-                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG"> NG
+                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG" required> NG
+                    </td> --}}
+                    <td class="align-middle text-center">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK" required>
+                            <label class="form-check-label" for="status[{{ $cctv['id_cctv'] }}]">Ok</label>
+                        </div>
+                    </td>
+                    <td class="allign-middle text-center">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG" required>
+                            <label class="form-check-label" for="status[{{ $cctv['id_cctv'] }}]">Not Good</label>
+                        </div>
                     </td>
                     <td>
                         <select name="condition[{{ $cctv['id_cctv'] }}]" class="form-select text-center" id="StatusSelect" contenteditable="true">
                             <option value="" disabled selected>---Kondisi---</option>
-                            <option value="bersih">Bersih</option>
-                            <option value="kotor">Kotor</option>
+                            <option value="Bersih">Bersih</option>
+                            <option value="Kotor">Kotor</option>
                         </select>
                     </td>
                     <td>

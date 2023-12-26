@@ -201,4 +201,21 @@ class MointernetController extends Controller
 
         return redirect()->route('mointernet.index')->with('success', 'Data berhasil dihapus');
     }
+
+    public function approval_mointernet(Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $mointernets = Mointernet::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($mointernets as $mointernet)
+        {
+            $mointernet->is_approved = 1;
+            $mointernet->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
+    }
 }

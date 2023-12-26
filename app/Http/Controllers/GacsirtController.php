@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Gacsirt;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class GacsirtController extends Controller
 {
@@ -104,5 +105,22 @@ class GacsirtController extends Controller
         $gacsirt->delete();
 
         return redirect()->route('gacsirt.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function approval_gacsirt(Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $gacsirts = Gacsirt::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($gacsirts as $gacsirt)
+        {
+            $gacsirt->is_approved = 1;
+            $gacsirt->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
     }
 }
