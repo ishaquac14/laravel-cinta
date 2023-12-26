@@ -86,7 +86,8 @@
                                         </form>
                                         @can('admin')
                                             @if ($acserver->is_approved === 0)
-                                                <form action="{{ route('acserver.edit', $acserver->id) }}">
+                                                <form action="{{ route('acserver.edit', $acserver->id) }}"
+                                                    style="margin-right: 5px; margin-left: 5px;">
                                                     @csrf
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </form>

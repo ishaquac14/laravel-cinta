@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sanswitch;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SanswitchController extends Controller
 {
@@ -161,6 +162,23 @@ class SanswitchController extends Controller
         $sanswitch->delete();
 
         return redirect()->route('sanswitch.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function approval_sanswitch(Request $request)
+    {   
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $before_month = $month - 1;
+        $sanswitchs = Sanswitch::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+
+        foreach($sanswitchs as $sanswitch)
+        {
+            $sanswitch->is_approved = 1;
+            $sanswitch->save();
+        }
+
+        return redirect()->back()->with('success', 'Approved success');
     }
         
 }

@@ -96,7 +96,8 @@
                                         </form>
                                         @can('admin')
                                             @if ($tapedrive->is_approved === 0)
-                                                <form action="{{ route('tapedrive.edit', $tapedrive->id) }}">
+                                                <form action="{{ route('tapedrive.edit', $tapedrive->id) }}"
+                                                    style="margin-right: 5px; margin-left: 5px;">
                                                     @csrf
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </form>

@@ -72,7 +72,8 @@
                                         </form>
                                         @can('admin')
                                             @if ($cctv->is_approved === 0)
-                                                <form action="{{ route('cctv.edit', $cctv->id) }}">
+                                                <form action="{{ route('cctv.edit', $cctv->id) }}"
+                                                    style="margin-right: 5px; margin-left: 5px;">
                                                     @csrf
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </form>

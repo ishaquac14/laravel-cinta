@@ -38,7 +38,6 @@
                                         <option value="OK" {{ $cctv->status === 'OK' ? 'selected' : '' }}>Ok</option>
                                         <option value="NG" {{ $cctv->status === 'NG' ? 'selected' : '' }}>Not Good
                                         </option>
-                                        <!-- Add other status options if needed -->
                                     </select>
                                 </td>
                                 <td class="align-middle text-center">
@@ -48,22 +47,33 @@
                                             Bersih</option>
                                         <option value="Kotor" {{ $cctv->condition === 'Kotor' ? 'selected' : '' }}>Kotor
                                         </option>
-                                        <!-- Add other condition options if needed -->
                                     </select>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="row mt-4">
-                    <div class="col-md-12 mb-5">
-                        <label for="note">Note :</label>
-                        <textarea class="form-control" name="note" rows="{{ substr_count($cctv->note, "\n") + 5 }}">{{ $cctv->note ?? '' }}</textarea>
+                <div class="row">
+                    <div class="@if (auth()->user() && auth()->user()->role) col-md-6 @else col-md-12 @endif">
+                        <label for="exampleFormControlTextarea1" class="form-label"></label>
+                        <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="3" placeholder="Note">{{ $cctv->note }}</textarea>
                     </div>
+                    @can('admin')
+                        <div class="col-md-6">
+                            <label for="exampleFormControlTextarea1" class="form-label"></label>
+                            <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $cctv->follow_up }}</textarea>
+                        </div>
+                    @endcan
+                    @can('superadmin')
+                        <div class="col-md-6">
+                            <label for="exampleFormControlTextarea1" class="form-label"></label>
+                            <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $cctv->follow_up }}</textarea>
+                        </div>
+                    @endcan
                 </div>
-            </div>
-            <div class="mt-4 mb-5">
-                <button class="btn btn-warning">UPDATE</button>
+                <div class="mt-4 mb-5">
+                    <button class="btn btn-warning">UPDATE</button>
+                </div>
             </div>
         </form>
     </div>

@@ -63,7 +63,7 @@ class CctvController extends Controller
             $cctv->save();
         }
 
-        return redirect()->route('cctv.index')->with('success', 'Formulir berhasil dikirim');
+        return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan');
     }
 
 
@@ -90,6 +90,7 @@ class CctvController extends Controller
 
         $rules = [
             'note' => 'nullable|string',
+            'follow_up' => 'nullable|string',
         ];
 
         // Check if cctv_monitoring is not null
@@ -104,6 +105,7 @@ class CctvController extends Controller
 
         $data = [
             'note' => $request->input('note'),
+            'follow_up' => $request->input('follow_up'),
         ];
 
         // Check if cctv_monitoring is not null

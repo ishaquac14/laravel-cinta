@@ -23,7 +23,7 @@
         <div class="col-md-3 offset-md-9 mb-3">
             <form action="/physical" class="d-flex ml-auto mt-2" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-success" type="submit">Search</button>
+                <button class="btn btn-dark" type="submit">Search</button>
             </form>
         </div>
         @if (Session::has('success'))
@@ -73,7 +73,8 @@
                                         </form>
                                         @can('admin')
                                             @if ($physical->is_approved === 0)
-                                                <form action="{{ route('physical.edit', $physical->id) }}">
+                                                <form action="{{ route('physical.edit', $physical->id) }}"
+                                                    style="margin-right: 5px; margin-left: 5px;">
                                                     @csrf
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </form>

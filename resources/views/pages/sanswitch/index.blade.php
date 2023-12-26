@@ -12,7 +12,10 @@
             </div>
 
             <div class="d-flex align-items-center">
-                <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
+                @can('superadmin')
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                        data-bs-target="#approve_modal">Approve</button>
+                @endcan
                 <a href="{{ route('sanswitch.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
                     Checksheet</a>
             </div>
@@ -20,7 +23,7 @@
         <div class="col-md-3 offset-md-9 mb-3">
             <form action="/sanswitch" class="d-flex ml-auto mt-2" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-success" type="submit">Search</button>
+                <button class="btn btn-dark" type="submit">Search</button>
             </form>
         </div>
         @if (Session::has('success'))
@@ -37,7 +40,8 @@
                         <th>Note</th>
                         <th>Follow Up</th>
                         <th>Author</th>
-                        <th width="15%">Action</th>
+                        <th>Approval</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,49 +59,46 @@
                                     {{ empty($sanswitch->follow_up) ? 'Tidak Ada' : $sanswitch->follow_up }}</td>
                                 <td class="align-middle text-center">{{ $sanswitch->users->name }}</td>
                                 <td class="align-middle text-center">
+                                    @if ($sanswitch->is_approved === 0)
+                                        <span class="badge bg-secondary">Belum Approval</span>
+                                    @else
+                                        <span class="badge bg-success">Sudah Approval</span>
+                                    @endif
+                                </td>
+                                <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{ route('sanswitch.show', $sanswitch->id) }}"
-                                            class="btn btn-primary">Detail</a>
+                                        <form action="{{ route('sanswitch.show', $sanswitch->id) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">Detail</button>
+                                        </form>
                                         @can('admin')
-                                            @if (!$sanswitch->is_approved)
-                                                <a href="{{ route('sanswitch.edit', $sanswitch->id) }}"
-                                                    class="btn btn-warning">Edit</a>
+                                            @if ($sanswitch->is_approved === 0)
+                                                <form action="{{ route('sanswitch.edit', $sanswitch->id) }}"
+                                                    style="margin-right: 5px; margin-left: 5px;">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-warning">Edit</button>
+                                                </form>
                                                 <form action="{{ route('sanswitch.destroy', $sanswitch->id) }}" method="POST"
                                                     onsubmit="return confirm('Hapus data ini?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
-                                            @else
                                             @endif
                                         @endcan
                                         @can('superadmin')
-                                            @if (!$sanswitch->is_approved)
-                                                <a href="{{ route('sanswitch.edit', $sanswitch->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('sanswitch.destroy', $sanswitch->id) }}" method="POST"
-                                                    onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @else
-                                                <a href="{{ route('sanswitch.edit', $sanswitch->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('sanswitch.destroy', $sanswitch->id) }}" method="POST"
-                                                    onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form>
-                                            @endif
-                                        @endcan
-                                        @if (auth()->user()->can('superadmin') && !$sanswitch->is_approved)
-                                            <form action="{{ route('approvalSanswitch', $sanswitch->id) }}" method="POST">
+                                            <form action="{{ route('sanswitch.edit', $sanswitch->id) }}"
+                                                style="margin-right: 5px; margin-left: 5px;">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success">Approval</button>
+                                                <button type="submit" class="btn btn-warning">Edit</button>
                                             </form>
-                                        @endif
+                                            <form action="{{ route('sanswitch.destroy', $sanswitch->id) }}" method="POST"
+                                                onsubmit="return confirm('Hapus data ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -110,6 +111,33 @@
                 </tbody>
             </table>
             @include('layouts.pagination-sanswitch', ['sanswitchs' => $sanswitchs])
+        </div>
+    </div>
+
+    <div class="modal fade" id="approve_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        @php
+                            $now = Carbon\Carbon::now();
+                            $month_before = $now->subMonth();
+                            $month = $month_before->format('F');
+                        @endphp
+                        Approve Checksheet Bulan {{ $month }} !
+                    </div>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ route('approval_sanswitch') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

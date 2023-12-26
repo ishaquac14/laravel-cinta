@@ -37,23 +37,17 @@
                         $servercctv = $cctv['servercctv'];
                         $namaserver = preg_replace("/\([^)]+\)/", "", $servercctv);
                     @endphp
-                    <td class="text-center">{{ $no++ }}</td>
-                    <td class="text-center">{{ $namaserver }}</td>
-                    <td class="text-center">{{ $cctv['building_name'] }}</td>
-                    <td class="text-center">{{ $cctv['id_cctv'] }}</td>
-                    {{-- <td>
-                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK" required> OK
-                    </td>
-                    <td>
-                        <input type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG" required> NG
-                    </td> --}}
+                    <td class="align-middle text-center">{{ $no++ }}</td>
+                    <td class="align-middle text-center">{{ $namaserver }}</td>
+                    <td class="align-middle text-center">{{ $cctv['building_name'] }}</td>
+                    <td class="align-middle text-center">{{ $cctv['id_cctv'] }}</td>
                     <td class="align-middle text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK" required>
                             <label class="form-check-label" for="status[{{ $cctv['id_cctv'] }}]">Ok</label>
                         </div>
                     </td>
-                    <td class="allign-middle text-center">
+                    <td class="align-middle text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="NG" required>
                             <label class="form-check-label" for="status[{{ $cctv['id_cctv'] }}]">Not Good</label>
@@ -66,9 +60,9 @@
                             <option value="Kotor">Kotor</option>
                         </select>
                     </td>
-                    <td>
+                    {{-- <td>
                         <input type="hidden" name="id_cctv[]" value="{{ $cctv['id_cctv'] }}">
-                    </td>
+                    </td> --}}
                 </tr>
                 @endforeach
             </tbody>

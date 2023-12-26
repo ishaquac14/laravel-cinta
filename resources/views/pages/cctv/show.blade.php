@@ -54,9 +54,13 @@
                 {{-- @include('cctv.partials.cctv_table') --}}
             </table>
             <div class="row mt-4">
-                <div class="col-md-12 mb-5">
-                    <p>Note :</p>
-                    <textarea class="form-control" name="note" rows="{{ substr_count($cctv->note, "\n") + 5 }}" readonly>{{ $cctv->note ?? 'Tidak ada' }}</textarea>
+                <div class="col-md-6 mb-5">
+                    <p><b>Note :</b></p>
+                    <textarea class="form-control" name="note" rows="{{ substr_count($cctv->note, "\n") + 5 }}" disabled>{{ $cctv->note ?? 'Tidak ada' }}</textarea>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <p><b>Follow Up :</b></p>
+                    <textarea class="form-control" name="follow_up" rows="{{ substr_count($cctv->follow_up, "\n") + 5 }}" disabled>{{ $cctv->follow_up ?? 'Tidak ada' }}</textarea>
                 </div>
             </div>
         </div>
