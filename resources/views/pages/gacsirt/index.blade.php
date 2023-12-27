@@ -67,10 +67,10 @@
                                         <span class="badge bg-success">Completed</span>
                                     @elseif ($gacsirt->status === 'Progress')
                                         <span class="badge bg-primary">Progress</span>
-                                    @elseif ($gacsirt->status === 'not good')
+                                    @elseif ($gacsirt->status === 'Tidak Ada')
                                         <span class="badge bg-secondary">Tidak ada</span>
                                     @else
-                                        {{ $gacsirt["{$item}"] }}
+                                        {{ $gacsirt->status }}
                                     @endif
                                 </td>
                                 <td class="align-middle">
