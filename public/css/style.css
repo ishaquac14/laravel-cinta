@@ -15,13 +15,13 @@
 
 .form-signin input[type="password"] {
   margin-bottom: 10px;
-  border-top-left-radius: 0;
+  border-top-left-radius: 5;
   border-top-right-radius: 0;
 }
 
 .form-registration {
-  max-width: 330px;
-  padding: 1rem;
+  max-width: 350px;
+  padding: 0px;
 }
 
 .form-registration .form-floating:focus-within {
