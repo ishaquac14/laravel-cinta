@@ -15,6 +15,7 @@ use App\Http\Controllers\FujixeroxController;
 use App\Http\Controllers\MointernetController;
 use App\Http\Controllers\CctvController;
 use App\Http\Controllers\TapedriveController;
+use App\Models\Cobaadmin;
 
 Route::get('/', function () {
     return view('/login/index');
@@ -61,7 +62,9 @@ Route::resource('/tapedrive', TapedriveController::class)->middleware('auth');
 Route::get('/tapedrive/search', 'TapedriveController@index');
 
 Route::get('/chart-data', [MointernetController::class, 'getChartData']);
-// Route::post('/cobaadmin', AdminController::class)->middleware('role');
+
+Route::get('/cobaadmin', [AdminController::class, 'index'])->name('cobaadmin.index')->middleware('role');
+// Route::post('/cobaadmin', [AdminController::class, 'index'])->middleware('role');
 
 // Route::get('/test', [AcserverController::class, 'alert'])->name('alert');
 // Route::post('/csdatabase/approval/{id}', [ApprovalController::class, 'ApproveCsdatabase'])->name('approvalCsdatabase');

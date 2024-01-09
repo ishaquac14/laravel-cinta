@@ -105,7 +105,7 @@
                         <span>ADMINISTRATOR</span>
                     </h5>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('cobaadmin.index') }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="#">
                             <svg class="bi">
                                 <use xlink:href="#file-earmark-text" />
                             </svg>
@@ -119,7 +119,7 @@
                         <span>ADMINISTRATOR</span>
                     </h5>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('cobaadmin.index') }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="#">
                             <svg class="bi">
                                 <use xlink:href="#file-earmark-text" />
                             </svg>

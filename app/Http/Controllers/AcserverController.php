@@ -25,10 +25,8 @@ class AcserverController extends Controller
             });
         }
 
-        // Menggunakan paginate(10) untuk mendapatkan data paginasi
         $acservers = $query->paginate(5);
 
-        // Mengirimkan data ke tampilan
         return view('pages.acserver.index', compact('acservers'));
     }
 
@@ -65,15 +63,13 @@ class AcserverController extends Controller
             'kondisi_ac-01', 'kondisi_ac-02', 'kondisi_ac-03', 'kondisi_ac-04',
             'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'suhu_ruangan', 'note', 'follow_up', 'status'
         ]);
-        // Menyimpan data ke dalam acserver
-        // dd($data);auth()->user()->name
+       
         $data['author'] = auth()->user()->name;
 
         $data['user_id'] = auth()->user()->id;
 
         Acserver::create($data);
 
-        // Redirect atau memberikan respons sesuai kebutuhan
         return redirect()->route('acserver.index')->with('success', 'Data berhasil disimpan');
     }
 

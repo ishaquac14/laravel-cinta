@@ -11,12 +11,8 @@ class AdminController extends Controller
 
    public function index()
     {
-        return view('pages.cobaadmin.index', [
-
-        'sanswitch' => Cobaadmin::all()
-        ]);
+        return view('pages.cobaadmin.index');
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -30,7 +26,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
     }
 
     /**
