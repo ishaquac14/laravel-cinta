@@ -169,5 +169,7 @@ class CctvController extends Controller
             $cctv->condition = $yesterday_cctv->condition;
             $cctv->save();
         }
+
+        return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan');
     }
 }
