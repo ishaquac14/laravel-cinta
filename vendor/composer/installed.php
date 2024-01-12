@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '207920403d7512a3b172a422d92137da36ab13a0',
+        'reference' => 'b36ebc1aeded710fb67934bd376ee45fcf311a12',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -379,6 +379,15 @@
                 0 => '*',
             ),
         ),
+        'kyslik/column-sortable' => array(
+            'pretty_version' => '6.5.0',
+            'version' => '6.5.0.0',
+            'reference' => '80a7f053cf8e457be06d5fe59371f1b2b5cd8d03',
+            'type' => 'package',
+            'install_path' => __DIR__ . '/../kyslik/column-sortable',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'laravel/breeze' => array(
             'pretty_version' => 'v1.26.3',
             'version' => '1.26.3.0',
@@ -400,7 +409,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '207920403d7512a3b172a422d92137da36ab13a0',
+            'reference' => 'b36ebc1aeded710fb67934bd376ee45fcf311a12',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -20,12 +20,12 @@
                     Checksheet</a>
             </div>
         </div>
-        <div class="col-md-3 offset-md-9 mb-3">
-            <form action="/csdatabase" class="d-flex ml-auto mt-2" method="GET">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-dark" type="submit">Search</button>
-            </form>
-        </div>
+        
+        <form method="GET" action="{{ route('csdatabase.index') }}">
+            @csrf
+            @include('layouts.filter')
+        </form>
+
         @if (Session::has('success'))
             <div class="alert alert-success" role="alert">
                 {{ Session::get('success') }}

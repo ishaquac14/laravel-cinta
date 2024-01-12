@@ -68,8 +68,8 @@
             </tbody>
         </table>     
         <div class="">
-            <label for="exampleFormControlTextarea1" class="form-label"></label>
-            <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
+            <label for="noteTextarea" class="form-label">Note</label>
+            <textarea class="form-control" name="note" id="noteTextarea" rows="4" placeholder="Note"></textarea>
         </div>
         <div class="mt-4"><p><b>IMPORTANT:</b> Jika terjadi problem atau mati langsung hubungi MSA</p></div>
         <div class="col">

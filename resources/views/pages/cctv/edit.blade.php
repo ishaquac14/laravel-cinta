@@ -12,7 +12,7 @@
             <h4>EDIT C/S MONITORING CCTV ({{ \Carbon\Carbon::parse($cctv->created_at)->format('d-m-Y H:i:s') }})</h4>
         </div>
         <hr>
-        <form method="post" action="{{ route('cctv.update', $cctv->id) }}">
+        <form method="POST" action="{{ route('cctv.update', $cctv->id) }}">
             @csrf
             @method('PUT')
             <div class="table-responsive">
@@ -29,23 +29,23 @@
                         @php
                             $no = 1;
                         @endphp
-                        @foreach ($cctv_monitoring as $cctv)
+                        @foreach ($cctv_monitoring as $cctv_mo)
                             <tr>
                                 <td class="align-middle text-center">{{ $no++ }}</td>
-                                <td class="align-middle text-center">{{ $cctv->id_cctv }}</td>
+                                <td class="align-middle text-center">{{ $cctv_mo->id_cctv }}</td>
                                 <td class="align-middle text-center">
                                     <select class="form-control text-center" name="status">
-                                        <option value="OK" {{ $cctv->status === 'OK' ? 'selected' : '' }}>Ok</option>
-                                        <option value="NG" {{ $cctv->status === 'NG' ? 'selected' : '' }}>Not Good
+                                        <option value="OK" {{ $cctv_mo->status === 'OK' ? 'selected' : '' }}>Ok</option>
+                                        <option value="NG" {{ $cctv_mo->status === 'NG' ? 'selected' : '' }}>Not Good
                                         </option>
                                     </select>
                                 </td>
                                 <td class="align-middle text-center">
                                     <select class="form-control text-center" name="condition">
                                         <option value="Bersih"
-                                            {{ $cctv->condition === 'Bersih' || is_null($cctv->condition) ? 'selected' : '' }}>
+                                            {{ $cctv_mo->condition === 'Bersih' || is_null($cctv_mo->condition) ? 'selected' : '' }}>
                                             Bersih</option>
-                                        <option value="Kotor" {{ $cctv->condition === 'Kotor' ? 'selected' : '' }}>Kotor
+                                        <option value="Kotor" {{ $cctv_mo->condition === 'Kotor' ? 'selected' : '' }}>Kotor
                                         </option>
                                     </select>
                                 </td>
@@ -55,8 +55,8 @@
                 </table>
                 <div class="row">
                     <div class="@if (auth()->user() && auth()->user()->role) col-md-6 @else col-md-12 @endif">
-                        <label for="exampleFormControlTextarea1" class="form-label"></label>
-                        <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="3" placeholder="Note">{{ $cctv->note }}</textarea>
+                        <label for="noteTextarea" class="form-label"></label>
+                        <textarea class="form-control" name="note" id="noteTextarea" rows="3" placeholder="Note">{{ $cctv->note }}</textarea>
                     </div>
                     @can('admin')
                         <div class="col-md-6">

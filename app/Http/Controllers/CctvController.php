@@ -43,11 +43,13 @@ class CctvController extends Controller
         // dd($request);
         $request->validate([
             'note' => 'nullable|string',
+            'follow_up' => 'nullable|string',
         ]);
 
         $cctvs = Cctv::create([
             "user_id" => auth()->id(),
             "note" => $request->note,
+            "follow_up" => $request->follow_up
         ]);
 
         foreach ($request->input('status') as $id_cctv => $status) {
@@ -79,20 +81,21 @@ class CctvController extends Controller
     {
         $cctv = Cctv::findOrFail($id);
         $cctv_monitoring = CctvMonitoring::where('cctv_id', $id)->orderBy('id_cctv', 'asc')->get();
+        
+        // dd($cctv, $cctv_monitoring);
 
         return view('pages.cctv.edit', compact('cctv', 'cctv_monitoring'));
     }
 
-
     public function update(Request $request, $id)
     {
         $cctv = Cctv::findOrFail($id);
-
+    
         $rules = [
             'note' => 'nullable|string',
             'follow_up' => 'nullable|string',
-        ];
-
+        ];  
+    
         // Check if cctv_monitoring is not null
         if ($cctv->cctv_monitoring) {
             foreach ($cctv->cctv_monitoring as $index => $monitoring) {
@@ -100,24 +103,26 @@ class CctvController extends Controller
                 $rules["condition.{$monitoring->id_cctv}"] = 'nullable|in:Bersih,Kotor';
             }
         }
-
+    
         $request->validate($rules);
-
-        $data = [
-            'note' => $request->input('note'),
-            'follow_up' => $request->input('follow_up'),
-        ];
-
-        // Check if cctv_monitoring is not null
+    
         if ($cctv->cctv_monitoring) {
             foreach ($cctv->cctv_monitoring as $index => $monitoring) {
-                $data["cam{$monitoring->id_cctv}"] = $request->input("status.{$monitoring->id_cctv}");
-                $data["kondisi_cam{$monitoring->id_cctv}"] = $request->input("condition.{$monitoring->id_cctv}");
+                $status = $request->input("status.{$monitoring->id_cctv}");
+                $condition = $request->input("condition.{$monitoring->id_cctv}");
+    
+                $monitoring->status = $status;
+                $monitoring->condition = $condition;
+                $monitoring->save();
             }
         }
 
+        $data = $request->only([
+            'note', 'follow_up'
+        ]);
+    
         $cctv->update($data);
-
+    
         return redirect()->route('cctv.index')->with('success', 'Data berhasil diperbarui');
     }
 

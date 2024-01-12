@@ -134,6 +134,10 @@ class ComposerStaticInit1e8cd9d61a3b79bafe9a99fe6344edf7
             'Laravel\\Prompts\\' => 16,
             'Laravel\\Breeze\\' => 15,
         ),
+        'K' => 
+        array (
+            'Kyslik\\ColumnSortable\\' => 22,
+        ),
         'I' => 
         array (
             'Illuminate\\Support\\' => 19,
@@ -449,6 +453,10 @@ class ComposerStaticInit1e8cd9d61a3b79bafe9a99fe6344edf7
         array (
             0 => __DIR__ . '/..' . '/laravel/breeze/src',
         ),
+        'Kyslik\\ColumnSortable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable',
+        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -561,6 +569,7 @@ class ComposerStaticInit1e8cd9d61a3b79bafe9a99fe6344edf7
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AcserverController' => __DIR__ . '/../..' . '/app/Http/Controllers/AcserverController.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
+        'App\\Http\\Controllers\\ApprovalController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApprovalController.php',
         'App\\Http\\Controllers\\CctvController' => __DIR__ . '/../..' . '/app/Http/Controllers/CctvController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\CsdatabaseController' => __DIR__ . '/../..' . '/app/Http/Controllers/CsdatabaseController.php',
@@ -594,11 +603,13 @@ class ComposerStaticInit1e8cd9d61a3b79bafe9a99fe6344edf7
         'App\\Models\\Acserver' => __DIR__ . '/../..' . '/app/Models/Acserver.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\Cctv' => __DIR__ . '/../..' . '/app/Models/Cctv.php',
+        'App\\Models\\CctvMonitoring' => __DIR__ . '/../..' . '/app/Models/CctvMonitoring.php',
         'App\\Models\\Cobaadmin' => __DIR__ . '/../..' . '/app/Models/Cobaadmin.php',
         'App\\Models\\Csdatabase' => __DIR__ . '/../..' . '/app/Models/Csdatabase.php',
         'App\\Models\\Fujixerox' => __DIR__ . '/../..' . '/app/Models/Fujixerox.php',
         'App\\Models\\Gacsirt' => __DIR__ . '/../..' . '/app/Models/Gacsirt.php',
         'App\\Models\\Grafikinternet' => __DIR__ . '/../..' . '/app/Models/Grafikinternet.php',
+        'App\\Models\\Logapproved' => __DIR__ . '/../..' . '/app/Models/Logapproved.php',
         'App\\Models\\Mointernet' => __DIR__ . '/../..' . '/app/Models/Mointernet.php',
         'App\\Models\\Physical' => __DIR__ . '/../..' . '/app/Models/Physical.php',
         'App\\Models\\Sanswitch' => __DIR__ . '/../..' . '/app/Models/Sanswitch.php',
@@ -756,6 +767,7 @@ class ComposerStaticInit1e8cd9d61a3b79bafe9a99fe6344edf7
         'Database\\Seeders\\FujixeroxSeeder' => __DIR__ . '/../..' . '/database/seeders/FujixeroxSeeder.php',
         'Database\\Seeders\\GacsirtSeeder' => __DIR__ . '/../..' . '/database/seeders/GacsirtSeeder.php',
         'Database\\Seeders\\MointernetSeeder' => __DIR__ . '/../..' . '/database/seeders/MointernetSeeder.php',
+        'Database\\Seeders\\PermissionSeeder' => __DIR__ . '/../..' . '/database/seeders/PermissionSeeder.php',
         'Database\\Seeders\\TapedriveSeeder' => __DIR__ . '/../..' . '/database/seeders/TapedriveSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
@@ -2857,6 +2869,10 @@ class ComposerStaticInit1e8cd9d61a3b79bafe9a99fe6344edf7
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Kyslik\\ColumnSortable\\ColumnSortableServiceProvider' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/ColumnSortableServiceProvider.php',
+        'Kyslik\\ColumnSortable\\Exceptions\\ColumnSortableException' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/Exceptions/ColumnSortableException.php',
+        'Kyslik\\ColumnSortable\\Sortable' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/Sortable.php',
+        'Kyslik\\ColumnSortable\\SortableLink' => __DIR__ . '/..' . '/kyslik/column-sortable/src/ColumnSortable/SortableLink.php',
         'Laravel\\Breeze\\BreezeServiceProvider' => __DIR__ . '/..' . '/laravel/breeze/src/BreezeServiceProvider.php',
         'Laravel\\Breeze\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallCommand.php',
         'Laravel\\Breeze\\Console\\InstallsApiStack' => __DIR__ . '/..' . '/laravel/breeze/src/Console/InstallsApiStack.php',

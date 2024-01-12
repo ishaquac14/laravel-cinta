@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acserver;
+use App\Models\Logapproved;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AcserverController extends Controller
 {
@@ -14,18 +16,24 @@ class AcserverController extends Controller
      */
     public function index(Request $request)
     {
-        $searchTerm = $request->input('search');
-
+        $sortTerm = $request->input('sort_bulan');
+        $tahunTerm = $request->input('sort_tahun');
+        
         $query = Acserver::orderBy('id', 'DESC');
-
-        if ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('status', 'LIKE', '%' . $searchTerm . '%');
+        
+        if ($sortTerm) {
+            $query->where(function ($q) use ($sortTerm, $tahunTerm) {
+                $q->whereMonth('created_at', $sortTerm)
+                    ->whereYear('created_at', $tahunTerm);
             });
         }
 
         $acservers = $query->paginate(5);
+
+        $acservers->appends([
+            'sort_bulan' => $sortTerm,
+            'sort_tahun' => $tahunTerm,
+        ]);
 
         return view('pages.acserver.index', compact('acservers'));
     }
@@ -63,7 +71,7 @@ class AcserverController extends Controller
             'kondisi_ac-01', 'kondisi_ac-02', 'kondisi_ac-03', 'kondisi_ac-04',
             'ac-01_suhu', 'ac-02_suhu', 'ac-03_suhu', 'ac-04_suhu', 'suhu_ruangan', 'note', 'follow_up', 'status'
         ]);
-       
+
         $data['author'] = auth()->user()->name;
 
         $data['user_id'] = auth()->user()->id;
@@ -130,19 +138,52 @@ class AcserverController extends Controller
     }
 
     public function approval_acserver(Request $request)
-    {   
+    {
+        $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $year = $now->year;
-        $month = $now->month;
-        $before_month = $month - 1;
-        $acservers = Acserver::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+        $current_month = $now->format('m');
 
-        foreach($acservers as $acserver)
+        $count_acservers = Acserver::whereMonth('created_at', $selectedMonth)
+        ->where('is_approved', 0)
+        ->count();
+
+        if($count_acservers == 0)
         {
+            return redirect()->back()->with('warning', 'Approval salah');
+        };
+        
+        $acservers = Acserver::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 0)
+            ->get();
+        
+        foreach ($acservers as $acserver) {
             $acserver->is_approved = 1;
             $acserver->save();
         }
 
-        return redirect()->back()->with('success', 'Approved success');
+        $user_id = Auth::id();
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $selectedMonth,
+            'user_id' => $user_id,
+            'checksheet_name' => "acservers",
+        ]);
+
+        return redirect()->back()->with('success', 'Approval berhasil');
+    }
+
+
+    public function log_approved(Request $request)
+    {
+        $request->validate([
+            'selected_month' => 'string|required'
+        ]);
+
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $request->input('selected_month'),
+        ]);
+
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
 }
