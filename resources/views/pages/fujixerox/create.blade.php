@@ -54,10 +54,10 @@
             </tr>
             </tbody>
           </table>
-        <div class="">
+        {{-- <div class="">
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
-        </div>
+        </div> --}}
         <div class="mt-4"><p><b>Note :</b> Dimatikan saat masuk shift 3 dan dinyalakan saat pulang shift 3</p></div>
         <div class="mt-3 mb-5">
             <button class="btn btn-primary">SUBMIT</button>
