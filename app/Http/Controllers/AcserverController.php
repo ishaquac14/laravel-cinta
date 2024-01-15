@@ -18,10 +18,14 @@ class AcserverController extends Controller
     {
         $sortTerm = $request->input('sort_bulan');
         $tahunTerm = $request->input('sort_tahun');
-        
-        $query = Acserver::orderBy('id', 'DESC');
-        
+
+        $now = Carbon::now();
+        $current_month = $now->month;
+        $current_year = $now->year;
+        $query = Acserver::whereMonth('created_at', $current_month)->whereYear('created_at', $current_year)->orderBy('id', 'DESC');
+
         if ($sortTerm) {
+            $query = Acserver::orderBy('id', 'DESC');
             $query->where(function ($q) use ($sortTerm, $tahunTerm) {
                 $q->whereMonth('created_at', $sortTerm)
                     ->whereYear('created_at', $tahunTerm);
@@ -78,7 +82,7 @@ class AcserverController extends Controller
 
         Acserver::create($data);
 
-        return redirect()->route('acserver.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('acserver.index')->with('success', 'Data berhasil disimpan !');
     }
 
     public function show($id)
@@ -126,7 +130,7 @@ class AcserverController extends Controller
         // Update atribut model berdasarkan input formulir
         $acserver->update($data);
 
-        return redirect()->route('acserver.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('acserver.index')->with('success', 'Data berhasil diperbaharui !');
     }
 
     public function destroy($id)
@@ -134,7 +138,7 @@ class AcserverController extends Controller
         $acserver = Acserver::findOrFail($id);
         $acserver->delete();
 
-        return redirect()->route('acserver.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('acserver.index')->with('success', 'Data berhasil dihapus !');
     }
 
     public function approval_acserver(Request $request)
@@ -144,18 +148,21 @@ class AcserverController extends Controller
         $current_month = $now->format('m');
 
         $count_acservers = Acserver::whereMonth('created_at', $selectedMonth)
-        ->where('is_approved', 0)
-        ->count();
+            ->where('is_approved', 1)
+            ->count();
 
-        if($count_acservers == 0)
-        {
-            return redirect()->back()->with('warning', 'Approval salah');
+        if ($count_acservers > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
         };
-        
+
         $acservers = Acserver::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
-        
+
+        if ($acservers->isEmpty()) {
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+        }
+
         foreach ($acservers as $acserver) {
             $acserver->is_approved = 1;
             $acserver->save();
@@ -169,7 +176,7 @@ class AcserverController extends Controller
             'checksheet_name' => "acservers",
         ]);
 
-        return redirect()->back()->with('success', 'Approval berhasil');
+        return redirect()->back()->with('success', 'Data berhasil diapprove !');
     }
 
 

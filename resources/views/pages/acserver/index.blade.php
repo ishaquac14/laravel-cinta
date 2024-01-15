@@ -37,6 +37,12 @@
                 {{ Session::get('warning') }}
             </div>
         @endif
+
+        @if (Session::has('danger'))
+            <div class="alert alert-danger" role="alert">
+                {{ Session::get('danger') }}
+            </div>
+        @endif
         <div class="table-responsive">
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
@@ -87,7 +93,6 @@
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <form action="{{ route('acserver.show', $acserver->id) }}">
-                                            @csrf
                                             <button type="submit" class="btn btn-primary">Detail</button>
                                         </form>
                                         @can('admin')

@@ -14,10 +14,14 @@ class CsdatabaseController extends Controller
     {
         $sortTerm = $request->input('sort_bulan');
         $tahunTerm = $request->input('sort_tahun');
-        
-        $query = Csdatabase::orderBy('id', 'DESC');
-        
+
+        $now = Carbon::now();
+        $current_month = $now->month;
+        $current_year = $now->year;
+        $query = Csdatabase::whereMonth('created_at', $current_month)->whereYear('created_at', $current_year)->orderBy('id', 'DESC');
+
         if ($sortTerm) {
+            $query = Csdatabase::orderBy('id', 'DESC');
             $query->where(function ($q) use ($sortTerm, $tahunTerm) {
                 $q->whereMonth('created_at', $sortTerm)
                     ->whereYear('created_at', $tahunTerm);
@@ -80,7 +84,7 @@ class CsdatabaseController extends Controller
         Csdatabase::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan
-        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil disimpan !');
     }
 
     /**
@@ -145,7 +149,7 @@ class CsdatabaseController extends Controller
             'follow_up'
         ));
 
-        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil diperbaharui !');
     }
 
     public function destroy($id)
@@ -153,7 +157,7 @@ class CsdatabaseController extends Controller
         $csdatabase = Csdatabase::findOrFail($id);
         $csdatabase->delete();
 
-        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil dihapus !');
     }
 
     public function approval_csdatabase(Request $request)
@@ -162,19 +166,22 @@ class CsdatabaseController extends Controller
         $now = Carbon::now();
         $current_month = $now->format('m');
 
-        $count_csdatabases = csdatabase::whereMonth('created_at', $selectedMonth)
-        ->where('is_approved', 0)
-        ->count();
+        $count_csdatabases = Csdatabase::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 1)
+            ->count();
 
-        if($count_csdatabases == 0)
-        {
-            return redirect()->back()->with('warning', 'Approval salah');
+        if ($count_csdatabases > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
         };
-        
-        $csdatabases = csdatabase::whereMonth('created_at', $selectedMonth)
+
+        $csdatabases = Csdatabase::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
-        
+
+        if ($csdatabases->isEmpty()) {
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+        }
+
         foreach ($csdatabases as $csdatabase) {
             $csdatabase->is_approved = 1;
             $csdatabase->save();
@@ -188,7 +195,7 @@ class CsdatabaseController extends Controller
             'checksheet_name' => "csdatabases",
         ]);
 
-        return redirect()->back()->with('success', 'Approval berhasil');
+        return redirect()->back()->with('success', 'Data berhasil diapprove !');
     }
 
 

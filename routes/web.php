@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AcserverController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\CsdatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
@@ -15,8 +14,13 @@ use App\Http\Controllers\FujixeroxController;
 use App\Http\Controllers\MointernetController;
 use App\Http\Controllers\CctvController;
 use App\Http\Controllers\TapedriveController;
+use App\Models\Cctv;
 use App\Models\Cobaadmin;
 use App\Models\Csdatabase;
+use App\Models\Fujixerox;
+use App\Models\Gacsirt;
+use App\Models\Physical;
+use Laravel\Sanctum\Sanctum;
 
 Route::get('/', function () {
     return view('/login/index');
@@ -65,10 +69,16 @@ Route::get('/tapedrive/search', 'TapedriveController@index');
 Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 
 Route::get('/cobaadmin', [AdminController::class, 'index'])->name('cobaadmin.index')->middleware('role');
-// Route::post('/cobaadmin', [AdminController::class, 'index'])->middleware('role');
 
 Route::post('/acserver/log_approved', [AcserverController::class, 'log_approved'])->name('log_approved');
 Route::post('/csdatabase/log_approved', [CsdatabaseController::class, 'log_approved'])->name('log_approved');
+Route::post('/tapedrive/log_approved', [TapedriveController::class, 'log_approved'])->name('log_approved');
+Route::post('/gacsirt/log_approved', [GacsirtController::class, 'log_approved'])->name('log_approved');
+Route::post('/mointernet/log_approved', [MointernetController::class, 'log_approved'])->name('log_approved');
+Route::post('/physical/log_approved', [PhysicalController::class, 'log_approved'])->name('log_approved');
+Route::post('/fujixerox/log_approved', [FujixeroxController::class, 'log_approved'])->name('log_approved');
+Route::post('/cctv/log_approved', [CctvController::class, 'log_approved'])->name('log_approved');
+Route::post('/sanswitch/log_approved', [SanswitchController::class, 'log_approved'])->name('log_approved');
 
 Route::post('/acserver/approval', [AcserverController::class, 'approval_acserver'])->name('approval_acserver');
 Route::post('/csdatabase/approval', [CsdatabaseController::class, 'approval_csdatabase'])->name('approval_csdatabase');

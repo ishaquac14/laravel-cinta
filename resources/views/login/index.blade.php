@@ -15,7 +15,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-primary" style="background-color: rgb(34, 34, 106);">
     <div class="row justify-content-center mt-5">
         <div class="card col-lg-3 mt-5">
 

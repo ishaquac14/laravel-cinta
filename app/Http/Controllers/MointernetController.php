@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Mointernet;
 use App\Models\Grafikinternet;
+use App\Models\Logapproved;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MointernetController extends Controller
 {
@@ -37,14 +39,28 @@ class MointernetController extends Controller
             $data[$day] = (float)$item->persen;
         }
 
-        if ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('note', 'LIKE', '%' . $searchTerm . '%');
+        $sortTerm = $request->input('sort_bulan');
+        $tahunTerm = $request->input('sort_tahun');
+
+        $now = Carbon::now();
+        $current_month = $now->month;
+        $current_year = $now->year;
+        $query = Mointernet::whereMonth('created_at', $current_month)->whereYear('created_at', $current_year)->orderBy('id', 'DESC');
+
+        if ($sortTerm) {
+            $query = Mointernet::orderBy('id', 'DESC');
+            $query->where(function ($q) use ($sortTerm, $tahunTerm) {
+                $q->whereMonth('created_at', $sortTerm)
+                    ->whereYear('created_at', $tahunTerm);
             });
         }
 
         $mointernets = $query->paginate(5);
+
+        $mointernets->appends([
+            'sort_bulan' => $sortTerm,
+            'sort_tahun' => $tahunTerm,
+        ]);
 
         // Menghitung total durasi dalam sebulan
         $totalDuration = $mointernets->sum('duration');
@@ -89,7 +105,7 @@ class MointernetController extends Controller
         // Hitung persentase dan simpan pada data yang baru saja dibuat
         $this->updatePercentage();
 
-        return redirect()->route('mointernet.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('mointernet.index')->with('success', 'Data berhasil disimpan !');
     }
 
     private function calculateDuration($startTime, $endTime)
@@ -191,7 +207,7 @@ class MointernetController extends Controller
             'follow_up'
         ));
 
-        return redirect()->route('mointernet.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('mointernet.index')->with('success', 'Data berhasil diperbaharui !');
     }
 
     public function destroy($id)
@@ -199,23 +215,59 @@ class MointernetController extends Controller
         $mointernet = Mointernet::findOrFail($id);
         $mointernet->delete();
 
-        return redirect()->route('mointernet.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('mointernet.index')->with('success', 'Data berhasil dihapus !');
     }
 
     public function approval_mointernet(Request $request)
-    {   
+    {
+        $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $year = $now->year;
-        $month = $now->month;
-        $before_month = $month - 1;
-        $mointernets = Mointernet::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+        $current_month = $now->format('m');
 
-        foreach($mointernets as $mointernet)
-        {
+        $count_mointernets = Mointernet::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 1)
+            ->count();
+
+        if ($count_mointernets > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
+        };
+
+        $mointernets = Mointernet::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 0)
+            ->get();
+
+        if ($mointernets->isEmpty()) {
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+        }
+
+        foreach ($mointernets as $mointernet) {
             $mointernet->is_approved = 1;
             $mointernet->save();
         }
 
-        return redirect()->back()->with('success', 'Approved success');
+        $user_id = Auth::id();
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $selectedMonth,
+            'user_id' => $user_id,
+            'checksheet_name' => "mointernets",
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+    }
+
+
+    public function log_approved(Request $request)
+    {
+        $request->validate([
+            'selected_month' => 'string|required'
+        ]);
+
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $request->input('selected_month'),
+        ]);
+
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
 }

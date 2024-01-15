@@ -3,31 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Physical;
+use App\Models\Logapproved;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PhysicalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index(Request $request)
     {
-        $searchTerm = $request->input('search');
+        $sortTerm = $request->input('sort_bulan');
+        $tahunTerm = $request->input('sort_tahun');
 
-        $query = Physical::orderBy('id', 'DESC');
+        $now = Carbon::now();
+        $current_month = $now->month;
+        $current_year = $now->year;
+        $query = Physical::whereMonth('created_at', $current_month)->whereYear('created_at', $current_year)->orderBy('id', 'DESC');
 
-        if ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('note', 'LIKE', '%' . $searchTerm . '%');
+        if ($sortTerm) {
+            $query = Physical::orderBy('id', 'DESC');
+            $query->where(function ($q) use ($sortTerm, $tahunTerm) {
+                $q->whereMonth('created_at', $sortTerm)
+                    ->whereYear('created_at', $tahunTerm);
             });
         }
 
-        // Menggunakan paginate(10) untuk mendapatkan data paginasi
         $physicals = $query->paginate(5);
 
-        // Mengirimkan data ke tampilan
+        $physicals->appends([
+            'sort_bulan' => $sortTerm,
+            'sort_tahun' => $tahunTerm,
+        ]);
+
         return view('pages.physical.index', compact('physicals'));
     }
 
@@ -56,19 +64,6 @@ class PhysicalController extends Controller
             'follow_up' => 'nullable|string',
         ]);
 
-        // // Validasi untuk 'hdd1' hingga 'hdd19' di storage3
-        // for ($i = 1; $i <= 19; $i++) {
-        //     $rules["hdd{$i}"] = 'required|in:OK,NG';
-        // }
-
-        // // Validasi untuk 'hdd1' hingga 'hdd10' di storage4
-        // for ($i = 1; $i <= 10; $i++) {
-        //     $rules["hdd_{$i}"] = 'required|in:OK,NG';
-        // }
-
-        // $request->validate($rules);
-
-        // Simpan data ke database
         $data = [
             'host3' => $request->input('host3'),
             'storage3' => $request->input('storage3'),
@@ -97,7 +92,7 @@ class PhysicalController extends Controller
 
 
         // Redirect atau memberikan respons sesuai kebutuhan
-        return redirect()->route('physical.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('physical.index')->with('success', 'Data berhasil disimpan !');
     }
 
     /**
@@ -143,7 +138,7 @@ class PhysicalController extends Controller
     
         $physical->update($data);
     
-        return redirect()->route('physical.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('physical.index')->with('success', 'Data berhasil diperbaharui !');
     }
 
     public function destroy($id)
@@ -151,23 +146,59 @@ class PhysicalController extends Controller
         $physical = Physical::findOrFail($id);
         $physical->delete();
 
-        return redirect()->route('physical.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('physical.index')->with('success', 'Data berhasil dihapus !');
     }
 
     public function approval_physical(Request $request)
-    {   
+    {
+        $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $year = $now->year;
-        $month = $now->month;
-        $before_month = $month - 1;
-        $physicals = Physical::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+        $current_month = $now->format('m');
 
-        foreach($physicals as $physical)
-        {
+        $count_physicals = Physical::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 1)
+            ->count();
+
+        if ($count_physicals > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
+        };
+
+        $physicals = Physical::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 0)
+            ->get();
+
+        if ($physicals->isEmpty()) {
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+        }
+
+        foreach ($physicals as $physical) {
             $physical->is_approved = 1;
             $physical->save();
         }
 
-        return redirect()->back()->with('success', 'Approved success');
+        $user_id = Auth::id();
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $selectedMonth,
+            'user_id' => $user_id,
+            'checksheet_name' => "physicals",
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+    }
+
+
+    public function log_approved(Request $request)
+    {
+        $request->validate([
+            'selected_month' => 'string|required'
+        ]);
+
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $request->input('selected_month'),
+        ]);
+
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
 }
