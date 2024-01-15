@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AcserverController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CsdatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
@@ -27,6 +26,8 @@ Route::get('/', function () {
 });
 
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
+
+Route::get('/cctv_sama',  [CctvController::class, 'cctv_sama'])->name('cctv_sama');
 
 Route::resource('/physical', PhysicalController::class)->middleware('auth');
 Route::get('/physical/search', 'PhysicalController@index')->middleware('auth');
@@ -67,8 +68,6 @@ Route::resource('/tapedrive', TapedriveController::class)->middleware('auth');
 Route::get('/tapedrive/search', 'TapedriveController@index');
 
 Route::get('/chart-data', [MointernetController::class, 'getChartData']);
-
-Route::get('/cobaadmin', [AdminController::class, 'index'])->name('cobaadmin.index')->middleware('role');
 
 Route::post('/acserver/log_approved', [AcserverController::class, 'log_approved'])->name('log_approved');
 Route::post('/csdatabase/log_approved', [CsdatabaseController::class, 'log_approved'])->name('log_approved');

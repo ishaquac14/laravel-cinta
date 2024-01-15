@@ -202,4 +202,30 @@ class CctvController extends Controller
 
         return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
+
+    public function cctv_sama()
+    {
+        $now = Carbon::now();
+        $day = $now->day;
+        $yesterday = Carbon::yesterday()->toDateString();
+
+        $yesterday_cctvs = CctvMonitoring::whereDate('created_at', $yesterday)->get();
+
+        $cctvs = Cctv::create([
+            'user_id' => auth()->id(),
+            // 'note' => $request->note,
+        ]);
+        // dd($yesterday_cctvs[0]);
+
+        foreach ($yesterday_cctvs as $yesterday_cctv) {
+            $cctv = new CctvMonitoring;
+            $cctv->cctv_id = $cctvs->id;
+            $cctv->id_cctv = $yesterday_cctv->id_cctv;
+            $cctv->status = $yesterday_cctv->status;
+            $cctv->condition = $yesterday_cctv->condition;
+            $cctv->save();
+        }
+
+        return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan');
+    }
 }
