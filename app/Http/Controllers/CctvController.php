@@ -227,6 +227,8 @@ class CctvController extends Controller
             $cctv->cctv_id = $cctvs->id;
             $cctv->id_cctv = $yesterday_cctv->id_cctv;
             $cctv->status = $yesterday_cctv->status;
+            $cctv->lokasi_name = $yesterday_cctv->lokasi_name;
+            $cctv->posisi_name = $yesterday_cctv->posisi_name;
             $cctv->condition = $yesterday_cctv->condition;
             $cctv->save();
         }

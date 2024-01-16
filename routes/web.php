@@ -69,15 +69,15 @@ Route::get('/tapedrive/search', 'TapedriveController@index');
 
 Route::get('/chart-data', [MointernetController::class, 'getChartData']);
 
-Route::post('/acserver/log_approved', [AcserverController::class, 'log_approved'])->name('log_approved');
-Route::post('/csdatabase/log_approved', [CsdatabaseController::class, 'log_approved'])->name('log_approved');
-Route::post('/tapedrive/log_approved', [TapedriveController::class, 'log_approved'])->name('log_approved');
-Route::post('/gacsirt/log_approved', [GacsirtController::class, 'log_approved'])->name('log_approved');
-Route::post('/mointernet/log_approved', [MointernetController::class, 'log_approved'])->name('log_approved');
-Route::post('/physical/log_approved', [PhysicalController::class, 'log_approved'])->name('log_approved');
-Route::post('/fujixerox/log_approved', [FujixeroxController::class, 'log_approved'])->name('log_approved');
-Route::post('/cctv/log_approved', [CctvController::class, 'log_approved'])->name('log_approved');
-Route::post('/sanswitch/log_approved', [SanswitchController::class, 'log_approved'])->name('log_approved');
+Route::post('/acserver/log_approved', [AcserverController::class, 'log_approved'])->name('acserver.log_approved');
+Route::post('/csdatabase/log_approved', [CsdatabaseController::class, 'log_approved'])->name('csdatabase.log_approved');
+Route::post('/tapedrive/log_approved', [TapedriveController::class, 'log_approved'])->name('tapedrive.log_approved');
+Route::post('/gacsirt/log_approved', [GacsirtController::class, 'log_approved'])->name('gacsirt.log_approved');
+Route::post('/mointernet/log_approved', [MointernetController::class, 'log_approved'])->name('mointernet.log_approved');
+Route::post('/physical/log_approved', [PhysicalController::class, 'log_approved'])->name('physical.log_approved');
+Route::post('/fujixerox/log_approved', [FujixeroxController::class, 'log_approved'])->name('fujixerox.log_approved');
+Route::post('/cctv/log_approved', [CctvController::class, 'log_approved'])->name('cctv.log_approved');
+Route::post('/sanswitch/log_approved', [SanswitchController::class, 'log_approved'])->name('sanswitch.log_approved');
 
 Route::post('/acserver/approval', [AcserverController::class, 'approval_acserver'])->name('approval_acserver');
 Route::post('/csdatabase/approval', [CsdatabaseController::class, 'approval_csdatabase'])->name('approval_csdatabase');
