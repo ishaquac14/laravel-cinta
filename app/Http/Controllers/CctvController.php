@@ -66,16 +66,21 @@ class CctvController extends Controller
 
         foreach ($request->input('status') as $id_cctv => $status) {
             $condition = $request->input("condition.$id_cctv");
+            $lokasi_name = $request->input("lokasi_name.$id_cctv");
+            $posisi_name = $request->input("posisi_name.$id_cctv");
 
             $cctv = new CctvMonitoring;
             $cctv->cctv_id = $cctvs->id;
             $cctv->id_cctv = $id_cctv;
             $cctv->building_name = $request->input("building_name.$id_cctv");
-            $cctv->lokasi_name = $request->input("lokasi_name.$id_cctv");
+            $cctv->lokasi_name = $lokasi_name;
+            $cctv->posisi_name = $posisi_name;
             $cctv->status = $status;
             $cctv->condition = $condition;
             $cctv->save();
         }
+
+        // dd($request);
 
         return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan !');
     }

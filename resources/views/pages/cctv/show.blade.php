@@ -18,7 +18,8 @@
                     <tr>
                         <th style="width: 50px;">No</th>
                         <th>ID CCTV</th>
-                        {{-- <th>Area</th> --}}
+                        <th>Lokasi</th>
+                        <th>Posisi</th>
                         <th>Status</th>
                         <th>Kondisi</th>
                     </tr>
@@ -31,7 +32,8 @@
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td>{{ $cctv_mo->id_cctv }}</td>
-                            {{-- <td>{{ $cctv->building_name }}</td> --}}
+                            <td>{{ $cctv_mo->lokasi_name }}</td>
+                            <td>{{ $cctv_mo->posisi_name }}</td>
                             <td>
                                 @if ($cctv_mo->status === 'OK')
                                     <span class="badge bg-success">Ok</span>
