@@ -27,25 +27,25 @@
                     @php
                         $no = 1;
                     @endphp
-                    @foreach ($cctv_monitoring as $cctv)
+                    @foreach ($cctv_monitoring as $cctv_mo)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $cctv->id_cctv }}</td>
+                            <td>{{ $cctv_mo->id_cctv }}</td>
                             {{-- <td>{{ $cctv->building_name }}</td> --}}
                             <td>
-                                @if ($cctv->status === 'OK')
+                                @if ($cctv_mo->status === 'OK')
                                     <span class="badge bg-success">Ok</span>
-                                @elseif($cctv->status === 'NG')
+                                @elseif($cctv_mo->status === 'NG')
                                     <span class="badge bg-danger">Not Good</span>
                                 @else
-                                    {{ $cctv->status }}
+                                    {{ $cctv_mo->status }}
                                 @endif
                             </td>
                             <td>
-                                @if ($cctv->condition === 'Bersih' || is_null($cctv->condition))
-                                    <span class="badge bg-success">{{ $cctv->condition ?? 'Bersih' }}</span>
-                                @elseif($cctv->condition === 'Kotor')
-                                    <span class="badge bg-danger">{{ $cctv->condition }}</span>
+                                @if ($cctv_mo->condition === 'Bersih' || is_null($cctv_mo->condition))
+                                    <span class="badge bg-success">{{ $cctv_mo->condition ?? 'Bersih' }}</span>
+                                @elseif($cctv_mo->condition === 'Kotor')
+                                    <span class="badge bg-danger">{{ $cctv_mo->condition }}</span>
                                 @endif
                             </td>
                         </tr>
