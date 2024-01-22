@@ -48,8 +48,8 @@
                     <tr>
                         <th width="2%">No</th>
                         <th>Tanggal</th>
-                        <th>Time On</th>
-                        <th>Time Down</th>
+                        <th>Time Off</th>
+                        <th>Time Up</th>
                         <th>Status</th>
                         <th>Follow Up</th>
                         <th>Author</th>
