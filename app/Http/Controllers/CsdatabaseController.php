@@ -67,13 +67,15 @@ class CsdatabaseController extends Controller
             'solid' => 'required|in:success,error',
             'cubic_pro_legacy' => 'required|in:success,error',
             'sikola_legacy' => 'required|in:success,error',
+            'devita' => 'required|in:success,error',
+            'cinta' => 'required|in:success,error',
             'note' => 'string|nullable',
         ]);
 
         // Mendapatkan data dari permintaan
         $data = $request->only([
             'asiic', 'avicenna', 'broadcast', 'cubic_pro', 'gary', 'iatf', 'lobby', 'maps_body',
-            'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy', 'note'
+            'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy','devita', 'note', 'cinta'
         ]);
         // Menyimpan data ke dalam csdatabase
 
@@ -124,6 +126,8 @@ class CsdatabaseController extends Controller
             'solid' => 'required|in:success,error',
             'cubic_pro_legacy' => 'required|in:success,error',
             'sikola_legacy' => 'required|in:success,error',
+            'devita' => 'required|in:success,error',
+            'cinta' => 'required|in:success,error',
             'note' => 'string|nullable',
             'follow_up' => 'string|nullable'
         ]);
@@ -145,6 +149,8 @@ class CsdatabaseController extends Controller
             'solid',
             'cubic_pro_legacy',
             'sikola_legacy',
+            'devita',
+            'cinta',
             'note',
             'follow_up'
         ));

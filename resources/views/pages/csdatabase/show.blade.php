@@ -26,7 +26,7 @@
             <tbody>
                 @foreach ([
                     'asiic', 'avicenna', 'broadcast', 'cubic_pro', 'gary', 'iatf', 'lobby', 'maps_body',
-                    'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy',
+                    'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy', 'devita', 'cinta'
                 ] as $index => $item)
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>

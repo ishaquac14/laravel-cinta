@@ -64,6 +64,9 @@
                         @endphp
 
                         @foreach ($csdatabases as $csdatabase)
+                        @php
+                        // dd($csdatabase);
+                        @endphp
                             <tr class="table-light">
                                 <td class="align-middle text-center">{{ $baseNumber++ }}</td>
                                 <td class="align-middle text-center">
