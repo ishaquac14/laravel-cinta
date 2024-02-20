@@ -98,6 +98,27 @@
                         Sanswitch
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('server_electric.checksheet_list') }}">
+                        <svg class="bi">
+                            <use xlink:href="#file-earmark-text" />
+                        </svg>
+                        Server Electric
+                    </a>
+                </li>
+                <hr class="my-3">
+                <h5
+                    class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-3 text-body-secondary text-uppercase">
+                    <span>MASTER</span>
+                </h5>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('server_electric.master_list') }}">
+                        <svg class="bi">
+                            <use xlink:href="#file-earmark-text" />
+                        </svg>
+                        Master Server Electric
+                    </a>
+                </li>
                 <br>
                 @can('admin')
                     <h5

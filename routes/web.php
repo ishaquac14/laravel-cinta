@@ -13,6 +13,7 @@ use App\Http\Controllers\FujixeroxController;
 use App\Http\Controllers\MointernetController;
 use App\Http\Controllers\CctvController;
 use App\Http\Controllers\TapedriveController;
+use App\Http\Controllers\ServerElectricController;
 use App\Models\Cctv;
 use App\Models\Cobaadmin;
 use App\Models\Csdatabase;
@@ -23,6 +24,23 @@ use Laravel\Sanctum\Sanctum;
 
 Route::get('/', function () {
     return view('/login/index');
+});
+
+Route::group(['prefix' => 'server_electric'], function(){
+    Route::get('/master_list', [ServerElectricController::class, 'master_list'])->name('server_electric.master_list');
+    Route::get('/master_create', [ServerElectricController::class, 'master_create'])->name('server_electric.master_create');
+    Route::post('/master_store', [ServerElectricController::class, 'master_store'])->name('server_electric.master_store');
+    Route::get('/master_edit/{id}', [ServerElectricController::class, 'master_edit'])->name('server_electric.master_edit');
+    Route::post('/master_update/{id}', [ServerElectricController::class, 'master_update'])->name('server_electric.master_update');
+    Route::post('/master_delete/{id}', [ServerElectricController::class, 'master_delete'])->name('server_electric.master_delete');
+
+    Route::get('/checksheet_list', [ServerElectricController::class, 'checksheet_list'])->name('server_electric.checksheet_list');
+    Route::get('/checksheet_detail/{id}', [ServerElectricController::class, 'checksheet_detail'])->name('server_electric.checksheet_detail');
+    Route::get('/checksheet_create', [ServerElectricController::class, 'checksheet_create'])->name('server_electric.checksheet_create');
+    Route::post('/checksheet_store', [ServerElectricController::class, 'checksheet_store'])->name('server_electric.checksheet_store');
+    Route::get('/checksheet_edit/{id}', [ServerElectricController::class, 'checksheet_edit'])->name('server_electric.checksheet_edit');
+    Route::post('/checksheet_update/{id}', [ServerElectricController::class, 'checksheet_update'])->name('server_electric.checksheet_update');
+    Route::post('/checksheet_delete/{id}', [ServerElectricController::class, 'checksheet_delete'])->name('server_electric.checksheet_delete');
 });
 
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
