@@ -7,18 +7,17 @@
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
 
-            <div class="text-center">
-                <h4>MASTER SERVER ELECTRIC</h4>
-            </div>
-
             <div class="d-flex align-items-center">
                 <a href="{{ route('server_electric.master_create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
                     Master</a>
             </div>
         </div>
 
+        <div class="mb-2 text-center">
+            <h5>CHECKSHEET SERVER ELECTRIC</h5>
+        </div><hr>
+
         <form method="GET" action="{{ route('server_electric.master_list') }}">
-            @csrf
             @include('layouts.filter')
         </form>
 

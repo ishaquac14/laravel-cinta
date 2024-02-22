@@ -29,7 +29,7 @@ class GacsirtController extends Controller
             });
         }
 
-        $gacsirts = $query->paginate(5);
+        $gacsirts = $query->paginate(10);
 
         $gacsirts->appends([
             'sort_bulan' => $sortTerm,

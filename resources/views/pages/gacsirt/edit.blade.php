@@ -2,16 +2,16 @@
 
 @section('body')
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+        <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
             <a href="{{ route('gacsirt.index') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
                 <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
             </a>
         </div>
-        <div class="mb-3">
-            <h4>C/S EDIT MONITORING GA-CSIRT</h4>
-        </div>
-        <hr>
+        
+        <div class="mb-4 text-center">
+            <h5>EDIT C/S MONITORING GA-CSIRT</h5>
+        </div><hr>
 
         <form action="{{ route('gacsirt.update', $gacsirt->id) }}" method="POST">
             @csrf
@@ -72,14 +72,14 @@
             </table>
             <div class="row">
                 @can('admin')
-                    <div class="col-md-12 mt-4">
+                    <div class="col-md-12 mt-2">
                         <div><b>Follow Up :</b></div>
                         <label for="exampleFormControlTextarea1" class="form-label "></label>
                         <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $gacsirt->follow_up }}</textarea>
                     </div>
                 @endcan
                 @can('superadmin')
-                    <div class="col-md-12">
+                    <div class="col-md-12 mt-2">
                         <label for="exampleFormControlTextarea1" class="form-label"></label>
                         <textarea class="form-control" name="follow_up" id="exampleFormControlTextarea1" rows="3" placeholder="Follow Up">{{ $gacsirt->follow_up }}</textarea>
                     </div>

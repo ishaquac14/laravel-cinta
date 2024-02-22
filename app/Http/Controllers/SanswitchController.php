@@ -31,7 +31,7 @@ class SanswitchController extends Controller
             });
         }
 
-        $sanswitchs = $query->paginate(5);
+        $sanswitchs = $query->paginate(10);
 
         $sanswitchs->appends([
             'sort_bulan' => $sortTerm,

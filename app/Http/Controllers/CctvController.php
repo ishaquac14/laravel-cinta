@@ -31,7 +31,7 @@ class CctvController extends Controller
             });
         }
 
-        $cctvs = $query->paginate(5);
+        $cctvs = $query->paginate(10);
 
         $cctvs->appends([
             'sort_bulan' => $sortTerm,

@@ -29,7 +29,7 @@ class TapedriveController extends Controller
             });
         }
 
-        $tapedrives = $query->paginate(5);
+        $tapedrives = $query->paginate(10);
 
         $tapedrives->appends([
             'sort_bulan' => $sortTerm,

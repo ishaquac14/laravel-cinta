@@ -55,7 +55,7 @@ class MointernetController extends Controller
             });
         }
 
-        $mointernets = $query->paginate(5);
+        $mointernets = $query->paginate(10);
 
         $mointernets->appends([
             'sort_bulan' => $sortTerm,
