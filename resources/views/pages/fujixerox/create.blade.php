@@ -2,17 +2,16 @@
 
 @section('body')
 <div class="container">
-    <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
         <a href="{{ route('fujixerox.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
     </div>
-    <div class="mb-3">
-
-        <h4>C/S PRINTER FUJIXEROX</h4>
-    </div>
-    <hr>
+    
+    <div class="mb-4 text-center">
+        <h5>CREATE C/S PRINTER FUJIXEROX</h5>
+    </div><hr>
     
     <form action="{{ route('fujixerox.store') }}" method="POST">
         @csrf
@@ -54,10 +53,10 @@
             </tr>
             </tbody>
           </table>
-        <div class="">
+        {{-- <div class="">
             <label for="exampleFormControlTextarea1" class="form-label"></label>
             <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
-        </div>
+        </div> --}}
         <div class="mt-4"><p><b>Note :</b> Dimatikan saat masuk shift 3 dan dinyalakan saat pulang shift 3</p></div>
         <div class="mt-3 mb-5">
             <button class="btn btn-primary">SUBMIT</button>

@@ -2,14 +2,14 @@
 
 @section('body')
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+        <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
             <a href="{{ route('cctv.index') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
                 <a href="{{ route('cctv.index') }}" class="btn btn-dark">Kembali</a>
             </a>
         </div>
-        <div class="mb-2">
-            <h4>DETAIL C/S MONITORING CCTV ({{ \Carbon\Carbon::parse($cctv->created_at)->format('d-m-Y H:i:s') }})</h4>
+        <div class="mb-4 text-center">
+            <h5>DETAIL C/S MONITORING CCTV ({{ \Carbon\Carbon::parse($cctv->created_at)->format('d-m-Y H:i:s') }})</h5>
         </div>
         <hr>
         <div class="table-responsive">
@@ -18,8 +18,8 @@
                     <tr>
                         <th style="width: 50px;">No</th>
                         <th>ID CCTV</th>
-                        {{-- <th>Nama Gedung</th>
-                        <th>Nama Lokasi</th> --}}
+                        <th>Lokasi</th>
+                        <th>Posisi</th>
                         <th>Status</th>
                         <th>Kondisi</th>
                     </tr>
@@ -28,24 +28,26 @@
                     @php
                         $no = 1;
                     @endphp
-                    @foreach ($cctv_monitoring as $cctv)
+                    @foreach ($cctv_monitoring as $cctv_mo)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $cctv->id_cctv }}</td>
+                            <td>{{ $cctv_mo->id_cctv }}</td>
+                            <td>{{ $cctv_mo->lokasi_name }}</td>
+                            <td>{{ $cctv_mo->posisi_name }}</td>
                             <td>
-                                @if ($cctv->status === 'OK')
+                                @if ($cctv_mo->status === 'OK')
                                     <span class="badge bg-success">Ok</span>
-                                @elseif($cctv->status === 'NG')
+                                @elseif($cctv_mo->status === 'NG')
                                     <span class="badge bg-danger">Not Good</span>
                                 @else
-                                    {{ $cctv->status }}
+                                    {{ $cctv_mo->status }}
                                 @endif
                             </td>
                             <td>
-                                @if ($cctv->condition === 'Bersih' || is_null($cctv->condition))
-                                    <span class="badge bg-success">{{ $cctv->condition ?? 'Bersih' }}</span>
-                                @elseif($cctv->condition === 'Kotor')
-                                    <span class="badge bg-danger">{{ $cctv->condition }}</span>
+                                @if ($cctv_mo->condition === 'Bersih' || is_null($cctv_mo->condition))
+                                    <span class="badge bg-success">{{ $cctv_mo->condition ?? 'Bersih' }}</span>
+                                @elseif($cctv_mo->condition === 'Kotor')
+                                    <span class="badge bg-danger">{{ $cctv_mo->condition }}</span>
                                 @endif
                             </td>
                         </tr>

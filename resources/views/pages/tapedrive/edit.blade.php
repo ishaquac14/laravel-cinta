@@ -2,16 +2,16 @@
 
 @section('body')
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+        <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
             <a href="{{ route('tapedrive.index') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
                 <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
             </a>
         </div>
-        <div class="mb-3">
-            <h4>C/S EDIT BACKUP TAPE DRIVE</h4>
-        </div>
-        <hr>
+        
+        <div class="mb-4 text-center">
+            <h5>EDIT C/S BACKUP TAPEDRIVE</h5>
+        </div><hr>
 
         <form action="{{ route('tapedrive.update', $tapedrive->id) }}" method="POST">
             @csrf

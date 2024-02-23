@@ -7,30 +7,46 @@
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
 
-            <div class="text-center">
+            {{-- <div class="text-center">
                 <h4>CHECKSHEET BACKUP TAPE DRIVE</h4>
-            </div>
+            </div> --}}
 
             <div class="d-flex align-items-center">
                 @can('superadmin')
                     <button class="btn btn-success" type="button" data-bs-toggle="modal"
                         data-bs-target="#approve_modal">Approve</button>
                 @endcan
-                <a href="{{ route('tapedrive.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
-                    Checksheet</a>
+                <a href="{{ route('tapedrive.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create</a>
             </div>
         </div>
-        <div class="col-sm-3 offset-sm-9 mb-3">
-            <form action="/tapedrive" class="d-flex ml-auto mt-2" method="GET">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-dark" type="submit">Search</button>
-            </form>
-        </div>
+
+        <div class="mt-2 text-center">
+            <h5>CHECKSHEET BACKUP TAPEDRIVE</h5>
+        </div><hr>
+
+        <form method="GET" action="{{ route('tapedrive.index') }}">
+            @csrf
+            @include('layouts.filter')
+        </form>
+
         @if (Session::has('success'))
             <div class="alert alert-success" role="alert">
                 {{ Session::get('success') }}
             </div>
         @endif
+
+        @if (Session::has('warning'))
+            <div class="alert alert-warning" role="alert">
+                {{ Session::get('warning') }}
+            </div>
+        @endif
+
+        @if (Session::has('danger'))
+            <div class="alert alert-danger" role="alert">
+                {{ Session::get('danger') }}
+            </div>
+        @endif
+
         <div class="table-responsive">
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
@@ -142,22 +158,32 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title">
-                        @php
-                            $now = Carbon\Carbon::now();
-                            $month_before = $now->subMonth();
-                            $month = $month_before->format('F');
-                        @endphp
-                        Approve Checksheet Bulan {{ $month }} !
+                        Approve Checksheet Bulan:
                     </div>
                 </div>
                 <div class="modal-body">
-                    Apakah anda yakin?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <form action="{{ route('approval_tapedrive') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-success">Approve</button>
+                        <select class="form-select" aria-label="Default select example" name="selected_month"
+                            id="SelectedMonth" contenteditable="true">
+                            <option selected>Bulan</option>
+                            <option value="01">Januari</option>
+                            <option value="02">Februari</option>
+                            <option value="03">Maret</option>
+                            <option value="04">April</option>
+                            <option value="05">Mei</option>
+                            <option value="06">Juni</option>
+                            <option value="07">Juli</option>
+                            <option value="08">Agustus</option>
+                            <option value="09">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </div>
                     </form>
                 </div>
             </div>

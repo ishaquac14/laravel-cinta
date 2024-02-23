@@ -19,7 +19,7 @@ class Cctv extends Model
 
         // Otomatis tambahkan kolom-kolom dari tabel ke fillable
         $this->fillable = $this->getTableColumns();
-    }
+    }   
 
     protected function getTableColumns()
     {

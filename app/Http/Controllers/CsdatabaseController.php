@@ -3,32 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Csdatabase;
+use App\Models\Logapproved;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CsdatabaseController extends Controller
 {
-    /**
-     * Display a listierror of the resource.
-     */
     public function index(Request $request)
     {
-        $searchTerm = $request->input('search');
+        $sortTerm = $request->input('sort_bulan');
+        $tahunTerm = $request->input('sort_tahun');
 
-        $query = Csdatabase::orderBy('id', 'DESC');
+        $now = Carbon::now();
+        $current_month = $now->month;
+        $current_year = $now->year;
+        $query = Csdatabase::whereMonth('created_at', $current_month)->whereYear('created_at', $current_year)->orderBy('id', 'DESC');
 
-        if ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('author', 'LIKE', '%' . $searchTerm . '%');
+        if ($sortTerm) {
+            $query = Csdatabase::orderBy('id', 'DESC');
+            $query->where(function ($q) use ($sortTerm, $tahunTerm) {
+                $q->whereMonth('created_at', $sortTerm)
+                    ->whereYear('created_at', $tahunTerm);
             });
         }
 
-        // Menggunakan paginate(10) untuk mendapatkan data paginasi
-        $csdatabases = $query->paginate(5);
+        $csdatabases = $query->paginate(10);
 
-        // dd($csdatabases);
-        // Mengirimkan data ke tampilan
+        $csdatabases->appends([
+            'sort_bulan' => $sortTerm,
+            'sort_tahun' => $tahunTerm,
+        ]);
+
         return view('pages.csdatabase.index', compact('csdatabases'));
     }
 
@@ -61,13 +67,15 @@ class CsdatabaseController extends Controller
             'solid' => 'required|in:success,error',
             'cubic_pro_legacy' => 'required|in:success,error',
             'sikola_legacy' => 'required|in:success,error',
+            'devita' => 'required|in:success,error',
+            'cinta' => 'required|in:success,error',
             'note' => 'string|nullable',
         ]);
 
         // Mendapatkan data dari permintaan
         $data = $request->only([
             'asiic', 'avicenna', 'broadcast', 'cubic_pro', 'gary', 'iatf', 'lobby', 'maps_body',
-            'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy', 'note'
+            'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy','devita', 'note', 'cinta'
         ]);
         // Menyimpan data ke dalam csdatabase
 
@@ -78,7 +86,7 @@ class CsdatabaseController extends Controller
         Csdatabase::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan
-        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil disimpan !');
     }
 
     /**
@@ -118,6 +126,8 @@ class CsdatabaseController extends Controller
             'solid' => 'required|in:success,error',
             'cubic_pro_legacy' => 'required|in:success,error',
             'sikola_legacy' => 'required|in:success,error',
+            'devita' => 'required|in:success,error',
+            'cinta' => 'required|in:success,error',
             'note' => 'string|nullable',
             'follow_up' => 'string|nullable'
         ]);
@@ -139,11 +149,13 @@ class CsdatabaseController extends Controller
             'solid',
             'cubic_pro_legacy',
             'sikola_legacy',
+            'devita',
+            'cinta',
             'note',
             'follow_up'
         ));
 
-        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil diperbaharui !');
     }
 
     public function destroy($id)
@@ -151,23 +163,60 @@ class CsdatabaseController extends Controller
         $csdatabase = Csdatabase::findOrFail($id);
         $csdatabase->delete();
 
-        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('csdatabase.index')->with('success', 'Data berhasil dihapus !');
     }
 
-    public function approval_csdatabase (Request $request)
-    {   
+    public function approval_csdatabase(Request $request)
+    {
+        $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $year = $now->year;
-        $month = $now->month;
-        $before_month = $month - 1;
-        $csdatabase = Csdatabase::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+        $current_month = $now->format('m');
 
-        foreach($csdatabase as $csdatabase)
-        {
+        $count_csdatabases = Csdatabase::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 1)
+            ->count();
+
+        if ($count_csdatabases > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
+        };
+
+        $csdatabases = Csdatabase::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 0)
+            ->get();
+
+        if ($csdatabases->isEmpty()) {
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+        }
+
+        foreach ($csdatabases as $csdatabase) {
             $csdatabase->is_approved = 1;
             $csdatabase->save();
         }
 
-        return redirect()->back()->with('success', 'Approved success');
+        $user_id = Auth::id();
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $selectedMonth,
+            'user_id' => $user_id,
+            'checksheet_name' => "csdatabases",
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+    }
+
+
+    public function log_approved(Request $request)
+    {
+        $request->validate([
+            'selected_month' => 'string|required'
+        ]);
+
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $request->input('selected_month'),
+        ]);
+
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
 }
+

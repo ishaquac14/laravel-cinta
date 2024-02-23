@@ -3,16 +3,17 @@
 @section('body')
 
 <div class="container">
-    <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
         <a href="{{ route('cctv.create') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
     </div>
-    <div class="mb-3">
-        <h4>C/S MONITORING CCTV</h4>
-    </div>
-    <hr>
+    
+    <div class="mb-4 text-center">
+        <h5>CREATE C/S MONITORING CCTV</h5>
+    </div><hr>
+
     <form action="{{ route('cctv.store') }}" method="POST">
         @csrf
         <table class="table table-striped table-bordered">
@@ -20,7 +21,8 @@
                 <tr>
                     <th style="width: 1%;" class="text-center">No</th>
                     <th style="width: 150px;">Server</th>
-                    <th style="width: 150px;">Area</th>
+                    <th style="width: 150px;">Lokasi</th>
+                    <th style="width: 150px;">Posisi</th>
                     <th style="width: 150px;">ID CCTV</th>
                     <th>Ok</th>
                     <th>Not Good</th>
@@ -39,8 +41,11 @@
                     @endphp
                     <td class="align-middle text-center">{{ $no++ }}</td>
                     <td class="align-middle text-center">{{ $namaserver }}</td>
-                    <td class="align-middle text-center">{{ $cctv['building_name'] }}</td>
+                    <td class="align-middle text-center">{{ $cctv['lokasi_name'] }}</td>
+                    <td class="align-middle text-center">{{ $cctv['posisi_name'] }}</td>
                     <td class="align-middle text-center">{{ $cctv['id_cctv'] }}</td>
+                    <input type="hidden" name="lokasi_name[{{ $cctv['id_cctv'] }}]" value="{{ $cctv['lokasi_name'] }}">
+                    <input type="hidden" name="posisi_name[{{ $cctv['id_cctv'] }}]" value="{{ $cctv['posisi_name'] }}">
                     <td class="align-middle text-center">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status[{{ $cctv['id_cctv'] }}]" value="OK" required>
@@ -68,8 +73,8 @@
             </tbody>
         </table>     
         <div class="">
-            <label for="exampleFormControlTextarea1" class="form-label"></label>
-            <textarea class="form-control" name="note" id="exampleFormControlTextarea1" rows="4" placeholder="Note"></textarea>
+            <label for="noteTextarea" class="form-label"></label>
+            <textarea class="form-control" name="note" id="noteTextarea" rows="4" placeholder="Note"></textarea>
         </div>
         <div class="mt-4"><p><b>IMPORTANT:</b> Jika terjadi problem atau mati langsung hubungi MSA</p></div>
         <div class="col">

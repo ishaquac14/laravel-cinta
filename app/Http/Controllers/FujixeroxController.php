@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fujixerox;
+use App\Models\Logapproved;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class FujixeroxController extends Controller
 {
@@ -13,21 +15,29 @@ class FujixeroxController extends Controller
      */
     public function index(Request $request)
     {
-        $searchTerm = $request->input('search');
+        $sortTerm = $request->input('sort_bulan');
+        $tahunTerm = $request->input('sort_tahun');
 
-        $query = Fujixerox::orderBy('id', 'DESC');
+        $now = Carbon::now();
+        $current_month = $now->month;
+        $current_year = $now->year;
+        $query = Fujixerox::whereMonth('created_at', $current_month)->whereYear('created_at', $current_year)->orderBy('id', 'DESC');
 
-        if ($searchTerm) {
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('created_at', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('note', 'LIKE', '%' . $searchTerm . '%');
+        if ($sortTerm) {
+            $query = Fujixerox::orderBy('id', 'DESC');
+            $query->where(function ($q) use ($sortTerm, $tahunTerm) {
+                $q->whereMonth('created_at', $sortTerm)
+                    ->whereYear('created_at', $tahunTerm);
             });
         }
 
-        // Menggunakan paginate(10) untuk mendapatkan data paginasi
-        $fujixeroxs = $query->paginate(5);
+        $fujixeroxs = $query->paginate(10);
 
-        // Mengirimkan data ke tampilan
+        $fujixeroxs->appends([
+            'sort_bulan' => $sortTerm,
+            'sort_tahun' => $tahunTerm,
+        ]);
+
         return view('pages.fujixerox.index', compact('fujixeroxs'));
     }
 
@@ -58,7 +68,7 @@ class FujixeroxController extends Controller
 
         Fujixerox::create($data);
 
-        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil disimpan !');
     }
 
 
@@ -95,7 +105,7 @@ class FujixeroxController extends Controller
             'status'
         ));
 
-        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil diperbarui');
+        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil diperbaharui !');
     }
 
     public function destroy($id)
@@ -103,23 +113,59 @@ class FujixeroxController extends Controller
         $fujixerox = Fujixerox::findOrFail($id);
         $fujixerox->delete();
 
-        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('fujixerox.index')->with('success', 'Data berhasil dihapus !');
     }
 
     public function approval_fujixerox(Request $request)
-    {   
+    {
+        $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $year = $now->year;
-        $month = $now->month;
-        $before_month = $month - 1;
-        $fujixeroxs = Fujixerox::whereYear('created_at', $year)->whereMonth('created_at', $before_month)->get();
+        $current_month = $now->format('m');
 
-        foreach($fujixeroxs as $fujixerox)
-        {
+        $count_fujixeroxs = Fujixerox::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 1)
+            ->count();
+
+        if ($count_fujixeroxs > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
+        };
+
+        $fujixeroxs = Fujixerox::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 0)
+            ->get();
+
+        if ($fujixeroxs->isEmpty()) {
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+        }
+
+        foreach ($fujixeroxs as $fujixerox) {
             $fujixerox->is_approved = 1;
             $fujixerox->save();
         }
 
-        return redirect()->back()->with('success', 'Approved success');
+        $user_id = Auth::id();
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $selectedMonth,
+            'user_id' => $user_id,
+            'checksheet_name' => "fujixeroxs",
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+    }
+
+
+    public function log_approved(Request $request)
+    {
+        $request->validate([
+            'selected_month' => 'string|required'
+        ]);
+
+        // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+        $logApproved = Logapproved::create([
+            'month' => $request->input('selected_month'),
+        ]);
+
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
 }

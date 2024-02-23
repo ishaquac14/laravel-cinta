@@ -2,14 +2,14 @@
 
 @section('body')
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+        <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
             <a href="{{ route('acserver.index') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
                 <a href="{{ route('acserver.index') }}" class="btn btn-dark">Kembali</a>
             </a>
         </div>
-        <div class="mb-2">
-            <h4>C/S DETAIL MONITORING AC SERVER ({{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y H:i:s') }})
+        <div class="mb-4 text-center">
+            <h5>DETAIL C/S MONITORING AC SERVER ({{ \Carbon\Carbon::parse($acserver->created_at)->format('d-m-Y H:i:s') }})
                     @if ($acserver->status === 'ok')
                         <span class="badge bg-success"></span>
                     @elseif ($acserver->status === 'warning')
@@ -19,9 +19,10 @@
                     @else
                         {{ $acserver->status }}
                     @endif
-            </h4>     
+            </h5>     
         </div>
         <hr>
+
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead class="table-primary text-center">

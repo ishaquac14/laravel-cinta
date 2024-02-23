@@ -2,16 +2,16 @@
 
 @section('body')
 <div class="container">
-    <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
         <a href="{{ route('csdatabase.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
     </div>
-    <div class="mb-3">
-        <h4>C/S BACKUP DATABASE</h4>
-    </div>
-    <hr>
+    
+    <div class="mb-4 text-center">
+        <h5>CREATE C/S BACKUP DATABASE</h5>
+    </div><hr>
     
     <form action="{{ route('csdatabase.store') }}" method="POST">
         @csrf
@@ -44,10 +44,12 @@
                     ['name' => 'solid'],  
                     ['name' => 'cubic_pro_legacy'],  
                     ['name' => 'sikola_legacy'],  
+                    ['name' => 'devita'],  
+                    ['name' => 'cinta'],  
                 ];
 
                 $servers = [
-                            '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.80', '3.80',
+                            '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.70', '3.80', '3.80', '3.90', '3.73'
                             ];
             @endphp
             
