@@ -38,14 +38,39 @@ class ServerElectricController extends Controller
 
     public function master_edit($id)
     {
+        // Temukan data berdasarkan ID
+        $m_server_electrics = MServerElectric::findOrFail($id);
+
+        // Load view untuk halaman edit dan lewatkan data item yang akan diedit
+        return view('pages.server_electric.master_edit')->with('item', $m_server_electrics);
     }
 
-    public function master_update(Request $request, $id)
+    public function update(Request $request, $id)
     {
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'type' => 'required',
+            'item' => 'required',
+        ]);
+
+        // Temukan data berdasarkan ID
+        $m_server_electrics = MServerElectric::findOrFail($id);
+
+        // Update data
+        $m_server_electrics->type = $request->type;
+        $m_server_electrics->item = $request->item;
+        $m_server_electrics->save();
+
+        // Redirect ke halaman master_list dengan pesan sukses
+        return redirect()->route('server_electric.master_list')->with('success', 'Data berhasil diperbarui !');
     }
 
-    public function master_delete(Request $request, $id)
+    public function master_delete($id)
     {
+        $m_server_electrics = MServerElectric::findOrFail($id);
+        $m_server_electrics->delete();
+
+        return redirect()->route('server_electric.master_list')->with('danger', 'Data berhasil dihapus !');
     }
 
     /// CHECKSHHET ///
@@ -115,15 +140,15 @@ class ServerElectricController extends Controller
         $c_server_electric->suhu = $request->suhu;
         $c_server_electric->note = $request->note;
         $c_server_electric->save();
-    
+
         // Menghapus semua item yang terkait dengan server electric
         CServerElectricItem::where('server_electric_id', $id)->delete();
-    
+
         // Menyimpan setiap baris data yang diperbarui
         $types = $request->input('type');
         $items = $request->input('item');
         $statuses = $request->input('status');
-    
+
         foreach ($types as $key => $type) {
             if (isset($items[$key], $statuses[$key])) {
                 $serverElectricItem = new CServerElectricItem();
@@ -134,14 +159,14 @@ class ServerElectricController extends Controller
                 $serverElectricItem->save();
             }
         }
-    
+
         return redirect()->route('server_electric.checksheet_list')->with('success', 'Data berhasil diperbarui!');
     }
-    
+
 
     public function checksheet_destroy($id)
     {
-        
+
         CServerElectricItem::where('server_electric_id', $id)->delete();
 
         $c_server_electric = CServerElectric::findOrFail($id);

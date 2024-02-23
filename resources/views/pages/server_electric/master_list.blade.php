@@ -8,14 +8,16 @@
             </a>
 
             <div class="d-flex align-items-center">
-                <a href="{{ route('server_electric.master_create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
+                <a href="{{ route('server_electric.master_create') }}" class="btn btn-primary"
+                    style="margin-left: 10px;">Create
                     Master</a>
             </div>
         </div>
 
         <div class="mb-2 text-center">
             <h5>CHECKSHEET SERVER ELECTRIC</h5>
-        </div><hr>
+        </div>
+        <hr>
 
         <form method="GET" action="{{ route('server_electric.master_list') }}">
             @include('layouts.filter')
@@ -58,8 +60,17 @@
                             <td class="align-middle text-center">{{ $m_server_electric->type }}</td>
                             <td class="align-middle text-center">{{ $m_server_electric->item }}</td>
                             <td class="align-middle text-center">
-                                <button class="btn btn-primary">Edit</button>
-                                <button class="btn btn-danger">Delete</button>
+                                <div class="btn-group">
+                                    <form action="{{ route('server_electric.master_edit', $m_server_electric->id) }}"
+                                        style="margin-right: 5px;">
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                    </form>
+                                    <form action="{{ route('server_electric.master_delete', $m_server_electric->id) }}" method="POST"
+                                        onsubmit="return confirm('Hapus data ini?')">
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
