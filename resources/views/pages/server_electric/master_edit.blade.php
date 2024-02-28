@@ -10,23 +10,24 @@
         </div>
         
         <div class="mb-4 text-center">
-            <h5>CREATE MASTER C/S SERVER ELECTRIC</h5>
+            <h5>EDIT MASTER C/S SERVER ELECTRIC</h5>
         </div><hr>
 
-        <form action="{{ route('server_electric.master_store') }}" method="POST">
+        <form action="{{ route('server_electric.master_update', $item->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label for="type"><b>TYPE :</b></label>
                 <select name="type" id="type" class="form-control mt-1 mb-3" required>
                     <option value="">-- Pilih --</option>
-                    <option value="SERVER">SERVER</option>
-                    <option value="HUB">HUB</option>
+                    <option value="SERVER" {{ $item->type == 'SERVER' ? 'selected' : '' }}>SERVER</option>
+                    <option value="HUB" {{ $item->type == 'HUB' ? 'selected' : '' }}>HUB</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="item"><b>NAMA ITEM :</b></label>
-                <input type="text" name="item" id="item" class="form-control mt-1" required>
+                <input type="text" name="item" id="item" class="form-control mt-1" value="{{ $item->item }}" required>
             </div>
 
             <div class="col">

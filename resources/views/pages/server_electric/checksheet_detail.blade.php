@@ -2,14 +2,10 @@
 
 @section('body')
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mt-5">
+        <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
             <a href="{{ route('server_electric.checksheet_list') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
-
-            <div class="text-center">
-                <h4>DETAIL CHECKSHEET SERVER ELECTRIC</h4>
-            </div>
 
             <div class="d-flex align-items-center">
                 <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
@@ -33,12 +29,11 @@
                 {{ Session::get('danger') }}
             </div>
         @endif
-        <hr>
-        <div class="mt-3">
-            <h6>Tanggal : {{ $c_server_electrics->created_at }}</h6>
-            <h6>Suhu Server Electric : {{ $c_server_electrics->suhu }} °C</h6>
-            <h6>Author : {{ $c_server_electrics->users->name }}</h6>
-        </div>
+
+        <div class="mb-4 text-center">
+            <h5>DETAIL C/S SERVER ELECTRIC ({{ \Carbon\Carbon::parse($c_server_electrics->created_at)->format('d-m-Y H:i:s') }})</h5>
+        </div><hr>
+
         <div class="table-responsive">
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
@@ -46,6 +41,8 @@
                         <th width="2%">No</th>
                         <th>Type</th>
                         <th>Item</th>
+                        <th>Suhu Server</th>
+                        <th>Author</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -61,6 +58,8 @@
                                 <td class="align-middle text-center">
                                     {{ $c_server_electric_item->type }}</td>
                                 <td class="align-middle text-center">{{ $c_server_electric_item->item }}</td>
+                                <td class="align-middle text-center">{{ $c_server_electrics->suhu }} °C</td>
+                                <td class="align-middle text-center">{{ $c_server_electrics->users->name }}</td>
                                 <td class="align-middle text-center">
                                     @if ($c_server_electric_item->status === "OK")
                                         <span class="badge bg-success">OK</span>
@@ -78,8 +77,8 @@
                 </tbody>
             </table>
             <div>
-                <label>Note :</label>
-                <textarea cols="30" rows="10" class="form-control" disabled>{{ $c_server_electrics->note }}</textarea>
+                <label class="mb-3">Note :</label>
+                <textarea cols="30" rows="5" class="form-control" disabled>{{ $c_server_electrics->note }}</textarea>
             </div>
             {{-- @include('layouts.pagination-server_electric', ['server_electrics' => $c_server_electric_items]) --}}
         </div>

@@ -3,16 +3,17 @@
 @section('body')
 
 <div class="container">
-    <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
         <a href="{{ route('physical.create') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
     </div>
-    <div class="mb-3">
-        <h4>C/S PHYSICAL SERVER</h4>
-    </div>
-    <hr>
+    
+    <div class="mb-4 text-center">
+        <h5>CREATE C/S PHYSICAL SERVER</h5>
+    </div><hr>
+
     <form action="{{ route('physical.store') }}" method="POST">
         @csrf
         <table class="table table-striped table-bordered">

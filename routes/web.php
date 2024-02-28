@@ -39,8 +39,8 @@ Route::group(['prefix' => 'server_electric'], function(){
     Route::get('/checksheet_create', [ServerElectricController::class, 'checksheet_create'])->name('server_electric.checksheet_create');
     Route::post('/checksheet_store', [ServerElectricController::class, 'checksheet_store'])->name('server_electric.checksheet_store');
     Route::get('/checksheet_edit/{id}', [ServerElectricController::class, 'checksheet_edit'])->name('server_electric.checksheet_edit');
-    Route::post('/checksheet_update/{id}', [ServerElectricController::class, 'checksheet_update'])->name('server_electric.checksheet_update');
-    Route::post('/checksheet_delete/{id}', [ServerElectricController::class, 'checksheet_delete'])->name('server_electric.checksheet_delete');
+    Route::put('/checksheet_update/{id}', [ServerElectricController::class, 'checksheet_update'])->name('server_electric.checksheet_update');
+    Route::get('/checksheet_destroy/{id}', [ServerElectricController::class, 'checksheet_destroy'])->name('server_electric.checksheet_destroy');
 });
 
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
@@ -96,6 +96,7 @@ Route::post('/physical/log_approved', [PhysicalController::class, 'log_approved'
 Route::post('/fujixerox/log_approved', [FujixeroxController::class, 'log_approved'])->name('fujixerox.log_approved');
 Route::post('/cctv/log_approved', [CctvController::class, 'log_approved'])->name('cctv.log_approved');
 Route::post('/sanswitch/log_approved', [SanswitchController::class, 'log_approved'])->name('sanswitch.log_approved');
+Route::post('/c_server_electric/log_approved', [SanswitchController::class, 'log_approved'])->name('c_server_electric.log_approved');
 
 Route::post('/acserver/approval', [AcserverController::class, 'approval_acserver'])->name('approval_acserver');
 Route::post('/csdatabase/approval', [CsdatabaseController::class, 'approval_csdatabase'])->name('approval_csdatabase');
@@ -106,3 +107,4 @@ Route::post('/physical/approval', [PhysicalController::class, 'approval_physical
 Route::post('/fujixerox/approval', [FujixeroxController::class, 'approval_fujixerox'])->name('approval_fujixerox');
 Route::post('/cctv/approval', [CctvController::class, 'approval_cctv'])->name('approval_cctv');
 Route::post('/sanswitch/approval', [SanswitchController::class, 'approval_sanswitch'])->name('approval_sanswitch');
+Route::post('/c_server_electric/approval', [ServerElectricController::class, 'approval_c_server_electric'])->name('approval_c_server_electric');

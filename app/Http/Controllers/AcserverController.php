@@ -32,7 +32,7 @@ class AcserverController extends Controller
             });
         }
 
-        $acservers = $query->paginate(5);
+        $acservers = $query->paginate(10);
 
         $acservers->appends([
             'sort_bulan' => $sortTerm,

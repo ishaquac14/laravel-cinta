@@ -29,7 +29,7 @@ class PhysicalController extends Controller
             });
         }
 
-        $physicals = $query->paginate(5);
+        $physicals = $query->paginate(10);
 
         $physicals->appends([
             'sort_bulan' => $sortTerm,

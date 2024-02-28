@@ -3,14 +3,14 @@
 @section('body')
 
 <div class="container">
-    <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+    <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
         <a href="{{ route('tapedrive.index') }}">
             <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             <a href="{{ route('tapedrive.index') }}" class="btn btn-dark">Kembali</a>
         </a>
     </div>
-    <div class="mb-2">
-        <h4>DETAIL C/S TAPE DRIVE ({{ \Carbon\Carbon::parse($tapedrive->created_at)->format('d-m-Y H:i:s') }})</h4>
+    <div class="mb-4 text-center">
+        <h5>DETAIL C/S TAPE DRIVE ({{ \Carbon\Carbon::parse($tapedrive->created_at)->format('d-m-Y H:i:s') }})</h5>
     </div>    
     <hr>
     <div class="table-responsive">

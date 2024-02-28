@@ -2,16 +2,17 @@
 
 @section('body')
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mt-5 mb-5">
+        <div class="d-flex align-items-center justify-content-between mt-5 mb-4">
             <a href="{{ route('cctv.index') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
                 <a href="{{ route('cctv.index') }}" class="btn btn-dark">Kembali</a>
             </a>
         </div>
-        <div class="mb-2">
-            <h4>EDIT C/S MONITORING CCTV ({{ \Carbon\Carbon::parse($cctv->created_at)->format('d-m-Y H:i:s') }})</h4>
-        </div>
-        <hr>
+        
+        <div class="mb-4 text-center">
+            <h5>EDIT C/S MONITORING CCTV</h5>
+        </div><hr>
+
         <form method="POST" action="{{ route('cctv.update', $cctv->id) }}">
             @csrf
             @method('PUT')

@@ -31,7 +31,7 @@ class FujixeroxController extends Controller
             });
         }
 
-        $fujixeroxs = $query->paginate(5);
+        $fujixeroxs = $query->paginate(10);
 
         $fujixeroxs->appends([
             'sort_bulan' => $sortTerm,

@@ -1,5 +1,5 @@
     <div class="row">
-        <div style="display: flex; align-items: center;" class="text-center mt-5 mb-3">
+        <div style="display: flex; align-items: center;" class="text-center mb-3">
             <select name="sort_bulan" class="form-select" aria-label="Default select example"
                 style="width: auto; margin-right: 10px;">
                 <option selected disabled>Bulan</option>

@@ -8,10 +8,10 @@
             <a href="javascript:history.go(-1);" class="btn btn-dark">Kembali</a>
         </a>
     </div>
-    <div class="mb-3">
-        <h4>C/S BACKUP TAPE DRIVE</h4>
-    </div>
-    <hr>
+    
+    <div class="mb-4 text-center">
+        <h5>CREATE C/S BACKUP TAPEDRIVE</h5>
+    </div><hr>
     
     <form action="{{ route('tapedrive.store') }}" method="POST">
         @csrf

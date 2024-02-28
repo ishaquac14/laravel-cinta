@@ -28,7 +28,7 @@ class CsdatabaseController extends Controller
             });
         }
 
-        $csdatabases = $query->paginate(5);
+        $csdatabases = $query->paginate(10);
 
         $csdatabases->appends([
             'sort_bulan' => $sortTerm,

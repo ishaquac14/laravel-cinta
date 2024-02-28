@@ -3,25 +3,21 @@
 @section('body')
     <div class="container">
         <div class="d-flex align-items-center justify-content-between mt-5">
-            <a href="{{ route('cctv.index') }}">
+            <a href="{{ route('server_electric.master_list') }}">
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
 
             <div class="text-center">
-                <h4>CHECKSHEET MONITORING CCTV</h4>
+                <h4>MASTER SERVER ELECTRIC</h4>
             </div>
 
             <div class="d-flex align-items-center">
-                @can('superadmin')
-                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
-                        data-bs-target="#approve_modal">Approve</button>
-                @endcan
-                <a href="{{ route('cctv.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
-                    Checksheet</a>
+                <a href="{{ route('server_electric.master_create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
+                    Master</a>
             </div>
         </div>
 
-        <form method="GET" action="{{ route('cctv.index') }}">
+        <form method="GET" action="{{ route('server_electric.master_list') }}">
             @csrf
             @include('layouts.filter')
         </form>
@@ -48,16 +44,27 @@
                 <thead class="table-primary text-center">
                     <tr>
                         <th width="2%">No</th>
-                        <th>Tanggal</th>
-                        <th>Note</th>
-                        <th>Follow Up</th>
-                        <th>Author</th>
-                        <th>Approval</th>
+                        <th>Type</th>
+                        <th>Item</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($cctvs->count() > 0)
+                    @php
+                        $no = 1;
+                    @endphp
+                    @foreach ($m_server_electrics as $m_server_electric)
+                        <tr>
+                            <td class="align-middle text-center">{{ $no++ }}</td>
+                            <td class="align-middle text-center">{{ $m_server_electric->type }}</td>
+                            <td class="align-middle text-center">{{ $m_server_electric->item }}</td>
+                            <td class="align-middle text-center">
+                                <button class="btn btn-primary">Edit</button>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    {{-- @if ($cctvs->count() > 0)
                         @php
                             $baseNumber = ($cctvs->currentPage() - 1) * $cctvs->perPage() + 1;
                         @endphp
@@ -119,10 +126,10 @@
                         <tr>
                             <td class="text-center" colspan="7">Data tidak ditemukan</td>
                         </tr>
-                    @endif
+                    @endif --}}
                 </tbody>
             </table>
-            @include('layouts.pagination-cctv', ['cctvs' => $cctvs])
+            {{-- @include('layouts.pagination-cctv', ['cctvs' => $cctvs]) --}}
         </div>
     </div>
 

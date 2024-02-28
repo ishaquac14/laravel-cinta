@@ -7,19 +7,22 @@
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
 
-            <div class="text-center">
+            {{-- <div class="text-center">
                 <h4>CHECKSHEET MONITORING AC SERVER</h4>
-            </div>
+            </div> --}}
 
             <div class="d-flex align-items-center">
                 @can('superadmin')
                     <button class="btn btn-success" type="button" data-bs-toggle="modal"
                         data-bs-target="#approve_modal">Approve</button>
                 @endcan
-                <a href="{{ route('acserver.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
-                    Checksheet</a>
+                <a href="{{ route('acserver.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create</a>
             </div>
         </div>
+
+        <div class="mt-2 text-center">
+            <h5>CHECKSHEET MONITORING AC SERVER</h5>
+        </div><hr>
 
         <form method="GET" action="{{ route('acserver.index') }}">
             @include('layouts.filter')

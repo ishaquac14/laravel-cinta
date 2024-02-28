@@ -7,18 +7,24 @@
                 <img src="{{ asset('images/logo1.png') }}" alt="" height="25">
             </a>
 
-            <div class="text-center">
+            {{-- <div class="text-center">
                 <h4>CHECKSHEET SERVER ELECTRIC</h4>
-            </div>
+            </div> --}}
 
             <div class="d-flex align-items-center">
-                <a href="{{ route('server_electric.checksheet_create') }}" class="btn btn-primary" style="margin-left: 10px;">Create
-                    Checksheet</a>
+                @can('superadmin')
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                        data-bs-target="#approve_modal">Approve</button>
+                @endcan
+                <a href="{{ route('server_electric.checksheet_create') }}" class="btn btn-primary" style="margin-left: 10px;">Create</a>
             </div>
         </div>
 
+        <div class="mt-2 text-center">
+            <h5>CHECKSHEET SERVER ELECTRIC</h5>
+        </div><hr>
+
         <form method="GET" action="{{ route('server_electric.checksheet_list') }}">
-            @csrf
             @include('layouts.filter')
         </form>
 
@@ -39,6 +45,7 @@
                 {{ Session::get('danger') }}
             </div>
         @endif
+
         <div class="table-responsive">
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
@@ -76,34 +83,34 @@
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
+                                        <form action="{{ route('server_electric.checksheet_detail', $c_server_electric->id) }}"
+                                            style="margin-left: 5px;">
+                                            <button type="submit" class="btn btn-primary">Detail</button>
+                                        </form>
                                         {{-- <form action="{{ route('server_electric.checksheet_detail', $c_server_electric->id) }}">
                                             <button type="submit" class="btn btn-primary">Detail</button>
                                         </form> --}}
-                                        <a href="{{ route('server_electric.checksheet_detail', $c_server_electric->id) }}" class="btn btn-primary">Detail</a>
+                                        {{-- <a href="{{ route('server_electric.checksheet_detail', $c_server_electric->id) }}" class="btn btn-primary">Detail</a> --}}
                                         @can('admin')
                                             @if ($c_server_electric->is_approved === 0)
-                                                <form action="{{ route('c_server_electric.edit', $c_server_electric->id) }}"
+                                                <form action="{{ route('server_electric.checksheet_edit', $c_server_electric->id) }}"
                                                     style="margin-right: 5px; margin-left: 5px;">
-                                                    @csrf
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </form>
-                                                <form action="{{ route('c_server_electric.destroy', $c_server_electric->id) }}" method="POST"
+                                                <form action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}" method="GET"
                                                     onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             @endif
                                         @endcan
                                         @can('superadmin')
-                                            <form action="{{ route('c_server_electric.edit', $c_server_electric->id) }}"
+                                            <form action="{{ route('server_electric.checksheet_edit', $c_server_electric->id) }}"
                                                 style="margin-right: 5px; margin-left: 5px;">
-                                                @csrf
                                                 <button type="submit" class="btn btn-warning">Edit</button>
                                             </form>
-                                            <form action="{{ route('c_server_electric.destroy', $c_server_electric->id) }}" method="POST"
+                                            <form action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}" method="POST"
                                                 onsubmit="return confirm('Hapus data ini?')">
-                                                @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
@@ -132,7 +139,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('approval_cctv') }}" method="POST">
+                    <form action="{{ route('approval_c_server_electric') }}" method="POST">
                         @csrf
                         <select class="form-select" aria-label="Default select example" name="selected_month"
                             id="SelectedMonth" contenteditable="true">
