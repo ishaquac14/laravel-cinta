@@ -27,7 +27,7 @@ class WhatsappFujixerox extends Command
     public function handle()
     {
         if (!Fujixerox::whereDate('created_at', today())->exists()) {
-            $nomor = ['6285282716716', '6282260050066'];  
+            $nomor = ['081223506433'];  
             $isi = "WARNING !!!\n\n"; 
             $isi .= "Hari ini Checksheet Printer Fujixerox tidak diisi !";
 

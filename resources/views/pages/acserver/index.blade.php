@@ -25,7 +25,6 @@
         </div><hr>
 
         <form method="GET" action="{{ route('acserver.index') }}">
-            @csrf
             @include('layouts.filter')
         </form>
 
@@ -151,7 +150,6 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('approval_acserver') }}" method="POST">
-                        @csrf
                         <select class="form-select" aria-label="Default select example" name="selected_month"
                             id="SelectedMonth" contenteditable="true">
                             <option selected>Bulan</option>
