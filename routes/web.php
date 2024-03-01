@@ -31,8 +31,8 @@ Route::group(['prefix' => 'server_electric'], function(){
     Route::get('/master_create', [ServerElectricController::class, 'master_create'])->name('server_electric.master_create');
     Route::post('/master_store', [ServerElectricController::class, 'master_store'])->name('server_electric.master_store');
     Route::get('/master_edit/{id}', [ServerElectricController::class, 'master_edit'])->name('server_electric.master_edit');
-    Route::post('/master_update/{id}', [ServerElectricController::class, 'master_update'])->name('server_electric.master_update');
-    Route::post('/master_delete/{id}', [ServerElectricController::class, 'master_delete'])->name('server_electric.master_delete');
+    Route::put('/master_update/{id}', [ServerElectricController::class, 'master_update'])->name('server_electric.master_update');
+    Route::delete('/master_delete/{id}', [ServerElectricController::class, 'master_delete'])->name('server_electric.master_delete');
 
     Route::get('/checksheet_list', [ServerElectricController::class, 'checksheet_list'])->name('server_electric.checksheet_list');
     Route::get('/checksheet_detail/{id}', [ServerElectricController::class, 'checksheet_detail'])->name('server_electric.checksheet_detail');
@@ -40,7 +40,7 @@ Route::group(['prefix' => 'server_electric'], function(){
     Route::post('/checksheet_store', [ServerElectricController::class, 'checksheet_store'])->name('server_electric.checksheet_store');
     Route::get('/checksheet_edit/{id}', [ServerElectricController::class, 'checksheet_edit'])->name('server_electric.checksheet_edit');
     Route::put('/checksheet_update/{id}', [ServerElectricController::class, 'checksheet_update'])->name('server_electric.checksheet_update');
-    Route::get('/checksheet_destroy/{id}', [ServerElectricController::class, 'checksheet_destroy'])->name('server_electric.checksheet_destroy');
+    Route::delete('/checksheet_destroy/{id}', [ServerElectricController::class, 'checksheet_destroy'])->name('server_electric.checksheet_destroy');
 });
 
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');

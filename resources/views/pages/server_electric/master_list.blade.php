@@ -67,6 +67,7 @@
                                     </form>
                                     <form action="{{ route('server_electric.master_delete', $m_server_electric->id) }}" method="POST"
                                         onsubmit="return confirm('Hapus data ini?')">
+                                        @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>

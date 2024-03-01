@@ -205,7 +205,7 @@ class CctvController extends Controller
             'month' => $request->input('selected_month'),
         ]);
 
-        return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan !');
     }
 
     public function cctv_sama()
@@ -233,6 +233,6 @@ class CctvController extends Controller
             $cctv->save();
         }
 
-        return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan');
+        return redirect()->route('cctv.index')->with('success', 'Data berhasil disimpan !');
     }
 }

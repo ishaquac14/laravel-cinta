@@ -99,6 +99,7 @@
                                                 </form>
                                                 <form action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}" method="GET"
                                                     onsubmit="return confirm('Hapus data ini?')">
+                                                    @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
@@ -111,6 +112,7 @@
                                             </form>
                                             <form action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}" method="POST"
                                                 onsubmit="return confirm('Hapus data ini?')">
+                                                @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>

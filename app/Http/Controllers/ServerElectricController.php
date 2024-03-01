@@ -45,7 +45,7 @@ class ServerElectricController extends Controller
         return view('pages.server_electric.master_edit')->with('item', $m_server_electrics);
     }
 
-    public function update(Request $request, $id)
+    public function master_update(Request $request, $id)
     {
         // Validasi data yang diterima dari form
         $request->validate([
@@ -74,9 +74,30 @@ class ServerElectricController extends Controller
     }
 
     /// CHECKSHHET ///
-    public function checksheet_list()
+    public function checksheet_list(Request $request)
     {
-        $c_server_electrics = CServerElectric::all();
+        $sortTerm = $request->input('sort_bulan');
+        $tahunTerm = $request->input('sort_tahun');
+
+        $now = Carbon::now();
+        $current_month = $now->month;
+        $current_year = $now->year;
+        $query = CServerElectric::whereMonth('created_at', $current_month)->whereYear('created_at', $current_year)->orderBy('id', 'DESC');
+
+        if ($sortTerm) {
+            $query = CServerElectric::orderBy('id', 'DESC');
+            $query->where(function ($q) use ($sortTerm, $tahunTerm) {
+                $q->whereMonth('created_at', $sortTerm)
+                    ->whereYear('created_at', $tahunTerm);
+            });
+        }
+
+        $c_server_electrics = $query->paginate(10);
+
+        $c_server_electrics->appends([
+            'sort_bulan' => $sortTerm,
+            'sort_tahun' => $tahunTerm,
+        ]);
 
         return view('pages.server_electric.checksheet_list', compact('c_server_electrics'));
     }
