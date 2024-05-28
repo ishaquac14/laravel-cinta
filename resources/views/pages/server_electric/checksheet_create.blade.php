@@ -71,9 +71,6 @@
                 <div class="col-md-6">
                     <label for="exampleFormControlTextarea1" class="form-label"></label>
                     <textarea class="form-control text-left" id="exampleFormControlTextarea1" rows="3" disabled>
-    - Backup dilakukan setiap pergantian hari saat shift 3.
-    - Jika terjadi error backup, lakukan backup ulang sampai 3x.
-    - Jika masih error segera lakukan SCW.
             </textarea>
                 </div>
             </div>

@@ -119,6 +119,14 @@
                         Master Server Electric
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('cctvaiia.index') }}">
+                        <svg class="bi">
+                            <use xlink:href="#file-earmark-text" />
+                        </svg>
+                        Master Server CCTV
+                    </a>
+                </li>
                 <br>
                 @can('admin')
                     <h5

@@ -9,34 +9,51 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     */
+
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call('App\Http\Controllers\SchedulerController@runMointernetScheduler')->daily();
-        $schedule->command('app:whatsapp-acserver')->everyMinute();
-        $schedule->command('app:whatsapp-cctv')->everyMinute();
-        $schedule->command('app:whatsapp-csdatabase')->everyMinute();
-        $schedule->command('app:whatsapp-fujixerox')->everyMinute();
-        $schedule->command('app:whatsapp-gacsirt')->everyMinute();
-        $schedule->command('app:whatsapp-sanswitch')->everyMinute();
-        $schedule->command('app:whatsapp-physical')->everyMinute();
-        $schedule->command('app:whatsapp-tapedrive')->everyMinute();
+        $schedule->call('App\Http\Controllers\SchedulerController@runMointernetScheduler')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-acserver')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-cctv')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-csdatabase')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-fujixerox')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-gacsirt')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-sanswitch')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-physical')
+            ->weekdays()
+            ->at('08:00');
+
+        $schedule->command('app:whatsapp-tapedrive')
+            ->weekdays()
+            ->at('08:00');
     }
 
-    /**
-     * Register the commands for the application.
-     */
     protected function commands()
     {
         $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
-
-    // protected $commands = [
-    //     \App\Console\Commands\SendWhatsAppMessage::class,
-    // ];
 
 }

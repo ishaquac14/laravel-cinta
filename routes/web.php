@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AcserverController;
+use App\Http\Controllers\CctvaiiaController;
 use App\Http\Controllers\CsdatabaseController;
 use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\RegisterController;
@@ -108,3 +109,6 @@ Route::post('/fujixerox/approval', [FujixeroxController::class, 'approval_fujixe
 Route::post('/cctv/approval', [CctvController::class, 'approval_cctv'])->name('approval_cctv');
 Route::post('/sanswitch/approval', [SanswitchController::class, 'approval_sanswitch'])->name('approval_sanswitch');
 Route::post('/c_server_electric/approval', [ServerElectricController::class, 'approval_c_server_electric'])->name('approval_c_server_electric');
+
+Route::resource('/cctvaiia', CctvaiiaController::class);
+Route::get('/cctvaiia/search', 'CctvaiiaController@index');
