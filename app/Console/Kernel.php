@@ -13,12 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call('App\Http\Controllers\SchedulerController@runMointernetScheduler')
-            ->weekdays()
-            ->at('08:00');
+            ->everyMinute();
 
-        $schedule->command('app:whatsapp-acserver')
-            ->weekdays()
-            ->at('08:00');
+        $schedule->command('app:whatsapp-acserver')->everyMinute();
 
         $schedule->command('app:whatsapp-cctv')
             ->weekdays()

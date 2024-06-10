@@ -120,11 +120,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('cctvaiia.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
                         <svg class="bi">
                             <use xlink:href="#file-earmark-text" />
                         </svg>
                         Master Server CCTV
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                        <svg class="bi">
+                            <use xlink:href="#file-earmark-text" />
+                        </svg>
+                        Master Physical Server
                     </a>
                 </li>
                 <br>

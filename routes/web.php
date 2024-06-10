@@ -13,15 +13,9 @@ use App\Http\Controllers\GacsirtController;
 use App\Http\Controllers\FujixeroxController;
 use App\Http\Controllers\MointernetController;
 use App\Http\Controllers\CctvController;
+use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TapedriveController;
 use App\Http\Controllers\ServerElectricController;
-use App\Models\Cctv;
-use App\Models\Cobaadmin;
-use App\Models\Csdatabase;
-use App\Models\Fujixerox;
-use App\Models\Gacsirt;
-use App\Models\Physical;
-use Laravel\Sanctum\Sanctum;
 
 Route::get('/', function () {
     return view('/login/index');
@@ -45,6 +39,7 @@ Route::group(['prefix' => 'server_electric'], function(){
 });
 
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
+Route::get('/run-scheduler', [SchedulerController::class, 'runScheduler']);
 
 Route::get('/cctv_sama',  [CctvController::class, 'cctv_sama'])->name('cctv_sama');
 
