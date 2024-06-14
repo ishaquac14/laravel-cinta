@@ -40,6 +40,7 @@ Route::group(['prefix' => 'server_electric'], function(){
 
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
 Route::get('/run-scheduler', [SchedulerController::class, 'runScheduler']);
+Route::get('/run-alert_approval', [SchedulerController::class, 'alertApproval']);
 
 Route::get('/cctv_sama',  [CctvController::class, 'cctv_sama'])->name('cctv_sama');
 

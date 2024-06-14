@@ -27,7 +27,10 @@ class SchedulerController extends Controller
     public function runScheduler()
     {
         $now = Carbon::now();
-        $day = $now->day;
+        // $day = $now->day;
+        // dd($formattedDate);
+        $yesterday = $now->subDay();
+        $formattedDate = $yesterday->locale('id')->translatedFormat('d F Y');
         $yesterday = Carbon::yesterday()->toDateString();
 
         $yesterday_acservers = Acserver::whereDate('created_at', $yesterday)->count();
@@ -44,44 +47,44 @@ class SchedulerController extends Controller
         $messages = [];
 
         if ($yesterday_acservers == 0) {
-            $messages[] = "Hari ini Checksheet AC SERVER tidak diisi!";
+            $messages[] = "Checksheet AC SERVER tidak diisi!";
         }
 
         if ($yesterday_cctvs == 0) {
-            $messages[] = "Hari ini Checksheet CCTV tidak diisi!";
+            $messages[] = "Checksheet CCTV tidak diisi!";
         }
 
         if ($yesterday_csdatabases == 0) {
-            $messages[] = "Hari ini Checksheet Database tidak diisi!";
+            $messages[] = "Checksheet Database tidak diisi!";
         }
 
         if ($yesterday_cserverelectrics == 0) {
-            $messages[] = "Hari ini Checksheet Server Electric tidak diisi!";
+            $messages[] = "Checksheet Server Electric tidak diisi!";
         }
 
         if ($yesterday_fujixeroxs == 0) {
-            $messages[] = "Hari ini Checksheet Printer Fujixerox tidak diisi!";
+            $messages[] = "Checksheet Printer Fujixerox tidak diisi!";
         }
 
         if ($yesterday_gacsirts == 0) {
-            $messages[] = "Hari ini Checksheet GA-CSIRT tidak diisi!";
+            $messages[] = "Checksheet GA-CSIRT tidak diisi!";
         }
 
         if ($yesterday_physicals == 0) {
-            $messages[] = "Hari ini Checksheet Physical tidak diisi!";
+            $messages[] = "Checksheet Physical tidak diisi!";
         }
 
         if ($yesterday_sanswitchs == 0) {
-            $messages[] = "Hari ini Checksheet Sanswitch tidak diisi!";
+            $messages[] = "Checksheet Sanswitch tidak diisi!";
         }
 
         if ($yesterday_tapedrives == 0) {
-            $messages[] = "Hari ini Checksheet Tape Drive tidak diisi!";
+            $messages[] = "Checksheet Tape Drive tidak diisi!";
         }
 
         if (!empty($messages)) {
-            $nomors = ['081223506433', '082125008160', '085282716716', '082260050066', '082111707754'];
-            $isi = "WARNING !!!\n\n" . implode("\n", $messages);
+            $nomors = ['081223506433', '082260050066', '085282716716', '082111707754', '082125008160'];
+            $isi = "WARNING !!!\nTanggal : ". $formattedDate . "\n\n" . implode("\n", $messages);
 
             foreach ($nomors as $nomor) {
                 $token = "v2n49drKeWNoRDN4jgqcdsR8a6bcochcmk6YphL6vLcCpRZdV1";
@@ -105,7 +108,8 @@ class SchedulerController extends Controller
         }
     }
 
-    public function checkAcserver()
+    public function Alertapproval()
     {
+        
     }
 }
