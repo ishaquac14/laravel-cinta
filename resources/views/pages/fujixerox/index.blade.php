@@ -21,7 +21,7 @@
         </div>
 
         <div class="mt-2 text-center">
-            <h5>CHECKSHEET PRINTER FUJIXEROX</h5>
+            <h5>CHECKSHEET PRINTER FUJIXEROX (FRM-ITD-S13-054-00)</h5>
         </div><hr>
 
         <form method="GET" action="{{ route('fujixerox.index') }}">

@@ -70,8 +70,6 @@
                 </div>
                 <div class="col-md-6">
                     <label for="exampleFormControlTextarea1" class="form-label"></label>
-                    <textarea class="form-control text-left" id="exampleFormControlTextarea1" rows="3" disabled>
-            </textarea>
                 </div>
             </div>
         </form>

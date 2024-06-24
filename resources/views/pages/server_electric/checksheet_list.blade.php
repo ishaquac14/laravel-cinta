@@ -21,7 +21,7 @@
         </div>
 
         <div class="mt-2 text-center">
-            <h5>CHECKSHEET SERVER ELECTRIC</h5>
+            <h5>CHECKSHEET SERVER ELECTRIC (FRM-ITD-S13-047-00)</h5>
         </div><hr>
 
         <form method="GET" action="{{ route('server_electric.checksheet_list') }}">
