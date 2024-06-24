@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Acserver;
 use App\Models\Logapproved;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -191,6 +190,6 @@ class AcserverController extends Controller
             'month' => $request->input('selected_month'),
         ]);
 
-        return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan !');
     }
 }

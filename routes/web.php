@@ -54,7 +54,7 @@ Route::resource('/csdatabase', CsdatabaseController::class)->middleware('auth');
 Route::get('/csdatabase/search', 'CsdatabaseController@index');
 
 Route::resource('/acserver', AcserverController::class)->middleware('auth');
-Route::get('/acserver/search', [LoginController::class, 'index']);
+Route::get('/acserver/search', 'AcserverController@index');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);

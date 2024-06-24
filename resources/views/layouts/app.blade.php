@@ -213,8 +213,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
         integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+    crossorigin="anonymous"></script>
     <script src="dashboard.js"></script>
     <script src="/js/dashboard.js"></script>
+    <script src="{{ asset('sb-admin') }}/assets/demo/chart-area-demo.js"></script>
+    <script src="{{ asset('sb-admin') }}/assets/demo/chart-bar-demo.js"></script>
 </body>
 
 </html>
