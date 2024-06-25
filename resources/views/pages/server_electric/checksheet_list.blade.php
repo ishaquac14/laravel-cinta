@@ -16,13 +16,15 @@
                     <button class="btn btn-success" type="button" data-bs-toggle="modal"
                         data-bs-target="#approve_modal">Approve</button>
                 @endcan
-                <a href="{{ route('server_electric.checksheet_create') }}" class="btn btn-primary" style="margin-left: 10px;">Create</a>
+                <a href="{{ route('server_electric.checksheet_create') }}" class="btn btn-primary"
+                    style="margin-left: 10px;">Create</a>
             </div>
         </div>
 
         <div class="mt-2 text-center">
             <h5>CHECKSHEET SERVER ELECTRIC (FRM-ITD-S13-047-00)</h5>
-        </div><hr>
+        </div>
+        <hr>
 
         <form method="GET" action="{{ route('server_electric.checksheet_list') }}">
             @include('layouts.filter')
@@ -72,7 +74,8 @@
                                     {{ \Carbon\Carbon::parse($c_server_electric->created_at)->format('d-m-Y') }}</td>
                                 <td class="align-middle text-center">{{ $c_server_electric->suhu . '°C' }}</td>
                                 <td class="align-middle">
-                                    {{ empty($c_server_electric->follow_up) ? 'Tidak Ada' : $c_server_electric->follow_up }}</td>
+                                    {{ empty($c_server_electric->follow_up) ? 'Tidak Ada' : $c_server_electric->follow_up }}
+                                </td>
                                 <td class="align-middle text-center">{{ $c_server_electric->users->name }}</td>
                                 <td class="align-middle text-center">
                                     @if ($c_server_electric->is_approved === 0)
@@ -83,7 +86,8 @@
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <form action="{{ route('server_electric.checksheet_detail', $c_server_electric->id) }}"
+                                        <form
+                                            action="{{ route('server_electric.checksheet_detail', $c_server_electric->id) }}"
                                             style="margin-left: 5px;">
                                             <button type="submit" class="btn btn-primary">Detail</button>
                                         </form>
@@ -93,12 +97,14 @@
                                         {{-- <a href="{{ route('server_electric.checksheet_detail', $c_server_electric->id) }}" class="btn btn-primary">Detail</a> --}}
                                         @can('admin')
                                             @if ($c_server_electric->is_approved === 0)
-                                                <form action="{{ route('server_electric.checksheet_edit', $c_server_electric->id) }}"
+                                                <form
+                                                    action="{{ route('server_electric.checksheet_edit', $c_server_electric->id) }}"
                                                     style="margin-right: 5px; margin-left: 5px;">
                                                     <button type="submit" class="btn btn-warning">Edit</button>
                                                 </form>
-                                                <form action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}" method="GET"
-                                                    onsubmit="return confirm('Hapus data ini?')">
+                                                <form
+                                                    action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}"
+                                                    method="GET" onsubmit="return confirm('Hapus data ini?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -106,12 +112,14 @@
                                             @endif
                                         @endcan
                                         @can('superadmin')
-                                            <form action="{{ route('server_electric.checksheet_edit', $c_server_electric->id) }}"
+                                            <form
+                                                action="{{ route('server_electric.checksheet_edit', $c_server_electric->id) }}"
                                                 style="margin-right: 5px; margin-left: 5px;">
                                                 <button type="submit" class="btn btn-warning">Edit</button>
                                             </form>
-                                            <form action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}" method="POST"
-                                                onsubmit="return confirm('Hapus data ini?')">
+                                            <form
+                                                action="{{ route('server_electric.checksheet_destroy', $c_server_electric->id) }}"
+                                                method="POST" onsubmit="return confirm('Hapus data ini?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -128,7 +136,7 @@
                     @endif
                 </tbody>
             </table>
-            {{-- @include('layouts.pagination-server_electric', ['server_electrics' => $c_server_electrics]) --}}
+            @include('layouts.pagination-server_electric', ['c_server_electrics' => $c_server_electrics])
         </div>
     </div>
 
