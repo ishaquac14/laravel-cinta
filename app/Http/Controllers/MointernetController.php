@@ -222,26 +222,44 @@ class MointernetController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah sudah ada data yang diapprove di bulan yang dipilih di tabel mointernets
         $count_mointernets = Mointernet::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
-        if ($count_mointernets > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+        // Cek juga di tabel grafik_internets
+        $count_grafik_internets = GrafikInternet::whereMonth('created_at', $selectedMonth)
+            ->where('is_approved', 1)
+            ->count();
 
+        // Jika ada data di mointernets atau grafik_internets yang sudah diapprove
+        if ($count_mointernets > 0 || $count_grafik_internets > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
+
+        // Cari data yang belum diapprove di tabel mointernets
         $mointernets = Mointernet::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
+        // Jika mointernets kosong, cek apakah grafik_internets juga kosong
         if ($mointernets->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            $grafik_internets = GrafikInternet::whereMonth('created_at', $selectedMonth)
+                ->where('is_approved', 0)
+                ->get();
+
+            if ($grafik_internets->isEmpty()) {
+                return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
+            }
+
+            return redirect()->back()->with('success', 'Data berhasil diapprove, Internet bulan ini 100%!');
         }
 
+        // Jika tidak kosong, approve semua data yang belum diapprove di mointernets
         foreach ($mointernets as $mointernet) {
             $mointernet->is_approved = 1;
+            $mointernet->approved_at = $now; // Menyimpan waktu approval
             $mointernet->save();
         }
 
@@ -253,7 +271,7 @@ class MointernetController extends Controller
             'checksheet_name' => "mointernets",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
 
 

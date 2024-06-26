@@ -200,26 +200,28 @@ class ServerElectricController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
-        $count_c_server_electrics = cServerElectric::whereMonth('created_at', $selectedMonth)
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
+        $count_c_server_electrics = CServerElectric::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_c_server_electrics > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
-        $c_server_electrics = cServerElectric::whereMonth('created_at', $selectedMonth)
+        // Cari data yang belum diapprove di bulan yang dipilih
+        $c_server_electrics = CServerElectric::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($c_server_electrics->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($c_server_electrics as $c_server_electric) {
             $c_server_electric->is_approved = 1;
+            $c_server_electric->approved_at = $now; // Menyimpan waktu approval
             $c_server_electric->save();
         }
 
@@ -231,7 +233,7 @@ class ServerElectricController extends Controller
             'checksheet_name' => "c_server_electrics",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
 
 

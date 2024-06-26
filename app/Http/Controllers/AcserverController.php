@@ -144,26 +144,28 @@ class AcserverController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
         $count_acservers = Acserver::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_acservers > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
+        // Cari data yang belum diapprove di bulan yang dipilih
         $acservers = Acserver::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($acservers->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($acservers as $acserver) {
             $acserver->is_approved = 1;
+            $acserver->approved_at = $now; // Menyimpan waktu approval
             $acserver->save();
         }
 
@@ -175,9 +177,8 @@ class AcserverController extends Controller
             'checksheet_name' => "acservers",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
-
 
     public function log_approved(Request $request)
     {

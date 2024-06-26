@@ -22,7 +22,8 @@
 
         <div class="mt-2 text-center">
             <h5>CHECKSHEET PHYSICAL SERVER (FRM-ITD-S13-046-00)</h5>
-        </div><hr>
+        </div>
+        <hr>
 
         <form method="GET" action="{{ route('physical.index') }}">
             @csrf
@@ -78,7 +79,15 @@
                                     @if ($physical->is_approved === 0)
                                         <span class="badge bg-secondary">Belum Approval</span>
                                     @else
-                                        <span class="badge bg-success">Sudah Approval</span>
+                                        <div class="badge bg-success">
+                                            Sudah Approval
+                                            @if (!is_null($physical->approved_at))
+                                                <br>
+                                                <small style="font-size: 0.8em;">
+                                                    ({{ \Carbon\Carbon::parse($physical->approved_at)->format('d M Y H:i') }})
+                                                </small>
+                                            @endif
+                                        </div>
                                     @endif
                                 </td>
                                 <td class="align-middle text-center">

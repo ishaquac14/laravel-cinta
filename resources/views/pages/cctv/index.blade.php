@@ -73,7 +73,15 @@
                                     @if ($cctv->is_approved === 0)
                                         <span class="badge bg-secondary">Belum Approval</span>
                                     @else
-                                        <span class="badge bg-success">Sudah Approval</span>
+                                        <div class="badge bg-success">
+                                            Sudah Approval
+                                            @if (!is_null($cctv->approved_at))
+                                                <br>
+                                                <small style="font-size: 0.8em;">
+                                                    ({{ \Carbon\Carbon::parse($cctv->approved_at)->format('d M Y H:i') }})
+                                                </small>
+                                            @endif
+                                        </div>
                                     @endif
                                 </td>
                                 <td class="align-middle text-center">

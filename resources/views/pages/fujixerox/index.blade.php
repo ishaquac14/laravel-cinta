@@ -22,7 +22,8 @@
 
         <div class="mt-2 text-center">
             <h5>CHECKSHEET PRINTER FUJIXEROX (FRM-ITD-S13-054-00)</h5>
-        </div><hr>
+        </div>
+        <hr>
 
         <form method="GET" action="{{ route('fujixerox.index') }}">
             @include('layouts.filter')
@@ -92,7 +93,15 @@
                                     @if ($fujixerox->is_approved === 0)
                                         <span class="badge bg-secondary">Belum Approval</span>
                                     @else
-                                        <span class="badge bg-success">Sudah Approval</span>
+                                        <div class="badge bg-success">
+                                            Sudah Approval
+                                            @if (!is_null($fujixerox->approved_at))
+                                                <br>
+                                                <small style="font-size: 0.8em;">
+                                                    ({{ \Carbon\Carbon::parse($fujixerox->approved_at)->format('d M Y H:i') }})
+                                                </small>
+                                            @endif
+                                        </div>
                                     @endif
                                 </td>
                                 @can('admin')

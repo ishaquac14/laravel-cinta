@@ -22,7 +22,8 @@
 
         <div class="mt-2 text-center">
             <h5>CHECKSHEET MONITORING GA-CSIRT (FRM-ITD-S13-050-00)</h5>
-        </div><hr>
+        </div>
+        <hr>
 
         <form method="GET" action="{{ route('gacsirt.index') }}">
             @csrf
@@ -46,7 +47,7 @@
                 {{ Session::get('danger') }}
             </div>
         @endif
-        
+
         <div class="table-responsive">
             <table id="example" class="table table-striped table-bordered">
                 <thead class="table-primary text-center">
@@ -96,7 +97,15 @@
                                     @if ($gacsirt->is_approved === 0)
                                         <span class="badge bg-secondary">Belum Approval</span>
                                     @else
-                                        <span class="badge bg-success">Sudah Approval</span>
+                                        <div class="badge bg-success">
+                                            Sudah Approval
+                                            @if (!is_null($gacsirt->approved_at))
+                                                <br>
+                                                <small style="font-size: 0.8em;">
+                                                    ({{ \Carbon\Carbon::parse($gacsirt->approved_at)->format('d M Y H:i') }})
+                                                </small>
+                                            @endif
+                                        </div>
                                     @endif
                                 </td>
                                 @can('admin')

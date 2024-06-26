@@ -22,7 +22,8 @@
 
         <div class="mt-2 text-center">
             <h5>CHECKSHEET MONITORING INTERNET (FRM-ITD-S13-028-01)</h5>
-        </div><hr>
+        </div>
+        <hr>
 
         <form method="GET" action="{{ route('mointernet.index') }}">
             @csrf
@@ -88,7 +89,15 @@
                                     @if ($mointernet->is_approved === 0)
                                         <span class="badge bg-secondary">Belum Approval</span>
                                     @else
-                                        <span class="badge bg-success">Sudah Approval</span>
+                                        <div class="badge bg-success">
+                                            Sudah Approval
+                                            @if (!is_null($mointernet->approved_at))
+                                                <br>
+                                                <small style="font-size: 0.8em;">
+                                                    ({{ \Carbon\Carbon::parse($mointernet->approved_at)->format('d M Y H:i') }})
+                                                </small>
+                                            @endif
+                                        </div>
                                     @endif
                                 </td>
                                 @can('admin')

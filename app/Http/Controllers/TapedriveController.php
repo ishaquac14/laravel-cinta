@@ -55,7 +55,7 @@ class TapedriveController extends Controller
             'note' => 'string|nullable',
             'follow_up' => 'string|nullable',
         ]);
-        
+
 
         // Mendapatkan data dari permintaan
         $data = $request->only(['plan_media', 'actual_media', 'tape_id', 'status', 'note', 'follow_up']);
@@ -118,26 +118,28 @@ class TapedriveController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
         $count_tapedrives = Tapedrive::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_tapedrives > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
+        // Cari data yang belum diapprove di bulan yang dipilih
         $tapedrives = Tapedrive::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($tapedrives->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($tapedrives as $tapedrive) {
             $tapedrive->is_approved = 1;
+            $tapedrive->approved_at = $now; // Menyimpan waktu approval
             $tapedrive->save();
         }
 
@@ -149,7 +151,7 @@ class TapedriveController extends Controller
             'checksheet_name' => "tapedrives",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
 
 
@@ -166,5 +168,4 @@ class TapedriveController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil disimpan !');
     }
-
 }

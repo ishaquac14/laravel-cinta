@@ -122,26 +122,28 @@ class GacsirtController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
         $count_gacsirts = Gacsirt::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_gacsirts > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
+        // Cari data yang belum diapprove di bulan yang dipilih
         $gacsirts = Gacsirt::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($gacsirts->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($gacsirts as $gacsirt) {
             $gacsirt->is_approved = 1;
+            $gacsirt->approved_at = $now; // Menyimpan waktu approval
             $gacsirt->save();
         }
 
@@ -153,9 +155,8 @@ class GacsirtController extends Controller
             'checksheet_name' => "gacsirts",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
-
 
     public function log_approved(Request $request)
     {

@@ -159,26 +159,28 @@ class CctvController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
         $count_cctvs = Cctv::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_cctvs > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
+        // Cari data yang belum diapprove di bulan yang dipilih
         $cctvs = Cctv::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($cctvs->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($cctvs as $cctv) {
             $cctv->is_approved = 1;
+            $cctv->approved_at = $now; // Menyimpan waktu approval
             $cctv->save();
         }
 
@@ -190,7 +192,7 @@ class CctvController extends Controller
             'checksheet_name' => "cctvs",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
 
 

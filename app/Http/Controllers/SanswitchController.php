@@ -40,7 +40,7 @@ class SanswitchController extends Controller
 
         return view('pages.sanswitch.index', compact('sanswitchs'));
     }
-  
+
 
     /**
      * Show the form for creating a new resource.
@@ -84,12 +84,12 @@ class SanswitchController extends Controller
             'note' => $request->input('note'),
             'follow_up' => $request->input('note')
         ];
-        
+
         // Tambahkan 'hdd1' hingga 'hdd19' ke dalam data untuk storage3
         for ($i = 0; $i <= 3; $i++) {
             $data["port{$i}"] = $request->input("port{$i}");
         }
-        
+
         // Tambahkan 'hdd1' hingga 'hdd10' ke dalam data untuk storage4
         for ($i = 0; $i <= 4; $i++) {
             $data["port_{$i}"] = $request->input("port_{$i}");
@@ -98,12 +98,11 @@ class SanswitchController extends Controller
         $data['author'] = auth()->user()->name;
 
         $data['user_id'] = auth()->user()->id;
-        
+
         Sanswitch::create($data);
 
         // Redirect atau memberikan respons sesuai kebutuhan
         return redirect()->route('sanswitch.index')->with('success', 'Data berhasil disimpan !');
-
     }
 
     /**
@@ -121,11 +120,11 @@ class SanswitchController extends Controller
 
         return view('pages.sanswitch.edit', compact('sanswitch'));
     }
-    
+
     public function update(Request $request, $id)
     {
         $sanswitch = Sanswitch::findOrFail($id);
-        
+
         $rules = [
             'powerstatus' => 'required|in:OK,NG',
             'notif_' => 'required|in:OK,NG',
@@ -177,26 +176,28 @@ class SanswitchController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
         $count_sanswitchs = Sanswitch::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_sanswitchs > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
+        // Cari data yang belum diapprove di bulan yang dipilih
         $sanswitchs = Sanswitch::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($sanswitchs->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($sanswitchs as $sanswitch) {
             $sanswitch->is_approved = 1;
+            $sanswitch->approved_at = $now; // Menyimpan waktu approval
             $sanswitch->save();
         }
 
@@ -208,7 +209,7 @@ class SanswitchController extends Controller
             'checksheet_name' => "sanswitchs",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
 
 
@@ -225,5 +226,4 @@ class SanswitchController extends Controller
 
         return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
-        
 }

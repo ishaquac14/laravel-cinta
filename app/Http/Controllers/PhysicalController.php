@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PhysicalController extends Controller
 {
-   
+
     public function index(Request $request)
     {
         $sortTerm = $request->input('sort_bulan');
@@ -55,7 +55,7 @@ class PhysicalController extends Controller
     {
         // dd($request);
         // Validasi form input
-        $request->validate ([
+        $request->validate([
             'host3' => 'required|in:OK,NG',
             'storage3' => 'required|in:OK,NG',
             'host4' => 'required|in:OK,NG',
@@ -110,11 +110,11 @@ class PhysicalController extends Controller
 
         return view('pages.physical.edit', compact('physical'));
     }
-    
+
     public function update(Request $request, $id)
     {
         $physical = Physical::findOrFail($id);
-    
+
         $request->validate([
             'host3' => 'required|in:OK,NG',
             'storage3' => 'required|in:OK,NG',
@@ -123,21 +123,21 @@ class PhysicalController extends Controller
             'note' => 'nullable|string',
             'follow_up' => 'nullable|string',
         ]);
-    
+
         $data = $request->only([
             'host3', 'storage3', 'host4', 'storage4', 'note', 'follow_up'
         ]);
-    
+
         for ($i = 1; $i <= 19; $i++) {
             $data["hdd{$i}"] = $request->input("hdd" . $i);
         }
-    
+
         for ($i = 1; $i <= 10; $i++) {
             $data["hdd_{$i}"] = $request->input("hdd_" . $i);
         }
-    
+
         $physical->update($data);
-    
+
         return redirect()->route('physical.index')->with('success', 'Data berhasil diperbaharui !');
     }
 
@@ -153,26 +153,28 @@ class PhysicalController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
         $count_physicals = Physical::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_physicals > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
+        // Cari data yang belum diapprove di bulan yang dipilih
         $physicals = Physical::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($physicals->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($physicals as $physical) {
             $physical->is_approved = 1;
+            $physical->approved_at = $now; // Menyimpan waktu approval
             $physical->save();
         }
 
@@ -184,7 +186,7 @@ class PhysicalController extends Controller
             'checksheet_name' => "physicals",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
 
 

@@ -22,7 +22,8 @@
 
         <div class="mt-2 text-center">
             <h5>CHECKSHEET MONITORING AC SERVER (FRM-ITD-S13-021-01)</h5>
-        </div><hr>
+        </div>
+        <hr>
 
         <form method="GET" action="{{ route('acserver.index') }}">
             @include('layouts.filter')
@@ -89,7 +90,15 @@
                                     @if ($acserver->is_approved === 0)
                                         <span class="badge bg-secondary">Belum Approval</span>
                                     @else
-                                        <span class="badge bg-success">Sudah Approval</span>
+                                        <div class="badge bg-success">
+                                            Sudah Approval
+                                            @if (!is_null($acserver->approved_at))
+                                                <br>
+                                                <small style="font-size: 0.8em;">
+                                                    ({{ \Carbon\Carbon::parse($acserver->approved_at)->format('d M Y H:i') }})
+                                                </small>
+                                            @endif
+                                        </div>
                                     @endif
                                 </td>
                                 <td class="align-middle text-center">

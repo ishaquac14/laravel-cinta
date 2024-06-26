@@ -168,49 +168,72 @@ class SchedulerController extends Controller
 
         $messages = [];
 
-        if ($unapprovedAcservers > 0) {
-            $messages[] = "Checksheet AC Server Belum diapprove!";
-        }
+        // if ($unapprovedAcservers > 0) {
+        //     $messages[] = "1. Checksheet AC Server";
+        // }
 
-        if ($unapprovedCctvs > 0) {
-            $messages[] = "Checksheet CCTV Belum diapprove!";
-        }
+        // if ($unapprovedCctvs > 0) {
+        //     $messages[] = "2. Checksheet CCTV";
+        // }
 
-        if ($unapprovedCsdatabases > 0) {
-            $messages[] = "Checksheet Database Belum diapprove!";
-        }
+        // if ($unapprovedCsdatabases > 0) {
+        //     $messages[] = "3. Checksheet Database";
+        // }
 
-        if ($unapprovedCserverelectrics > 0) {
-            $messages[] = "Checksheet Server Electric Belum diapprove!";
-        }
+        // if ($unapprovedCserverelectrics > 0) {
+        //     $messages[] = "4. Checksheet Server Electric";
+        // }
 
-        if ($unapprovedFujixeroxs > 0) {
-            $messages[] = "Checksheet Printer Fujixerox Belum diapprove!";
-        }
+        // if ($unapprovedFujixeroxs > 0) {
+        //     $messages[] = "5. Checksheet Printer Fujixerox";
+        // }
 
-        if ($unapprovedGacsirts > 0) {
-            $messages[] = "Checksheet GA-CSIRT Belum diapprove!";
-        }
+        // if ($unapprovedGacsirts > 0) {
+        //     $messages[] = "6. Checksheet GA-CSIRT";
+        // }
 
-        if ($unapprovedPhysicals > 0) {
-            $messages[] = "Checksheet Physical Server Belum diapprove!";
-        }
+        // if ($unapprovedPhysicals > 0) {
+        //     $messages[] = "7. Checksheet Physical Server";
+        // }
 
-        if ($unapprovedSanswitchs > 0) {
-            $messages[] = "Checksheet Sanswitch Belum diapprove!";
-        }
+        // if ($unapprovedSanswitchs > 0) {
+        //     $messages[] = "8. Checksheet Sanswitch";
+        // }
 
-        if ($unapprovedTapedrives > 0) {
-            $messages[] = "Checksheet Tape Drive Belum diapprove!";
-        }
+        // if ($unapprovedTapedrives > 0) {
+        //     $messages[] = "9. Checksheet Tape Drive";
+        // }
 
-        if ($unapprovedMointernet > 0) {
-            $messages[] = "Checksheet Internet Belum diapprove!";
+        // if ($unapprovedMointernet > 0) {
+        //     $messages[] = "10. Checksheet Internet";
+        // }
+
+        $checksheets = [
+            'AC Server' => $unapprovedAcservers,
+            'CCTV' => $unapprovedCctvs,
+            'Database' => $unapprovedCsdatabases,
+            'Server Electric' => $unapprovedCserverelectrics,
+            'Printer Fujixerox' => $unapprovedFujixeroxs,
+            'GA-CSIRT' => $unapprovedGacsirts,
+            'Physical Server' => $unapprovedPhysicals,
+            'Sanswitch' => $unapprovedSanswitchs,
+            'Tape Drive' => $unapprovedTapedrives,
+            'Internet' => $unapprovedMointernet
+        ];
+
+        $messages = [];
+        $i = 1;  // Start counting from 1 for numbering
+
+        foreach ($checksheets as $name => $count) {
+            if ($count > 0) {
+                $messages[] = "{$i}. Checksheet {$name}";
+                $i++;  // Increment the counter for each item
+            }
         }
 
         if (!empty($messages)) {
             $nomors = ['081223506433'];
-            $isi = "REMINDER !!!\n\nDear pak Ferry,\nMohon untuk segera approve checksheet bulan " . $formattedDate . ".\nGuna memastikan checksheet selalu dilakukan pengecekan\nsesuai dengan standard.\n" . "\nBerikut data checksheet yang perlu diapprove :\n" . implode("\n", $messages) . "\n\nTerimakasih.";
+            $isi = "REMINDER !!!\n\nDear pak Ferry,\nMohon untuk segera approve form checksheet bulan " . $formattedDate . ".\nGuna memastikan form checksheet selalu dilakukan pengecekan\nsesuai dengan standard.\n" . "\nBerikut form yang belum diapprove :\n" . implode("\n", $messages) . "\n\nTerimakasih.";
 
             foreach ($nomors as $nomor) {
                 $token = "v2n49drKeWNoRDN4jgqcdsR8a6bcochcmk6YphL6vLcCpRZdV1";

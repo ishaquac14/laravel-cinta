@@ -75,7 +75,7 @@ class CsdatabaseController extends Controller
         // Mendapatkan data dari permintaan
         $data = $request->only([
             'asiic', 'avicenna', 'broadcast', 'cubic_pro', 'gary', 'iatf', 'lobby', 'maps_body',
-            'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy','devita', 'note', 'cinta'
+            'maps_unit', 'prisma', 'risna', 'sikola', 'sinta', 'solid', 'cubic_pro_legacy', 'sikola_legacy', 'devita', 'note', 'cinta'
         ]);
         // Menyimpan data ke dalam csdatabase
 
@@ -170,26 +170,28 @@ class CsdatabaseController extends Controller
     {
         $selectedMonth = $request->input('selected_month');
         $now = Carbon::now();
-        $current_month = $now->format('m');
 
+        // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
         $count_csdatabases = Csdatabase::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 1)
             ->count();
 
         if ($count_csdatabases > 0) {
-            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya !');
-        };
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
 
+        // Cari data yang belum diapprove di bulan yang dipilih
         $csdatabases = Csdatabase::whereMonth('created_at', $selectedMonth)
             ->where('is_approved', 0)
             ->get();
 
         if ($csdatabases->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove !');
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
         }
 
         foreach ($csdatabases as $csdatabase) {
             $csdatabase->is_approved = 1;
+            $csdatabase->approved_at = $now; // Menyimpan waktu approval
             $csdatabase->save();
         }
 
@@ -201,9 +203,8 @@ class CsdatabaseController extends Controller
             'checksheet_name' => "csdatabases",
         ]);
 
-        return redirect()->back()->with('success', 'Data berhasil diapprove !');
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
     }
-
 
     public function log_approved(Request $request)
     {
@@ -219,4 +220,3 @@ class CsdatabaseController extends Controller
         return redirect()->back()->with('success', 'Data bulan berhasil disimpan');
     }
 }
-
