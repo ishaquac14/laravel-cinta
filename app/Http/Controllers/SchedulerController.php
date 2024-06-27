@@ -232,7 +232,7 @@ class SchedulerController extends Controller
         }
 
         if (!empty($messages)) {
-            $nomors = ['081223506433'];
+            $nomors = ['081223506433' , '082260050066', '082125008160'];
             $isi = "REMINDER !!!\n\nDear pak Ferry,\nMohon untuk segera approve form checksheet bulan " . $formattedDate . ".\nGuna memastikan form checksheet selalu dilakukan pengecekan\nsesuai dengan standard.\n" . "\nBerikut form yang belum diapprove :\n" . implode("\n", $messages) . "\n\nTerimakasih.";
 
             foreach ($nomors as $nomor) {
