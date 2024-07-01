@@ -11,12 +11,17 @@
                 <h4>CHECKSHEET MONITORING AC SERVER</h4>
             </div> --}}
 
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center ml-auto">
                 @can('superadmin')
                     <button class="btn btn-success" type="button" data-bs-toggle="modal"
                         data-bs-target="#approve_modal">Approve</button>
+                    <a href="{{ route('acserver.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create</a>
                 @endcan
-                <a href="{{ route('acserver.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create</a>
+                @can('admin')
+                    <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                        data-bs-target="#approve_modal_ldr">Approve Leader</button>
+                    <a href="{{ route('acserver.create') }}" class="btn btn-primary" style="margin-left: 10px;">Create</a>
+                @endcan
             </div>
         </div>
 
@@ -54,9 +59,10 @@
                         <th>Tanggal</th>
                         <th>Suhu Ruangan</th>
                         <th>Status</th>
-                        <th>Follow Up</th>
+                        {{-- <th>Follow Up</th> --}}
                         <th>Author</th>
-                        <th>Approval</th>
+                        <th>Approval Leader</th>
+                        <th>Approval Manager</th>
                         <th width="15%">Action</th>
                     </tr>
                 </thead>
@@ -83,9 +89,25 @@
                                         {{ $acserver["{$item}"] }}
                                     @endif
                                 </td>
-                                <td class="align-middle">
-                                    {{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}</td>
+                                {{-- <td class="align-middle">
+                                    {{ empty($acserver->follow_up) ? 'Tidak Ada' : $acserver->follow_up }}
+                                </td> --}}
                                 <td class="align-middle text-center">{{ $acserver->users->name }}</td>
+                                <td class="align-middle text-center">
+                                    @if ($acserver->is_approved_ldr === 0)
+                                        <span class="badge bg-secondary">Belum Approval</span>
+                                    @else
+                                        <div class="badge bg-primary">
+                                            Sudah Approval
+                                            @if (!is_null($acserver->approved_at_ldr))
+                                                <br>
+                                                <small style="font-size: 0.8em;">
+                                                    ({{ \Carbon\Carbon::parse($acserver->approved_at_ldr)->format('d M Y H:i') }})
+                                                </small>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </td>
                                 <td class="align-middle text-center">
                                     @if ($acserver->is_approved === 0)
                                         <span class="badge bg-secondary">Belum Approval</span>
@@ -149,40 +171,93 @@
         </div>
     </div>
 
-    <div class="modal fade" id="approve_modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title">
-                        Approve Checksheet Bulan:
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('approval_acserver') }}" method="POST">
-                        @csrf
-                        <select class="form-select" aria-label="Default select example" name="selected_month"
-                            id="SelectedMonth" contenteditable="true">
-                            <option selected>Bulan</option>
-                            <option value="01">Januari</option>
-                            <option value="02">Februari</option>
-                            <option value="03">Maret</option>
-                            <option value="04">April</option>
-                            <option value="05">Mei</option>
-                            <option value="06">Juni</option>
-                            <option value="07">Juli</option>
-                            <option value="08">Agustus</option>
-                            <option value="09">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">November</option>
-                            <option value="12">Desember</option>
-                        </select>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-success">Approve</button>
+    @can('superadmin')
+        <div class="modal fade" id="approve_modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            Approve Checksheet Bulan:
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('approval_acserver') }}" method="POST">
+                            @csrf
+                            <select class="form-select" aria-label="Default select example" name="selected_month"
+                                id="SelectedMonth" contenteditable="true">
+                                <option selected>Bulan</option>
+                                <option value="01">Januari</option>
+                                <option value="02">Februari</option>
+                                <option value="03">Maret</option>
+                                <option value="04">April</option>
+                                <option value="05">Mei</option>
+                                <option value="06">Juni</option>
+                                <option value="07">Juli</option>
+                                <option value="08">Agustus</option>
+                                <option value="09">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endcan
+
+    @can('admin')
+        <div class="modal fade" id="approve_modal_ldr" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            Approve Checksheet Bulan:
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('approval_ldr_acserver') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="SelectedMonth" class="form-label">Pilih Bulan:</label>
+                                <select class="form-select" aria-label="Default select example" name="selected_month"
+                                    id="SelectedMonth">
+                                    <option selected>Bulan</option>
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="StartDate" class="form-label">Tanggal Mulai:</label>
+                                <input type="date" class="form-control" id="StartDate" name="start_date">
+                            </div>
+                            <div class="mb-3">
+                                <label for="EndDate" class="form-label">Tanggal Akhir:</label>
+                                <input type="date" class="form-control" id="EndDate" name="end_date">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
+
 @endsection

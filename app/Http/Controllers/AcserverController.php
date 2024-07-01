@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Acserver;
 use App\Models\Logapproved;
+use App\Models\LogapprovedLdr;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -192,5 +193,130 @@ class AcserverController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Data bulan berhasil disimpan !');
+    }
+
+    // public function approval_ldr_acserver(Request $request)
+    // {
+    //     $selectedMonth = $request->input('selected_month');
+    //     $now = Carbon::now();
+
+    //     // Cek apakah ada data yang sudah diapprove di bulan yang dipilih
+    //     $count_acservers = Acserver::whereMonth('created_at', $selectedMonth)
+    //         ->where('is_approved_ldr', 1)
+    //         ->count();
+
+    //     if ($count_acservers > 0) {
+    //         return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+    //     }
+
+    //     // Cari data yang belum diapprove di bulan yang dipilih
+    //     $acservers = Acserver::whereMonth('created_at', $selectedMonth)
+    //         ->where('is_approved_ldr', 0)
+    //         ->get();
+
+    //     if ($acservers->isEmpty()) {
+    //         return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
+    //     }
+
+    //     foreach ($acservers as $acserver) {
+    //         $acserver->is_approved_ldr = 1;
+    //         $acserver->approved_at_ldr = $now; // Menyimpan waktu approval
+    //         $acserver->save();
+    //     }
+
+    //     $user_id = Auth::id();
+    //     // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+    //     $logApprovedLdr = LogapprovedLdr::create([
+    //         'month' => $selectedMonth,
+    //         'user_id' => $user_id,
+    //         'checksheet_name' => "acservers",
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Data berhasil diapprove!');
+    // }
+
+    // public function log_approved_ldr(Request $request)
+    // {
+    //     $request->validate([
+    //         'selected_month' => 'string|required'
+    //     ]);
+
+    //     // Simpan data bulan yang di-approve ke dalam tabel Logapproved
+    //     $logApprovedLdr = LogapprovedLdr::create([
+    //         'month' => $request->input('selected_month'),
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Data bulan berhasil disimpan !');
+    // }
+
+    public function approval_ldr_acserver(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'selected_month' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        $selectedMonth = $request->input('selected_month');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $now = Carbon::now();
+
+        // Cek apakah ada data yang sudah diapprove di rentang tanggal yang dipilih
+        $count_acservers = Acserver::whereMonth('created_at', $selectedMonth)
+            ->whereBetween('created_at', [$startDate, Carbon::parse($endDate)->endOfDay()])
+            ->where('is_approved_ldr', 1)
+            ->count();
+
+        if ($count_acservers > 0) {
+            return redirect()->back()->with('warning', 'Data sudah diapprove sebelumnya!');
+        }
+
+        // Cari data yang belum diapprove di rentang tanggal yang dipilih
+        $acservers = Acserver::whereMonth('created_at', $selectedMonth)
+            ->whereBetween('created_at', [$startDate, Carbon::parse($endDate)->endOfDay()])
+            ->where('is_approved_ldr', 0)
+            ->get();
+
+        if ($acservers->isEmpty()) {
+            return redirect()->back()->with('danger', 'Data tidak ditemukan untuk diapprove!');
+        }
+
+        foreach ($acservers as $acserver) {
+            $acserver->is_approved_ldr = 1;
+            $acserver->approved_at_ldr = $now; // Menyimpan waktu approval
+            $acserver->save();
+        }
+
+        $user_id = Auth::id();
+        // Simpan data bulan dan rentang tanggal yang di-approve ke dalam tabel Logapproved
+        $logApprovedLdr = LogapprovedLdr::create([
+            'month' => $selectedMonth,
+            'user_id' => $user_id,
+            'checksheet_name' => "acservers",
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil diapprove!');
+    }
+
+    public function log_approved_ldr(Request $request)
+    {
+        $request->validate([
+            'selected_month' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        // Simpan data bulan dan rentang tanggal yang di-approve ke dalam tabel Logapproved
+        $logApprovedLdr = LogapprovedLdr::create([
+            'month' => $request->input('selected_month'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
+
+        return redirect()->back()->with('success', 'Data bulan berhasil disimpan!');
     }
 }

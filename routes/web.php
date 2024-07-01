@@ -108,3 +108,6 @@ Route::post('/c_server_electric/approval', [ServerElectricController::class, 'ap
 
 Route::resource('/cctvaiia', CctvaiiaController::class);
 Route::get('/cctvaiia/search', 'CctvaiiaController@index');
+
+Route::post('/acserver/log_approved_ldr', [AcserverController::class, 'log_approved_ldr'])->name('acserver.log_approved_ldr');
+Route::post('/acserver/approval_ldr', [AcserverController::class, 'approval_ldr_acserver'])->name('approval_ldr_acserver');
