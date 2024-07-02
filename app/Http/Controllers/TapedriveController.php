@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tapedrive;
+use App\Models\MTapedrive;
 use App\Models\Logapproved;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -11,6 +12,68 @@ use Illuminate\Support\Facades\Auth;
 
 class TapedriveController extends Controller
 {
+    /// MASTER ///
+    public function master_list()
+    {
+        $m_tapedrives = MTapedrive::all();
+
+        return view('pages.tapedrive.master_list', compact('m_tapedrives'));
+    }
+
+    public function master_create()
+    {
+        return view('pages.tapedrive.master_create');
+    }
+
+    public function master_store(Request $request)
+    {
+        $m_tapedrives = MTapedrive::create([
+            'name' => $request->name,
+            'tape_id' => $request->tape_id,
+        ]);
+
+        return redirect()->route('tapedrive.master_list')->with('success', 'Data berhasil disimpan !');
+    }
+
+    public function master_edit($uuid)
+    {
+        $m_tapedrive = MTapedrive::where('uuid', $uuid)->first();
+        // Temukan data berdasarkan ID
+        // $m_tapedrives = MTapedrive::findOrFail($uuid_m_tapedrive->id);
+
+        // Load view untuk halaman edit dan lewatkan data item yang akan diedit
+        return view('pages.tapedrive.master_edit', compact('m_tapedrive'));
+    }
+
+    public function master_update(Request $request, $uuid)
+    {
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'name' => 'required',
+            'tape_id' => 'required',
+        ]);
+
+        // Temukan data berdasarkan ID
+        // $m_tapedrives = MTapedrive::findOrFail($id);
+        $m_tapedrives = MTapedrive::where('uuid', $uuid)->first();
+
+        // Update data
+        $m_tapedrives->name = $request->name;
+        $m_tapedrives->tape_id = $request->tape_id;
+        $m_tapedrives->save();
+
+        // Redirect ke halaman master_list dengan pesan sukses
+        return redirect()->route('tapedrive.master_list')->with('success', 'Data berhasil diperbarui !');
+    }
+
+    public function master_delete($uuid)
+    {
+        $m_tapedrives = MTapedrive::where('uuid', $uuid)->first();
+        $m_tapedrives->delete();
+
+        return redirect()->route('tapedrive.master_list')->with('danger', 'Data berhasil dihapus !');
+    }
+
     public function index(Request $request)
     {
         $sortTerm = $request->input('sort_bulan');
@@ -41,7 +104,9 @@ class TapedriveController extends Controller
 
     public function create()
     {
-        return view('pages.tapedrive.create');
+        $m_tapedrives = MTapedrive::orderBy('name', 'ASC')->get();
+
+        return view('pages.tapedrive.create', compact('m_tapedrives'));
     }
 
     public function store(Request $request)

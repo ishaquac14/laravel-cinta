@@ -99,7 +99,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('server_electric.checksheet_list') }}">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                        href="{{ route('server_electric.checksheet_list') }}">
                         <svg class="bi">
                             <use xlink:href="#file-earmark-text" />
                         </svg>
@@ -112,11 +113,20 @@
                     <span>MASTER</span>
                 </h5>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('server_electric.master_list') }}">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                        href="{{ route('server_electric.master_list') }}">
                         <svg class="bi">
                             <use xlink:href="#file-earmark-text" />
                         </svg>
                         Master Server Electric
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('tapedrive.master_list') }}">
+                        <svg class="bi">
+                            <use xlink:href="#file-earmark-text" />
+                        </svg>
+                        Master Backup Server Tape
                     </a>
                 </li>
                 {{-- <li class="nav-item">

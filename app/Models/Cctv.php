@@ -34,6 +34,11 @@ class Cctv extends Model
         }
     }
 
+    public function monitorings()
+    {
+        return $this->hasMany(CctvMonitoring::class, 'cctv_id');
+    }
+
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

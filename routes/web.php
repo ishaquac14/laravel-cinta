@@ -38,6 +38,15 @@ Route::group(['prefix' => 'server_electric'], function(){
     Route::delete('/checksheet_destroy/{id}', [ServerElectricController::class, 'checksheet_destroy'])->name('server_electric.checksheet_destroy');
 });
 
+Route::group(['prefix' => 'tapedrive'], function(){
+    Route::get('/master_list', [TapedriveController::class, 'master_list'])->name('tapedrive.master_list');
+    Route::get('/master_create', [TapedriveController::class, 'master_create'])->name('tapedrive.master_create');
+    Route::post('/master_store', [TapedriveController::class, 'master_store'])->name('tapedrive.master_store');
+    Route::get('/master_edit/{uuid}', [TapedriveController::class, 'master_edit'])->name('tapedrive.master_edit');
+    Route::put('/master_update/{uuid}', [TapedriveController::class, 'master_update'])->name('tapedrive.master_update');
+    Route::delete('/master_delete/{uuid}', [TapedriveController::class, 'master_delete'])->name('tapedrive.master_delete');
+});
+
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
 Route::get('/run-scheduler', [SchedulerController::class, 'runScheduler']);
 Route::get('/run-alert_approval', [SchedulerController::class, 'alertApproval']);

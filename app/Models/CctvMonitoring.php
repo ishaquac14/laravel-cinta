@@ -10,5 +10,10 @@ class CctvMonitoring extends Model
     use HasFactory;
 
     protected $table = 'cctv_monitorings';
-    protected $guarded = [];
+    protected $guarded = ['id'];
+
+    public function cctv()
+    {
+        return $this->belongsTo(Cctv::class, 'cctv_id');
+    }
 }
