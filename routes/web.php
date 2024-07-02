@@ -50,6 +50,8 @@ Route::group(['prefix' => 'tapedrive'], function(){
 Route::get('/mointernet/persen_grafik_monitoring_internet', [MointernetController::class, 'grafik_internet'])->name('grafik_internet');
 Route::get('/run-scheduler', [SchedulerController::class, 'runScheduler']);
 Route::get('/run-alert_approval', [SchedulerController::class, 'alertApproval']);
+Route::get('/run-alert_approval_ldr_1', [SchedulerController::class, 'alertApproval_ldr']);
+Route::get('/run-alert_approval_ldr_2', [SchedulerController::class, 'alertApproval_ldr']);
 
 Route::get('/cctv_sama',  [CctvController::class, 'cctv_sama'])->name('cctv_sama');
 

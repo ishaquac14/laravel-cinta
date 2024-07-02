@@ -168,46 +168,6 @@ class SchedulerController extends Controller
 
         $messages = [];
 
-        // if ($unapprovedAcservers > 0) {
-        //     $messages[] = "1. Checksheet AC Server";
-        // }
-
-        // if ($unapprovedCctvs > 0) {
-        //     $messages[] = "2. Checksheet CCTV";
-        // }
-
-        // if ($unapprovedCsdatabases > 0) {
-        //     $messages[] = "3. Checksheet Database";
-        // }
-
-        // if ($unapprovedCserverelectrics > 0) {
-        //     $messages[] = "4. Checksheet Server Electric";
-        // }
-
-        // if ($unapprovedFujixeroxs > 0) {
-        //     $messages[] = "5. Checksheet Printer Fujixerox";
-        // }
-
-        // if ($unapprovedGacsirts > 0) {
-        //     $messages[] = "6. Checksheet GA-CSIRT";
-        // }
-
-        // if ($unapprovedPhysicals > 0) {
-        //     $messages[] = "7. Checksheet Physical Server";
-        // }
-
-        // if ($unapprovedSanswitchs > 0) {
-        //     $messages[] = "8. Checksheet Sanswitch";
-        // }
-
-        // if ($unapprovedTapedrives > 0) {
-        //     $messages[] = "9. Checksheet Tape Drive";
-        // }
-
-        // if ($unapprovedMointernet > 0) {
-        //     $messages[] = "10. Checksheet Internet";
-        // }
-
         $checksheets = [
             'AC Server' => $unapprovedAcservers,
             'CCTV' => $unapprovedCctvs,
@@ -232,8 +192,115 @@ class SchedulerController extends Controller
         }
 
         if (!empty($messages)) {
-            $nomors = ['081223506433' , '082260050066', '082125008160'];
+            $nomors = ['081223506433'];
             $isi = "REMINDER !!!\n\nDear pak Ferry,\nMohon untuk segera approve form checksheet bulan " . $formattedDate . ".\nGuna memastikan form checksheet selalu dilakukan pengecekan\nsesuai dengan standard.\n" . "\nBerikut form yang belum diapprove :\n" . implode("\n", $messages) . "\n\nTerimakasih.";
+
+            foreach ($nomors as $nomor) {
+                $token = "v2n49drKeWNoRDN4jgqcdsR8a6bcochcmk6YphL6vLcCpRZdV1";
+                $message = sprintf("------------CINTA------------%c$isi%c-------------------------------- ", 10, 10);
+
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://app.ruangwa.id/api/send_message',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => 'token=' . $token . '&number=' . $nomor . '&message=' . $message,
+                ));
+                $response = curl_exec($curl);
+                curl_close($curl);
+            }
+        }
+    }
+
+    public function Alertapproval_ldr()
+    {
+        $now = Carbon::now();
+        $lastMonth = $now->subMonth();
+        $formattedDate = $lastMonth->locale('id')->translatedFormat('F Y');
+
+        $unapprovedAcservers = Acserver::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedCctvs = Cctv::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedCsdatabases = Csdatabase::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedCserverelectrics = CServerElectric::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedFujixeroxs = Fujixerox::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedGacsirts = Gacsirt::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedPhysicals = Physical::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedSanswitchs = Sanswitch::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedTapedrives = Tapedrive::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $unapprovedMointernet = Mointernet::whereMonth('created_at', $lastMonth->month)
+            ->whereYear('created_at', $lastMonth->year)
+            ->where('is_approved', 0)
+            ->count();
+
+        $messages = [];
+
+        $checksheets = [
+            'AC Server' => $unapprovedAcservers,
+            'CCTV' => $unapprovedCctvs,
+            'Database' => $unapprovedCsdatabases,
+            'Server Electric' => $unapprovedCserverelectrics,
+            'Printer Fujixerox' => $unapprovedFujixeroxs,
+            'GA-CSIRT' => $unapprovedGacsirts,
+            'Physical Server' => $unapprovedPhysicals,
+            'Sanswitch' => $unapprovedSanswitchs,
+            'Tape Drive' => $unapprovedTapedrives,
+            'Internet' => $unapprovedMointernet
+        ];
+
+        $messages = [];
+        $i = 1;  
+
+        foreach ($checksheets as $name => $count) {
+            if ($count > 0) {
+                $messages[] = "{$i}. Checksheet {$name}";
+                $i++; 
+            }
+        }
+
+        if (!empty($messages)) {
+            $nomors = ['081223506433'];
+            $isi = "REMINDER !!!\n\nDear pak Alliq,\nTest " . $formattedDate . ".\nGuna memastikan form checksheet selalu dilakukan pengecekan\nsesuai dengan standard.\n" . "\nBerikut form yang belum diapprove :\n" . implode("\n", $messages) . "\n\nTerimakasih.";
 
             foreach ($nomors as $nomor) {
                 $token = "v2n49drKeWNoRDN4jgqcdsR8a6bcochcmk6YphL6vLcCpRZdV1";

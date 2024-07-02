@@ -14,7 +14,7 @@
         </div>
 
         <div class="mb-2 text-center">
-            <h5>CHECKSHEET SERVER ELECTRIC</h5>
+            <h5>CHECKSHEET BACKUP TAPEDRIVE</h5>
         </div>
         <hr>
 
